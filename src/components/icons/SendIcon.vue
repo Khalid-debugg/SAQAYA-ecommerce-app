@@ -1,0 +1,28 @@
+<template>
+  <svg
+    :width="width"
+    :height="height"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M9.91202 11.9998H4.00002L2.02302 4.1348C2.01036 4.0891 2.00265 4.04216 2.00002 3.9948C1.97802 3.2738 2.77202 2.7738 3.46002 3.1038L22 11.9998L3.46002 20.8958C2.78002 21.2228 1.99602 20.7368 2.00002 20.0288C2.00204 19.9655 2.01316 19.9029 2.03302 19.8428L3.50002 14.9998"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</template>
+
+<script lang="ts">
+import Vue from "vue"
+export default Vue.extend({
+  name: "SendIcon",
+  props: {
+    width: { type: Number, default: 24 },
+    height: { type: Number, default: 24 },
+  },
+})
+</script>

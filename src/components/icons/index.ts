@@ -1,5 +1,3 @@
-import { VueConstructor } from "vue"
-
 import SearchIcon from "./SearchIcon.vue"
 import CartIcon from "./CartIcon.vue"
 import FacebookIcon from "./FacebookIcon.vue"
@@ -8,18 +6,9 @@ import InstagramIcon from "./InstagramIcon.vue"
 import LinkedinIcon from "./LinkedinIcon.vue"
 import BurgerIcon from "./BurgerIcon.vue"
 import CloseIcon from "./CloseIcon.vue"
+import SendIcon from "./SendIcon.vue"
 
-export type IconName =
-  | "search"
-  | "cart"
-  | "facebook"
-  | "twitter"
-  | "instagram"
-  | "linkedin"
-  | "burger"
-  | "close"
-
-export const icons: Record<IconName, VueConstructor> = {
+export const icons = {
   search: SearchIcon,
   cart: CartIcon,
   facebook: FacebookIcon,
@@ -28,4 +17,7 @@ export const icons: Record<IconName, VueConstructor> = {
   linkedin: LinkedinIcon,
   burger: BurgerIcon,
   close: CloseIcon,
-}
+  send: SendIcon,
+} as const
+
+export type IconName = keyof typeof icons
