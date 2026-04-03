@@ -1,0 +1,41 @@
+.not-found {
+  &__content {
+    @include flex-center;
+    flex-direction: column;
+    gap: 40px;
+    padding: 180px $spacing-md;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 110px;
+    font-weight: $font-weight-medium;
+    line-height: 115px;
+    letter-spacing: 3%;
+    @include respond-to("lg") {
+      font-size: 80px;
+      line-height: 85px;
+    }
+    @include respond-to("md") {
+      font-size: 60px;
+      line-height: 65px;
+    }
+    @include respond-to("sm") {
+      font-size: 30px;
+      line-height: 45px;
+    }
+  }
+
+  &__cta {
+    margin: $spacing-md 0;
+    padding: $spacing-md $spacing-2xl;
+    background-color: $color-primary;
+    color: $color-text-light;
+    border-radius: $radius-sm;
+    transition: $transition-fast;
+
+    &:hover {
+      background-color: $color-primary-hover;
+    }
+  }
+}
