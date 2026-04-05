@@ -44,6 +44,9 @@
     flex: 1;
     // TODO: to be styled
   }
+  &__form {
+    display: contents;
+  }
   &__footer {
     padding: $spacing-lg $spacing-xl;
     display: flex;

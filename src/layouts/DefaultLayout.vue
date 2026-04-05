@@ -12,7 +12,7 @@
 <script>
 import Header from "@/components/layouts/Header.vue"
 import Footer from "@/components/layouts/Footer.vue"
-import CartSideBar from "@/components/layouts/CartSideBar.vue"
+import CartSideBar from "@/components/layouts/CartSideBar/CartSideBar.vue"
 
 export default {
   components: { Header, Footer, CartSideBar },
