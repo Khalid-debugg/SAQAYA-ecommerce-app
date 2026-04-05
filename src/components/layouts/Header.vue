@@ -11,7 +11,7 @@
         </ul>
 
         <div class="header__actions">
-          <form class="header__search" @submit="onSearch">
+          <form class="header__search" @submit.prevent="onSearch">
             <input
               v-model="searchQuery"
               type="text"
@@ -33,37 +33,49 @@
       </nav>
     </div>
 
-    <div
-      class="header__overlay"
-      :class="{ 'is-open': isMenuOpen }"
-      @click="toggleMenu"
-    >
-      <div class="header__overlay-content" @click.stop>
-        <form class="header__search" @submit.prevent="onSearch">
-          <input
-            v-model="searchQuery"
-            type="text"
-            placeholder="What are you looking for?"
-          />
-          <button type="submit">
-            <app-icon name="search" :size="16" />
-          </button>
-        </form>
+    <transition name="drawer-overlay">
+      <div v-if="isMenuOpen" class="drawer-overlay" @click="toggleMenu" />
+    </transition>
 
-        <ul class="header__overlay-links">
-          <li v-for="link in navLinks" :key="link.to">
-            <router-link :to="link.to" @click.native="toggleMenu">{{
-              link.label
-            }}</router-link>
-          </li>
-          <li>
-            <button class="header__overlay-checkout" @click="openCart">
-              Checkout
+    <transition name="drawer-slide-right">
+      <div v-if="isMenuOpen" class="drawer">
+        <div class="drawer__header">
+          <h2 class="drawer__title">Menu</h2>
+          <button class="drawer__close" @click="toggleMenu">
+            <app-icon name="close" />
+          </button>
+        </div>
+
+        <div class="drawer__body">
+          <form
+            class="header__search nav-menu__search"
+            @submit.prevent="onSearch"
+          >
+            <input
+              v-model="searchQuery"
+              type="text"
+              placeholder="What are you looking for?"
+            />
+            <button type="submit">
+              <app-icon name="search" :size="16" />
             </button>
-          </li>
-        </ul>
+          </form>
+
+          <ul class="nav-menu__links">
+            <li v-for="link in navLinks" :key="link.to">
+              <router-link :to="link.to" @click.native="toggleMenu">
+                {{ link.label }}
+              </router-link>
+            </li>
+            <li>
+              <button class="nav-menu__checkout" @click="openCart">
+                Checkout
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+    </transition>
   </header>
 </template>
 

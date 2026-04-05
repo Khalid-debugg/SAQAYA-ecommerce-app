@@ -7,9 +7,10 @@
 
 @import "layout/container";
 @import "layout/page-layout";
+@import "layout/drawer";
 
-@import "components/header";
-@import "components/footer";
-@import "components/cart-sidebar";
+@import "components/layout/header";
+@import "components/layout/footer";
+@import "components/layout/cart-sidebar";
 
 @import "pages/not-found";
