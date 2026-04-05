@@ -1,0 +1,119 @@
+<template>
+  <transition name="cart-slide">
+    <div v-if="isOpen" class="cart-sidebar">
+      <div class="cart-sidebar__header">
+        <h2 class="cart-sidebar__title">Shopping Cart</h2>
+        <button class="cart-sidebar__close" @click="$emit('close')">
+          <app-icon name="close" />
+        </button>
+      </div>
+
+      <div class="cart-sidebar__products">
+        <!-- TODO: products list -->
+      </div>
+      <div class="cart-sidebar__footer">
+        <div class="cart-sidebar__wrapper">
+          <div class="cart-sidebar__row">
+            <span>Subtotal:</span>
+            <span>$0</span>
+          </div>
+          <div class="cart-sidebar__divider" />
+
+          <div class="cart-sidebar__row">
+            <span>Shipping:</span>
+            <span>Free</span>
+          </div>
+          <div class="cart-sidebar__divider" />
+
+          <div class="cart-sidebar__row">
+            <span>Total:</span>
+            <span class="cart-sidebar__price">$0</span>
+          </div>
+        </div>
+
+        <div class="cart-sidebar__wrapper">
+          <div class="cart-sidebar__payment">
+            <div class="cart-sidebar__radio">
+              <input
+                v-model="paymentMethod"
+                type="radio"
+                name="paymentMethod"
+                value="bank"
+                id="bank"
+              />
+              <label for="bank">Bank</label>
+            </div>
+            <div class="cart-sidebar__bank-logos">
+              <img
+                v-for="logo in bankLogos"
+                :src="logo.src"
+                :alt="logo.name"
+                :key="logo.name"
+              />
+            </div>
+          </div>
+
+          <div class="cart-sidebar__payment">
+            <div class="cart-sidebar__radio">
+              <input
+                v-model="paymentMethod"
+                type="radio"
+                name="paymentMethod"
+                value="cash"
+                id="cash"
+              />
+              <label for="cash">Cash on delivery</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="cart-sidebar__coupon">
+          <input
+            type="text"
+            class="cart-sidebar__coupon-input"
+            placeholder="Coupon Code"
+          />
+          <button class="cart-sidebar__cta">Apply</button>
+        </div>
+
+        <button class="cart-sidebar__cta cart-sidebar__order-btn">
+          Place Order
+        </button>
+      </div>
+    </div>
+  </transition>
+</template>
+
+<script lang="ts">
+import Vue from "vue"
+import AppIcon from "@/components/icons/AppIcon.vue"
+type PaymentMethod = "bank" | "cash"
+const bankLogos = [
+  { name: "B kash", fileName: "b-kash" },
+  { name: "Visa", fileName: "visa" },
+  { name: "Master Card", fileName: "master-card" },
+  { name: "Indian Bank", fileName: "indian-bank" },
+].map((logo) => ({
+  ...logo,
+  src: require(`@/assets/images/logos/${logo.fileName}.png`),
+}))
+export default Vue.extend({
+  name: "CartSideBar",
+
+  components: { AppIcon },
+
+  props: {
+    isOpen: {
+      type: Boolean,
+      required: true,
+    },
+  },
+
+  data() {
+    return {
+      paymentMethod: "cash" as PaymentMethod,
+      bankLogos,
+    }
+  },
+})
+</script>

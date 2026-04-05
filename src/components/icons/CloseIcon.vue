@@ -6,14 +6,15 @@
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
+    <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-width="1.5" />
     <path
-      d="M18 6L6 18"
+      d="M16 8L8 16"
       stroke="currentColor"
       stroke-width="1.5"
       stroke-linecap="round"
     />
     <path
-      d="M6 6L18 18"
+      d="M8 8L16 16"
       stroke="currentColor"
       stroke-width="1.5"
       stroke-linecap="round"
