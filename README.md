@@ -150,6 +150,23 @@ Follows [Conventional Commits](https://www.conventionalcommits.org/):
 - Social icons row using the icon registry
 - Copyright bar with a subtle top border separator
 
+### Week 1 Review — Refactors
+
+**SCSS folder restructure**
+
+- Renamed `src/assets/scss/` → `src/styles/` and updated the import path in `main.ts` accordingly
+
+**Shared drawer layout**
+
+- Extracted a reusable `_drawer.scss` under `styles/layout/` defining `.drawer`, `.drawer-overlay`, and the `drawer-slide-right` / `drawer-overlay` Vue transition classes
+- Both the cart sidebar and the mobile nav menu now share this base layout instead of duplicating fixed positioning, sizing, overflow, and transition logic
+- Removed redundant `is-open` / `is-closed` CSS classes — `v-if` handles DOM presence so these were dead code
+
+**Footer refactor**
+
+- Replaced hardcoded navigation lists with `v-for` loops driven by `navColumns`, `appBadges`, and `socials` data arrays
+- Moved support contact details (`address`, `email`, `phone`) into a `support` data object and bound them dynamically
+
 ---
 
 ## Configuration Reference
