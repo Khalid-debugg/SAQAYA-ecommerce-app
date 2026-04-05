@@ -1,57 +1,12 @@
 .cart-sidebar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  width: 500px;
-  background-color: $color-bg-page;
-  display: flex;
-  flex-direction: column;
-  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
-  z-index: 400;
-  overflow-y: auto;
-
-  @include respond-to("sm") {
-    width: 100%;
+  &__products {
+    // TODO: to be styled when products list is implemented
   }
 
   &__wrapper {
     display: flex;
     flex-direction: column;
     gap: $spacing-md;
-  }
-
-  &__header {
-    @include flex-between;
-    padding: $spacing-lg;
-  }
-
-  &__title {
-    font-family: $font-family-heading;
-    font-size: $font-size-2xl;
-    font-weight: $font-weight-medium;
-  }
-
-  &__close {
-    transition: $transition-fast;
-
-    &:hover {
-      color: $color-primary;
-    }
-  }
-
-  &__products {
-    flex: 1;
-    // TODO: to be styled
-  }
-  &__form {
-    display: contents;
-  }
-  &__footer {
-    padding: $spacing-lg $spacing-xl;
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-lg;
   }
 
   &__row {
@@ -61,6 +16,14 @@
   &__divider {
     height: 1px;
     background-color: $color-text-primary;
+  }
+
+  &__price {
+    font-weight: $font-weight-semibold;
+  }
+
+  &__form {
+    display: contents;
   }
 
   &__payment {
@@ -79,6 +42,7 @@
     input {
       cursor: pointer;
     }
+
     input {
       accent-color: $color-text-primary;
       width: 24px;
@@ -132,6 +96,7 @@
     &:hover {
       background-color: $color-primary-hover;
     }
+
     @include respond-to("sm") {
       flex: 1;
     }
@@ -139,18 +104,9 @@
 
   &__order-btn {
     width: 50%;
+
     @include respond-to("sm") {
       width: 100%;
     }
   }
-}
-
-.cart-slide-enter-active,
-.cart-slide-leave-active {
-  transition: transform 0.3s ease;
-}
-
-.cart-slide-enter,
-.cart-slide-leave-to {
-  transform: translateX(100%);
 }
