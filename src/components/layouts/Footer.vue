@@ -44,9 +44,10 @@
                 >Login / Register</router-link
               >
             </li>
-            <!-- TODO: open cart overlay -->
             <li>
-              <router-link to="#" class="footer__link">Cart</router-link>
+              <button class="footer__link" @click="$emit('open-cart')">
+                Cart
+              </button>
             </li>
             <li>
               <router-link to="#" class="footer__link">Wishlist</router-link>

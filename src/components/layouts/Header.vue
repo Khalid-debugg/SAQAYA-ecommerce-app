@@ -22,8 +22,7 @@
             </button>
           </form>
 
-          <!-- TODO: open cart overlay  -->
-          <button class="header__cart">
+          <button class="header__cart" @click="openCart">
             <app-icon name="cart" />
           </button>
         </div>
@@ -57,9 +56,10 @@
               link.label
             }}</router-link>
           </li>
-          <!-- TODO: open cart overlay  -->
           <li>
-            <router-link @click.native="toggleMenu">Checkout</router-link>
+            <button class="header__overlay-checkout" @click="openCart">
+              Checkout
+            </button>
           </li>
         </ul>
       </div>
@@ -94,6 +94,10 @@ export default Vue.extend({
     },
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen
+    },
+    openCart() {
+      this.isMenuOpen = false
+      this.$emit("open-cart")
     },
   },
 })
