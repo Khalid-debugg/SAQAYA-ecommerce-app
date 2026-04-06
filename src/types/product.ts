@@ -29,9 +29,4 @@ export interface ProductsState {
   productsCategoryList: ProductCategory[]
   exploreProductsList: Product[]
   sideCartItems: CartItem[]
-  isLoadingProductList: boolean
-  isLoadingSelectedProduct: boolean
-  isLoadingFlashSaleProducts: boolean
-  isLoadingProductCategories: boolean
-  isLoadingExploreProducts: boolean
 }
