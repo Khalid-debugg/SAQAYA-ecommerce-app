@@ -1,0 +1,28 @@
+.btn {
+  cursor: pointer;
+  border: none;
+  border-radius: $radius-sm;
+  padding: $spacing-md $spacing-2xl;
+  font-weight: $font-weight-medium;
+  transition: $transition-fast;
+
+  &--primary {
+    background-color: $color-primary;
+    color: $color-text-light;
+
+    &:hover {
+      background-color: $color-primary-hover;
+    }
+  }
+
+  &--outline {
+    background-color: transparent;
+    border: 1px solid $color-dark;
+    color: $color-dark;
+
+    &:hover {
+      background-color: $color-dark;
+      color: $color-text-light;
+    }
+  }
+}

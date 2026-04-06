@@ -85,18 +85,7 @@
     }
   }
 
-  &__cta {
-    padding: $spacing-md $spacing-2xl;
-    background-color: $color-primary;
-    color: $color-text-light;
-    border-radius: $radius-sm;
-    font-weight: $font-weight-medium;
-    transition: $transition-fast;
-
-    &:hover {
-      background-color: $color-primary-hover;
-    }
-
+  &__apply-btn {
     @include respond-to("sm") {
       flex: 1;
     }
