@@ -12,9 +12,8 @@
 
         <div class="header__actions">
           <form class="header__search" @submit.prevent="onSearch">
-            <input
+            <app-input
               v-model="searchQuery"
-              type="text"
               placeholder="What are you looking for?"
             />
             <button type="submit">
@@ -51,9 +50,8 @@
             class="header__search nav-menu__search"
             @submit.prevent="onSearch"
           >
-            <input
+            <app-input
               v-model="searchQuery"
-              type="text"
               placeholder="What are you looking for?"
             />
             <button type="submit">
@@ -82,11 +80,12 @@
 <script lang="ts">
 import Vue from "vue"
 import AppIcon from "@/components/icons/AppIcon.vue"
+import AppInput from "@/components/ui/AppInput.vue"
 
 export default Vue.extend({
   name: "TheHeader",
 
-  components: { AppIcon },
+  components: { AppIcon, AppInput },
 
   data() {
     return {

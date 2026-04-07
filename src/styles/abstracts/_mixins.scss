@@ -21,3 +21,20 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+@mixin input-base {
+  width: 100%;
+  border: none;
+  border-radius: $radius-sm;
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-sm;
+  background-color: $color-bg-muted;
+
+  &::placeholder {
+    color: $color-text-secondary;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
