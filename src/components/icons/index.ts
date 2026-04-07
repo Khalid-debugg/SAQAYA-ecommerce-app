@@ -7,6 +7,8 @@ import LinkedinIcon from "./LinkedinIcon.vue"
 import BurgerIcon from "./BurgerIcon.vue"
 import CloseIcon from "./CloseIcon.vue"
 import SendIcon from "./SendIcon.vue"
+import PhoneIcon from "./PhoneIcon.vue"
+import MailIcon from "./MailIcon.vue"
 
 export const icons = {
   search: SearchIcon,
@@ -18,6 +20,8 @@ export const icons = {
   burger: BurgerIcon,
   close: CloseIcon,
   send: SendIcon,
+  phone: PhoneIcon,
+  mail: MailIcon,
 } as const
 
 export type IconName = keyof typeof icons
