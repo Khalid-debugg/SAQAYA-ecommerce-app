@@ -1,0 +1,21 @@
+.contact-box {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    font-weight: $font-weight-medium;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__description {
+    font-size: $font-size-sm;
+    max-width: 70%;
+  }
+  svg {
+    color: $color-primary;
+  }
+}
