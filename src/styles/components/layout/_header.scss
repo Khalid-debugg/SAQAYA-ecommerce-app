@@ -63,28 +63,15 @@
   }
 
   &__search {
+    width: 243px;
     display: flex;
     align-items: center;
-    background-color: $color-bg-muted;
     border-radius: $radius-sm;
-    gap: $spacing-sm;
-    width: 243px;
-
+    background-color: $color-bg-muted;
+    padding: $spacing-sm $spacing-md;
     input {
-      background: none;
-      font-size: $font-size-sm;
-      color: $color-text-primary;
-      padding: 7px 12px 7px 20px;
-      border: none;
-
-      &::placeholder {
-        color: $color-text-secondary;
-        font-size: $font-size-xs;
-      }
-
-      &:focus {
-        outline: none;
-      }
+      font-size: $font-size-xs;
+      padding: 0;
     }
   }
 
@@ -110,10 +97,6 @@
   &__search {
     width: 80%;
     padding: $spacing-sm $spacing-md;
-
-    input {
-      flex: 1;
-    }
   }
 
   &__links {
