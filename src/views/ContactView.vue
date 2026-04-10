@@ -32,8 +32,8 @@
 
 <script lang="ts">
 import Vue from "vue"
-import ContactBox from "@/components/contact/ContactBox.vue"
-import ContactForm from "@/components/contact/ContactForm.vue"
+import ContactBox from "@/components/business/ContactBox.vue"
+import ContactForm from "@/components/forms/ContactForm.vue"
 
 export default Vue.extend({
   name: "ContactView",
