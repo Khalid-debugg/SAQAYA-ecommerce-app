@@ -1,9 +1,17 @@
 .cart-sidebar {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: $spacing-md;
+  padding: $spacing-lg $spacing-xl;
+
   &__products {
     // TODO: to be styled when products list is implemented
+    flex: 1;
   }
 
-  &__wrapper {
+  &__wrapper,
+  &__summary {
     display: flex;
     flex-direction: column;
     gap: $spacing-md;
@@ -16,10 +24,6 @@
   &__divider {
     height: 1px;
     background-color: $color-text-primary;
-  }
-
-  &__price {
-    font-weight: $font-weight-semibold;
   }
 
   &__form {

@@ -17,8 +17,8 @@
 
 <script lang="ts">
 import Vue from "vue"
-import AppIcon from "@/components/icons/AppIcon.vue"
-import { IconName } from "@/components/icons/index"
+import AppIcon from "@/components/ui/AppIcon.vue"
+import { IconName } from "@/components/ui/icons/index"
 
 interface ContactDetail {
   label: string
