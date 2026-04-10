@@ -1,0 +1,24 @@
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-md;
+
+    @include respond-to("sm") {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+
+    @include respond-to("sm") {
+      justify-content: center;
+    }
+  }
+}

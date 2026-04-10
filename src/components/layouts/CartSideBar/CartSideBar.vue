@@ -81,15 +81,18 @@
                 class="cart-sidebar__coupon-input"
                 placeholder="Coupon Code"
               />
-              <button type="button" class="cart-sidebar__cta">Apply</button>
+              <app-button class="cart-sidebar__apply-btn" @click="applyCoupon"
+                >Apply</app-button
+              >
             </div>
 
-            <button
+            <app-button
               type="submit"
-              class="cart-sidebar__cta cart-sidebar__order-btn"
+              @click="handlePlaceOrder"
+              class="cart-sidebar__order-btn"
             >
               Place Order
-            </button>
+            </app-button>
           </form>
         </div>
       </div>
@@ -100,6 +103,8 @@
 <script lang="ts">
 import Vue from "vue"
 import AppIcon from "@/components/icons/AppIcon.vue"
+import AppButton from "@/components/ui/AppButton.vue"
+
 type PaymentMethod = "bank" | "cash"
 type BankLogo = { name: string; fileName: string }
 
@@ -115,7 +120,7 @@ export const bankLogos: BankLogo[] = [
 export default Vue.extend({
   name: "CartSideBar",
 
-  components: { AppIcon },
+  components: { AppIcon, AppButton },
 
   props: {
     isOpen: {

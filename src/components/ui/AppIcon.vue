@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import Vue from "vue"
-import { icons, IconName } from "./index"
+import { icons, IconName } from "./icons/index"
 
 export default Vue.extend({
   name: "AppIcon",
