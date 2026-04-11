@@ -1,3 +1,10 @@
+interface Review {
+  rating: number
+  comment: string
+  date: string
+  reviewerName: string
+  reviewerEmail: string
+}
 export interface Product {
   id: number
   title: string
@@ -9,12 +16,7 @@ export interface Product {
   stock: number
   images: string[]
   thumbnail: string
-  reviews: unknown[]
-}
-
-export interface CartItem {
-  product: Product
-  quantity: number
+  reviews: Review[]
 }
 
 export interface ProductCategory {
@@ -22,11 +24,10 @@ export interface ProductCategory {
   name: string
   url: string
 }
-export interface ProductsState {
-  productsList: Product[]
-  selectedProduct: Product | null
-  flashSaleProducts: Product[]
-  productsCategoryList: ProductCategory[]
-  exploreProductsList: Product[]
-  sideCartItems: CartItem[]
+
+export type ProductsPaginated = {
+  products: Product[]
+  total: number
+  skip: number
+  limit: number
 }
