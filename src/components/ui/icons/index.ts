@@ -9,6 +9,8 @@ import CloseIcon from "./CloseIcon.vue"
 import SendIcon from "./SendIcon.vue"
 import PhoneIcon from "./PhoneIcon.vue"
 import MailIcon from "./MailIcon.vue"
+import ArrowUpIcon from "./ArrowUpIcon.vue"
+import ArrowDownIcon from "./ArrowDownIcon.vue"
 
 export const icons = {
   search: SearchIcon,
@@ -22,6 +24,8 @@ export const icons = {
   send: SendIcon,
   phone: PhoneIcon,
   mail: MailIcon,
+  arrowUp: ArrowUpIcon,
+  arrowDown: ArrowDownIcon,
 } as const
 
 export type IconName = keyof typeof icons

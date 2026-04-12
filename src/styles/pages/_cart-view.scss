@@ -1,0 +1,7 @@
+.cart-view {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: $spacing-md;
+  padding: $spacing-lg $spacing-xl;
+}
