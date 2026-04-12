@@ -9,6 +9,9 @@ import CloseIcon from "./CloseIcon.vue"
 import SendIcon from "./SendIcon.vue"
 import PhoneIcon from "./PhoneIcon.vue"
 import MailIcon from "./MailIcon.vue"
+import HeartIcon from "./HeartIcon.vue"
+import QuickViewIcon from "./QuickViewIcon.vue"
+import StarIcon from "./StarIcon.vue"
 import ArrowUpIcon from "./ArrowUpIcon.vue"
 import ArrowDownIcon from "./ArrowDownIcon.vue"
 
@@ -24,6 +27,9 @@ export const icons = {
   send: SendIcon,
   phone: PhoneIcon,
   mail: MailIcon,
+  heart: HeartIcon,
+  view: QuickViewIcon,
+  star: StarIcon,
   arrowUp: ArrowUpIcon,
   arrowDown: ArrowDownIcon,
 } as const
