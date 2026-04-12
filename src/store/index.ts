@@ -1,17 +1,15 @@
 import Vue from "vue"
 import Vuex from "vuex"
 import { productsModule } from "./modules/products"
+import { cartModule } from "./modules/cart"
+import { uiModule } from "./modules/ui"
 
 Vue.use(Vuex)
 
-export type RootState = object
-
 export default new Vuex.Store({
-  state: {},
-  getters: {},
-  mutations: {},
-  actions: {},
   modules: {
     products: productsModule,
+    cart: cartModule,
+    ui: uiModule,
   },
 })
