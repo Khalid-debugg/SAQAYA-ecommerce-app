@@ -14,6 +14,11 @@ import QuickViewIcon from "./QuickViewIcon.vue"
 import StarIcon from "./StarIcon.vue"
 import ArrowUpIcon from "./ArrowUpIcon.vue"
 import ArrowDownIcon from "./ArrowDownIcon.vue"
+import BeautyIcon from "./BeautyIcon.vue"
+import FragrancesIcon from "./FragrancesIcon.vue"
+import FurnitureIcon from "./FurnitureIcon.vue"
+import HomeDecorationIcon from "./HomeDecorationIcon.vue"
+import MobileAccessoriesIcon from "./MobileAccessoriesIcon.vue"
 
 export const icons = {
   search: SearchIcon,
@@ -32,6 +37,11 @@ export const icons = {
   star: StarIcon,
   arrowUp: ArrowUpIcon,
   arrowDown: ArrowDownIcon,
+  beauty: BeautyIcon,
+  fragrances: FragrancesIcon,
+  furniture: FurnitureIcon,
+  "home-decoration": HomeDecorationIcon,
+  "mobile-accessories": MobileAccessoriesIcon,
 } as const
 
 export type IconName = keyof typeof icons
