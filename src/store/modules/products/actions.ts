@@ -2,6 +2,7 @@ import {
   getProductById,
   getCategories,
   getProducts,
+  getProductsByCategory,
 } from "@/services/products/products.api"
 import { ProductsState, RootState } from "@/types/store"
 import { ActionContext } from "vuex"
@@ -91,5 +92,33 @@ export const productsActions = {
   ) {
     const data = await getProductById(id)
     commit("SET_SELECTED_PRODUCT", data)
+  },
+  async fetchProductsByCategory(
+    { commit }: ActionContext<ProductsState, RootState>,
+    category: string
+  ) {
+    commit(
+      "ui/SET_LOADING",
+      { key: "fetchProducts", value: true },
+      { root: true }
+    )
+    try {
+      const data = await getProductsByCategory(category)
+      commit("SET_PRODUCTS_LIST", data.products)
+      commit("SET_TOTAL_PRODUCTS", data.total)
+    } catch (error) {
+      commit(
+        "ui/SET_ERROR",
+        { key: "fetchProducts", value: "Failed to load products" },
+        { root: true }
+      )
+      throw error
+    } finally {
+      commit(
+        "ui/SET_LOADING",
+        { key: "fetchProducts", value: false },
+        { root: true }
+      )
+    }
   },
 }
