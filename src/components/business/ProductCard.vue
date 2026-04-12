@@ -1,0 +1,98 @@
+<template>
+  <div class="product">
+    <div class="product__image-container">
+      <div class="product__badges">
+        <span
+          v-if="product.discountPercentage"
+          class="product__badge product__badge--discount"
+        >
+          -{{ Math.ceil(product.discountPercentage) }}%
+        </span>
+        <span v-if="isProductNew" class="product__badge product__badge--new"
+          >New</span
+        >
+      </div>
+      <div class="product__actions">
+        <button class="product__action-btn"><app-icon name="heart" /></button>
+        <button class="product__action-btn"><app-icon name="view" /></button>
+      </div>
+      <img
+        class="product__image"
+        :src="product.thumbnail"
+        :alt="product.title"
+      />
+      <app-button
+        modifier="dark"
+        class="product__cart-btn"
+        @click.native="addToCart()"
+      >
+        Add to cart
+      </app-button>
+    </div>
+    <div class="product__details">
+      <p class="product__title">{{ product.title }}</p>
+      <div class="product__prices">
+        <span class="product__price">${{ product.price.toFixed(2) }}</span>
+        <span v-if="product.discountPercentage" class="product__price--original"
+          >${{ originalPrice.toFixed(2) }}</span
+        >
+      </div>
+      <div class="product__ratings">
+        <div class="product__stars">
+          <div v-for="index in 5" :key="index" class="product__star">
+            <app-icon
+              name="star"
+              :width="20"
+              :height="20"
+              class="product__star--empty"
+            />
+            <div
+              class="product__star--filled"
+              :style="{ width: getStarFill(index) + '%' }"
+            >
+              <app-icon name="star" :width="20" :height="20" />
+            </div>
+          </div>
+        </div>
+        <span class="product__reviews">({{ product.reviews.length }})</span>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { Product } from "@/types/product"
+import Vue, { PropType } from "vue"
+import AppIcon from "../ui/AppIcon.vue"
+import AppButton from "../ui/AppButton.vue"
+
+export default Vue.extend({
+  name: "ProductCard",
+  components: { AppIcon, AppButton },
+  props: {
+    product: {
+      type: Object as PropType<Product>,
+      required: true,
+    },
+  },
+  computed: {
+    isProductNew(): boolean {
+      return this.product.id % 5 === 0
+    },
+    originalPrice(): number {
+      return this.product.price / (1 - this.product.discountPercentage / 100)
+    },
+  },
+  methods: {
+    getStarFill(index: number): number {
+      const diff = this.product.rating - (index - 1)
+      if (diff >= 1) return 100
+      if (diff <= 0) return 0
+      return Math.round(diff * 100)
+    },
+    addToCart() {
+      this.$emit("add-to-cart", this.product)
+    },
+  },
+})
+</script>
