@@ -1,5 +1,6 @@
 import Vue from "vue"
 import VueRouter, { RouteConfig } from "vue-router"
+import { productDetailsGuard } from "./guards"
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
@@ -42,6 +43,7 @@ const routes: Array<RouteConfig> = [
           import(
             /* webpackChunkName: "product-details" */ "@/views/ProductDetailsView.vue"
           ),
+        beforeEnter: productDetailsGuard,
       },
       {
         path: "*",
