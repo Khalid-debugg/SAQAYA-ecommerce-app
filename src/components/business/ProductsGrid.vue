@@ -1,15 +1,15 @@
 <template>
   <div class="products-grid">
-    <app-skeleton v-if="isLoading && !visibleProducts.length" />
+    <app-skeleton v-if="isLoading && !products.length" />
     <app-error
-      v-else-if="error && !visibleProducts.length"
+      v-else-if="error && !products.length"
       :message="error"
       @retry="retry"
     />
-    <p v-else-if="!visibleProducts.length">No products to show</p>
+    <p v-else-if="!products.length">No products to show</p>
     <div v-else class="products-grid__inner">
       <product-card
-        v-for="product in sortedProducts"
+        v-for="product in products"
         :key="product.id"
         :product="product"
         @add-to-cart="addToCart"
@@ -25,8 +25,7 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue"
-import { mapState } from "vuex"
+import Vue, { PropType } from "vue"
 import { Product } from "@/types/product"
 import { CartItem } from "@/types/cart"
 import ProductCard from "@/components/business/ProductCard.vue"
@@ -34,59 +33,27 @@ import AppButton from "@/components/ui/AppButton.vue"
 import AppSkeleton from "@/components/ui/AppSkeleton.vue"
 import AppError from "@/components/ui/AppError.vue"
 
-type SortKey = "default" | "price-high" | "price-low" | "discount" | "rating"
-
 export default Vue.extend({
   name: "ProductsGrid",
 
   components: { ProductCard, AppButton, AppSkeleton, AppError },
 
   props: {
-    sortKey: {
-      type: String as () => SortKey,
-      default: "default",
+    products: {
+      type: Array as PropType<Product[]>,
+      required: true,
     },
-    category: {
-      type: String,
-      default: "",
+    canLoadMore: {
+      type: Boolean,
+      default: false,
     },
-  },
-
-  computed: {
-    ...mapState("products", ["productsList", "totalProducts", "visibleCount"]),
-
-    isLoading(): boolean {
-      return this.$store.getters["ui/IS_LOADING"]("fetchProducts")
+    isLoading: {
+      type: Boolean,
+      default: false,
     },
-
-    error(): string | null {
-      return this.$store.getters["ui/GET_ERROR"]("fetchProducts")
-    },
-
-    visibleProducts(): Product[] {
-      return this.productsList.slice(0, this.visibleCount)
-    },
-
-    canLoadMore(): boolean {
-      return this.visibleCount < this.totalProducts
-    },
-
-    sortedProducts(): Product[] {
-      const list = [...this.visibleProducts]
-      switch (this.sortKey) {
-        case "price-high":
-          return list.sort((a, b) => b.price - a.price)
-        case "price-low":
-          return list.sort((a, b) => a.price - b.price)
-        case "discount":
-          return list.sort(
-            (a, b) => b.discountPercentage - a.discountPercentage
-          )
-        case "rating":
-          return list.sort((a, b) => b.rating - a.rating)
-        default:
-          return list
-      }
+    error: {
+      type: String as () => string | null,
+      default: null,
     },
   },
 
