@@ -7,5 +7,7 @@ export const productsState = (): ProductsState => {
     selectedProduct: null,
     productCategories: [],
     totalProducts: 0,
+    visibleCount: 0,
+    currentCategory: "",
   }
 }

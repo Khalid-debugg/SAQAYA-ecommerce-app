@@ -1,9 +1,9 @@
 <template>
   <div class="section-header">
     <div class="section-header__left">
-      <div class="section-header__top">
+      <div v-if="label" class="section-header__top">
         <span class="section-header__indicator"></span>
-        <span v-if="label" class="section-header__label">{{ label }}</span>
+        <span class="section-header__label">{{ label }}</span>
       </div>
       <h2 v-if="title" class="section-header__title">{{ title }}</h2>
     </div>

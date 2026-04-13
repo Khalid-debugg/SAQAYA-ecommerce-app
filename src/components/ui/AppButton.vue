@@ -1,5 +1,9 @@
 <template>
-  <button :type="type" :class="`btn ${modifier ? `btn--${modifier}` : ''}`">
+  <button
+    :type="type"
+    :disabled="disabled"
+    :class="`btn ${modifier ? `btn--${modifier}` : ''}`"
+  >
     <slot />
   </button>
 </template>
@@ -18,6 +22,10 @@ export default Vue.extend({
     type: {
       type: String,
       default: "button",
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
 })
