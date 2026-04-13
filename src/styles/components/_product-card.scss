@@ -122,29 +122,6 @@
     gap: $spacing-sm;
   }
 
-  &__stars {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-  }
-
-  &__star {
-    position: relative;
-    width: 20px;
-    height: 20px;
-
-    &--empty {
-      color: $color-star-dull;
-    }
-
-    &--filled {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      color: $color-star;
-    }
-  }
-
   &__reviews {
     font-size: $font-size-sm;
     color: $color-text-secondary;
