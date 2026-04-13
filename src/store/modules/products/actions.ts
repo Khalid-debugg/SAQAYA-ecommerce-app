@@ -94,8 +94,8 @@ export const productsActions = {
     commit("SET_SELECTED_PRODUCT", data)
   },
   async fetchProductsByCategory(
-    { commit }: ActionContext<ProductsState, RootState>,
-    category: string
+    { commit, state }: ActionContext<ProductsState, RootState>,
+    { category, limit, skip }: { category: string; limit: number; skip: number }
   ) {
     commit(
       "ui/SET_LOADING",
@@ -103,8 +103,8 @@ export const productsActions = {
       { root: true }
     )
     try {
-      const data = await getProductsByCategory(category)
-      commit("SET_PRODUCTS_LIST", data.products)
+      const data = await getProductsByCategory(category, limit, skip)
+      commit("SET_PRODUCTS_LIST", [...state.productsList, ...data.products])
       commit("SET_TOTAL_PRODUCTS", data.total)
     } catch (error) {
       commit(
