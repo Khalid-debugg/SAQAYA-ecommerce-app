@@ -1,0 +1,36 @@
+.service-card {
+  @include flex-center;
+  flex-direction: column;
+  gap: $spacing-sm;
+  text-align: center;
+
+  &__icon-wrapper {
+    @include flex-center;
+    width: 80px;
+    height: 80px;
+    border-radius: $radius-full;
+    background-color: #c1c1c1;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__icon-inner {
+    @include flex-center;
+    width: 58px;
+    height: 58px;
+    border-radius: $radius-full;
+    background-color: $color-text-primary;
+    color: $color-text-light;
+  }
+
+  &__title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__subtitle {
+    font-size: $font-size-sm;
+  }
+}
