@@ -78,6 +78,7 @@ export default Vue.extend({
       navLinks: [
         { to: "/", label: "Home" },
         { to: "/contact", label: "Contact" },
+        { to: "/products", label: "Products" },
         { to: "/about", label: "About" },
       ],
     }
