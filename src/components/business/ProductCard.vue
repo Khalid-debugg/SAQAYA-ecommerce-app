@@ -16,11 +16,16 @@
         <button class="product__action-btn"><app-icon name="heart" /></button>
         <button class="product__action-btn"><app-icon name="view" /></button>
       </div>
-      <img
-        class="product__image"
-        :src="product.thumbnail"
-        :alt="product.title"
-      />
+      <router-link
+        :to="{ name: 'product-details', params: { id: String(product.id) } }"
+        class="product__title"
+      >
+        <img
+          class="product__image"
+          :src="product.thumbnail"
+          :alt="product.title"
+        />
+      </router-link>
       <app-button
         modifier="dark"
         class="product__cart-btn"
@@ -30,7 +35,12 @@
       </app-button>
     </div>
     <div class="product__details">
-      <p class="product__title">{{ product.title }}</p>
+      <router-link
+        :to="{ name: 'product-details', params: { id: String(product.id) } }"
+        class="product__title"
+      >
+        {{ product.title }}
+      </router-link>
       <div class="product__prices">
         <span class="product__price">${{ product.price.toFixed(2) }}</span>
         <span v-if="product.discountPercentage" class="product__price--original"
