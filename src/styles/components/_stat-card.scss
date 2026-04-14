@@ -1,0 +1,29 @@
+.stat-card {
+  padding: $spacing-xl $spacing-md;
+  border: 1px solid rgba($color-text-primary, 0.3);
+  border-radius: $radius-sm;
+  transition: $transition-base;
+  cursor: default;
+
+  &:hover {
+    background-color: $color-primary;
+    border-color: $color-primary;
+
+    .service-card__icon-inner {
+      background-color: $color-text-light;
+      color: $color-primary;
+    }
+
+    .stat-card__value,
+    .stat-card__label {
+      color: $color-text-light;
+    }
+  }
+
+  &__value {
+    font-size: 32px;
+    font-weight: $font-weight-bold;
+    font-family: $font-family-heading;
+    transition: $transition-base;
+  }
+}
