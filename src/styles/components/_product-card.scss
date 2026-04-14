@@ -19,6 +19,12 @@
     }
   }
 
+  &__image-link {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
   &__image {
     position: absolute;
     inset: 0;
@@ -95,8 +101,10 @@
   }
 
   &__title {
+    display: block;
     font-size: $font-size-base;
     font-weight: $font-weight-medium;
+    color: $color-text-primary;
     @include truncate;
   }
 
