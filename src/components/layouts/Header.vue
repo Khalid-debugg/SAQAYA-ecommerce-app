@@ -11,7 +11,7 @@
         </ul>
 
         <div class="header__actions">
-          <form class="header__search" @submit.prevent="onSearch">
+          <form class="header__search">
             <app-input
               v-model="searchQuery"
               placeholder="What are you looking for?"
@@ -84,9 +84,6 @@ export default Vue.extend({
   },
 
   methods: {
-    onSearch() {
-      //TODO: to be implemented
-    },
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen
     },

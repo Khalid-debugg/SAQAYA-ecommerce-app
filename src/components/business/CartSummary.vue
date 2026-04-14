@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <form class="cart-summary__form" @submit.prevent="handlePlaceOrder">
+    <form class="cart-summary__form">
       <div class="cart-summary__payment">
         <div class="cart-summary__payment-option">
           <div class="cart-summary__radio">
@@ -60,10 +60,7 @@
           class="cart-summary__coupon-input"
           placeholder="Coupon Code"
         />
-        <app-button
-          type="button"
-          @click="applyCoupon"
-          class="cart-summary__coupon-btn"
+        <app-button type="button" class="cart-summary__coupon-btn"
           >Apply</app-button
         >
       </div>
@@ -106,14 +103,6 @@ export default Vue.extend({
   computed: {
     totalUSD(): number {
       return this.$store.getters["cart/GET_TOTAL_USD"]
-    },
-  },
-  methods: {
-    handlePlaceOrder() {
-      // TODO: to be implemented
-    },
-    applyCoupon() {
-      // TODO: to be implemented
     },
   },
 })

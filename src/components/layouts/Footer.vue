@@ -6,7 +6,7 @@
           <router-link to="/" class="footer__logo">Exclusive</router-link>
           <h3 class="footer__heading">Subscribe</h3>
           <p class="footer__text">Get 10% off your first order</p>
-          <form class="footer__subscribe" @submit.prevent="onSubscribe">
+          <form class="footer__subscribe">
             <input
               v-model="email"
               type="email"
@@ -145,12 +145,6 @@ export default Vue.extend({
 
       socials: ["facebook", "twitter", "instagram", "linkedin"],
     }
-  },
-
-  methods: {
-    onSubscribe() {
-      // TODO: to be implemented
-    },
   },
 })
 </script>
