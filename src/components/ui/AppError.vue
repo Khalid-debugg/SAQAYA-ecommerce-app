@@ -1,7 +1,7 @@
 <template>
   <div class="app-error">
     <p class="app-error__message">{{ message }}</p>
-    <app-button modifier="outline" @click.native="$emit('retry')">
+    <app-button modifier="outline" @click.native="retry">
       Try again
     </app-button>
   </div>
@@ -18,6 +18,11 @@ export default Vue.extend({
     message: {
       type: String,
       default: "Something went wrong. Please try again.",
+    },
+  },
+  methods: {
+    retry() {
+      this.$emit("retry")
     },
   },
 })

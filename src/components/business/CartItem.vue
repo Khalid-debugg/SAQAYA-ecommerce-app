@@ -1,9 +1,6 @@
 <template>
   <div class="cart-item">
-    <button
-      class="cart-item__remove"
-      @click="$emit('remove', cartItem.product.id)"
-    >
+    <button class="cart-item__remove" @click="removeItem">
       <app-icon name="close" :width="16" :height="16" />
     </button>
     <img
@@ -15,27 +12,11 @@
     <div class="cart-item__quantity">
       <span>{{ cartItem.quantity }}</span>
       <div class="cart-item__qty-controls">
-        <button
-          class="cart-item__qty-btn"
-          @click="
-            $emit('update-quantity', {
-              id: cartItem.product.id,
-              quantity: cartItem.quantity + 1,
-            })
-          "
-        >
-          <app-icon name="arrowUp" width="9" height="6" />
+        <button class="cart-item__qty-btn" @click="incrementItemQuantity">
+          <app-icon name="arrow-up" width="9" height="6" />
         </button>
-        <button
-          class="cart-item__qty-btn"
-          @click="
-            $emit('update-quantity', {
-              id: cartItem.product.id,
-              quantity: cartItem.quantity - 1,
-            })
-          "
-        >
-          <app-icon name="arrowDown" width="9" height="6" />
+        <button class="cart-item__qty-btn" @click="decrementItemQuantity">
+          <app-icon name="arrow-down" width="9" height="6" />
         </button>
       </div>
     </div>
@@ -57,6 +38,23 @@ export default Vue.extend({
     cartItem: {
       type: Object as PropType<CartItem>,
       required: true,
+    },
+  },
+  methods: {
+    removeItem() {
+      this.$emit("remove", this.cartItem.product.id)
+    },
+    incrementItemQuantity() {
+      this.$emit("update-quantity", {
+        id: this.cartItem.product.id,
+        quantity: this.cartItem.quantity + 1,
+      })
+    },
+    decrementItemQuantity() {
+      this.$emit("update-quantity", {
+        id: this.cartItem.product.id,
+        quantity: this.cartItem.quantity - 1,
+      })
     },
   },
 })

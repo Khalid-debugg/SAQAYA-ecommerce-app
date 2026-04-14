@@ -6,7 +6,7 @@
           <router-link to="/" class="footer__logo">Exclusive</router-link>
           <h3 class="footer__heading">Subscribe</h3>
           <p class="footer__text">Get 10% off your first order</p>
-          <form class="footer__subscribe" @submit.prevent="onSubscribe">
+          <form class="footer__subscribe">
             <input
               v-model="email"
               type="email"
@@ -94,6 +94,8 @@
 <script lang="ts">
 import Vue from "vue"
 import AppIcon from "@/components/ui/AppIcon.vue"
+import googlePlay from "@/assets/images/footer/google-play.svg"
+import appStore from "@/assets/images/footer/app-store.svg"
 
 export default Vue.extend({
   name: "Footer",
@@ -134,23 +136,17 @@ export default Vue.extend({
 
       appBadges: [
         {
-          src: require("@/assets/images/footer/google-play.svg"),
+          src: googlePlay,
           alt: "Google Play Badge",
         },
         {
-          src: require("@/assets/images/footer/app-store.svg"),
+          src: appStore,
           alt: "App Store Badge",
         },
       ],
 
       socials: ["facebook", "twitter", "instagram", "linkedin"],
     }
-  },
-
-  methods: {
-    onSubscribe() {
-      // TODO: to be implemented
-    },
   },
 })
 </script>

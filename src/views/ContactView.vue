@@ -2,10 +2,7 @@
   <div class="contact">
     <div class="container contact__flex">
       <div class="contact__image">
-        <img
-          :src="require('@/assets/images/contact/contact-us.jpg')"
-          alt="Contact us"
-        />
+        <img src="@/assets/images/contact/contact-us.jpg" alt="Contact us" />
       </div>
       <div class="contact__right">
         <div class="contact__box">
