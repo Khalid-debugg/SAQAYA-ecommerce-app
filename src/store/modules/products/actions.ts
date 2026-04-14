@@ -19,7 +19,9 @@ export const productsActions = {
     )
     try {
       const data = await getProducts(limit, skip)
-      commit("SET_PRODUCTS_LIST", [...state.productsList, ...data.products])
+      const list =
+        skip === 0 ? data.products : [...state.productsList, ...data.products]
+      commit("SET_PRODUCTS_LIST", list)
       commit("SET_TOTAL_PRODUCTS", data.total)
     } catch (error) {
       commit(
@@ -104,7 +106,9 @@ export const productsActions = {
     )
     try {
       const data = await getProductsByCategory(category, limit, skip)
-      commit("SET_PRODUCTS_LIST", [...state.productsList, ...data.products])
+      const list =
+        skip === 0 ? data.products : [...state.productsList, ...data.products]
+      commit("SET_PRODUCTS_LIST", list)
       commit("SET_TOTAL_PRODUCTS", data.total)
     } catch (error) {
       commit(
