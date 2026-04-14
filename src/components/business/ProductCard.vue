@@ -29,7 +29,7 @@
       <app-button
         modifier="dark"
         class="product__cart-btn"
-        @click.native="addToCart()"
+        @click.native="addToCart"
       >
         Add to cart
       </app-button>

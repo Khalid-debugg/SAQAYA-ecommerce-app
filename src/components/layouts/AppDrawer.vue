@@ -1,13 +1,13 @@
 <template>
   <div>
     <transition name="drawer-overlay">
-      <div v-if="isOpen" class="drawer-overlay" @click="$emit('close')" />
+      <div v-if="isOpen" class="drawer-overlay" @click="close" />
     </transition>
     <transition name="drawer-slide-right">
       <div v-if="isOpen" class="drawer">
         <div class="drawer__header">
           <h2 class="drawer__title">{{ title }}</h2>
-          <button class="drawer__close" @click="$emit('close')">
+          <button class="drawer__close" @click="close">
             <app-icon name="close" />
           </button>
         </div>
@@ -32,6 +32,11 @@ export default Vue.extend({
     title: {
       type: String,
       default: "",
+    },
+  },
+  methods: {
+    close() {
+      this.$emit("close")
     },
   },
 })
