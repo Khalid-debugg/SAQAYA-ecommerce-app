@@ -6,10 +6,14 @@ export const productDetailsGuard = async (
   _from: Route,
   next: NavigationGuardNext
 ) => {
+  const id = Number(to.params.id)
+  if (!id) {
+    next("/not-found")
+    return
+  }
+
   try {
-    await store.dispatch("products/fetchProductById", {
-      id: Number(to.params.id),
-    })
+    await store.dispatch("products/fetchProductById", { id })
     next()
   } catch {
     next("/not-found")
