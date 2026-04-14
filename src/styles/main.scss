@@ -31,9 +31,13 @@
 @import "components/error";
 @import "components/products-grid";
 @import "components/sort-dropdown";
+@import "components/star-rating";
+@import "components/product-info";
+@import "components/product-gallery";
 
 @import "pages/not-found";
 @import "pages/products-view";
 @import "pages/contact";
 @import "pages/cart-view";
 @import "pages/home";
+@import "pages/product-details-view";

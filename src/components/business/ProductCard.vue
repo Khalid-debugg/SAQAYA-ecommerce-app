@@ -16,11 +16,16 @@
         <button class="product__action-btn"><app-icon name="heart" /></button>
         <button class="product__action-btn"><app-icon name="view" /></button>
       </div>
-      <img
-        class="product__image"
-        :src="product.thumbnail"
-        :alt="product.title"
-      />
+      <router-link
+        :to="{ name: 'product-details', params: { id: String(product.id) } }"
+        class="product__title"
+      >
+        <img
+          class="product__image"
+          :src="product.thumbnail"
+          :alt="product.title"
+        />
+      </router-link>
       <app-button
         modifier="dark"
         class="product__cart-btn"
@@ -30,7 +35,12 @@
       </app-button>
     </div>
     <div class="product__details">
-      <p class="product__title">{{ product.title }}</p>
+      <router-link
+        :to="{ name: 'product-details', params: { id: String(product.id) } }"
+        class="product__title"
+      >
+        {{ product.title }}
+      </router-link>
       <div class="product__prices">
         <span class="product__price">${{ product.price.toFixed(2) }}</span>
         <span v-if="product.discountPercentage" class="product__price--original"
@@ -38,22 +48,7 @@
         >
       </div>
       <div class="product__ratings">
-        <div class="product__stars">
-          <div v-for="index in 5" :key="index" class="product__star">
-            <app-icon
-              name="star"
-              :width="20"
-              :height="20"
-              class="product__star--empty"
-            />
-            <div
-              class="product__star--filled"
-              :style="{ width: getStarFill(index) + '%' }"
-            >
-              <app-icon name="star" :width="20" :height="20" />
-            </div>
-          </div>
-        </div>
+        <star-rating :rating="product.rating" />
         <span class="product__reviews">({{ product.reviews.length }})</span>
       </div>
     </div>
@@ -65,10 +60,11 @@ import { Product } from "@/types/product"
 import Vue, { PropType } from "vue"
 import AppIcon from "../ui/AppIcon.vue"
 import AppButton from "../ui/AppButton.vue"
+import StarRating from "@/components/ui/StarRating.vue"
 
 export default Vue.extend({
   name: "ProductCard",
-  components: { AppIcon, AppButton },
+  components: { AppIcon, AppButton, StarRating },
   props: {
     product: {
       type: Object as PropType<Product>,
@@ -84,12 +80,6 @@ export default Vue.extend({
     },
   },
   methods: {
-    getStarFill(index: number): number {
-      const diff = this.product.rating - (index - 1)
-      if (diff >= 1) return 100
-      if (diff <= 0) return 0
-      return Math.round(diff * 100)
-    },
     addToCart() {
       this.$emit("add-to-cart", this.product)
     },

@@ -1,0 +1,22 @@
+.star-rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+
+  &__star {
+    position: relative;
+    width: 20px;
+    height: 20px;
+  }
+
+  &__empty {
+    color: $color-star-dull;
+  }
+
+  &__filled {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    color: $color-star;
+  }
+}
