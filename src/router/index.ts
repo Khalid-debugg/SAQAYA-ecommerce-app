@@ -1,4 +1,4 @@
-import Vue from "vue"
+import Vue, { CreateElement } from "vue"
 import VueRouter, { RouteConfig } from "vue-router"
 import { productDetailsGuard } from "./guards"
 Vue.use(VueRouter)
@@ -21,33 +21,47 @@ const routes: Array<RouteConfig> = [
       {
         path: "about",
         name: "about",
+        meta: { breadcrumb: "About" },
         component: () =>
           import(/* webpackChunkName: "about" */ "@/views/AboutView.vue"),
       },
       {
         path: "contact",
         name: "contact",
+        meta: { breadcrumb: "Contact" },
         component: () =>
           import(/* webpackChunkName: "contact" */ "@/views/ContactView.vue"),
       },
       {
         path: "products",
         name: "products",
-        component: () =>
-          import(/* webpackChunkName: "products" */ "@/views/ProductsView.vue"),
-      },
-      {
-        path: "product/:id",
-        name: "product-details",
-        component: () =>
-          import(
-            /* webpackChunkName: "product-details" */ "@/views/ProductDetailsView.vue"
-          ),
-        beforeEnter: productDetailsGuard,
+        meta: { breadcrumb: "Products" },
+        component: { render: (h: CreateElement) => h("router-view") },
+        children: [
+          {
+            path: "",
+            name: "products-list",
+            component: () =>
+              import(
+                /* webpackChunkName: "products" */ "@/views/ProductsView.vue"
+              ),
+          },
+          {
+            path: ":id",
+            name: "product-details",
+            meta: { breadcrumb: null },
+            component: () =>
+              import(
+                /* webpackChunkName: "product-details" */ "@/views/ProductDetailsView.vue"
+              ),
+            beforeEnter: productDetailsGuard,
+          },
+        ],
       },
       {
         path: "*",
         name: "not-found",
+        meta: { breadcrumb: "404 Error" },
         component: () =>
           import(
             /* webpackChunkName: "not-found" */ "@/views/NotFoundView.vue"
