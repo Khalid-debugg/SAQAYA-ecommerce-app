@@ -48,19 +48,27 @@ npm run lint
 ```
 src/
 ├── assets/
-│   ├── images/            # static assets (footer badges, QR code)
-│   └── scss/
-│       ├── abstracts/     # design tokens (_variables.scss) and mixins
-│       ├── base/          # reset, typography, font declarations
-│       ├── layout/        # container and page-layout utilities
-│       └── components/    # component-scoped styles
+│   ├── fonts/             # Poppins and Inter font files
+│   └── images/            # static images organized by page/feature
 ├── components/
-│   ├── icons/             # SVG icon registry with typed IconName
-│   └── layouts/           # Header and Footer components
+│   ├── business/          # feature-specific components (products, cart, about, etc.)
+│   ├── forms/             # form components
+│   ├── layouts/           # Header, Footer, AppDrawer
+│   └── ui/                # reusable primitives and icon registry
 ├── layouts/               # page layout wrappers (DefaultLayout)
-├── views/                 # route-level page components
-├── router/                # Vue Router 3 config with lazy-loaded routes
-└── store/                 # Vuex store
+├── mixins/                # shared Vue mixins (pagination)
+├── plugins/               # Vue plugins (axios, cart persistence)
+├── router/                # Vue Router 3 config with guards and lazy-loaded routes
+├── services/              # API call functions
+├── store/                 # Vuex store with namespaced modules (products, cart, ui)
+├── styles/
+│   ├── abstracts/         # design tokens and mixins
+│   ├── base/              # reset, typography, font declarations
+│   ├── components/        # component-scoped styles
+│   ├── layout/            # container, drawer, header, footer, page-layout
+│   └── pages/             # page-level styles
+├── types/                 # TypeScript type definitions
+└── views/                 # route-level page components
 ```
 
 ---
@@ -101,6 +109,35 @@ Follows [Conventional Commits](https://www.conventionalcommits.org/):
 ---
 
 ## Progress Log
+
+### Week 2 — Pages & Features
+
+**Routing**
+
+- Extended the router with nested routes, breadcrumb meta keys, and a navigation guard for the product details page
+
+**State Management**
+
+- Added `products`, `cart` and `ui` Vuex modules and a cart persistence plugin to keep cart state across page refreshes
+
+**Components & Icons**
+
+- Built out all UI primitives, business components, and expanded the icon registry to support the new pages
+
+**Pages**
+
+- Added a shared pagination mixin used across listing pages
+- Implemented Home, Products, Product Details, and About pages with their own dedicated components and styles
+
+### Week 2 Review — Refactors
+
+- Extracted inline template logic into methods for better readability and testability
+- Replaced inline and dynamic imports with static top-level imports throughout
+- Fixed a product list duplication issue on page re-entry by resetting state on fresh fetches
+- Improved the navigation guard to validate the route param before making any API call
+- Cleaned up the codebase by removing unused comments and the leftover `HelloWorld` component
+
+---
 
 ### Week 1 — Project Foundation
 

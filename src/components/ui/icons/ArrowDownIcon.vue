@@ -4,11 +4,11 @@
     :width="width"
     :height="height"
     viewBox="0 0 9 6"
-    fill="none"
+    fill="currentColor"
   >
     <path
       d="M4.24268 3.3L7.54268 0L8.48535 0.942666L4.24268 5.18533L1.71661e-05 0.942666L0.942683 0L4.24268 3.3Z"
-      fill="black"
+      fill="currentColor"
     />
   </svg>
 </template>

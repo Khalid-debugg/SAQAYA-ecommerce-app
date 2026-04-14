@@ -1,0 +1,22 @@
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -800px 0;
+  }
+  100% {
+    background-position: 800px 0;
+  }
+}
+
+.app-skeleton {
+  width: 100%;
+  min-height: 200px;
+  border-radius: $radius-sm;
+  background: linear-gradient(
+    105deg,
+    $color-bg-muted 40%,
+    lighten($color-bg-muted, 3%) 50%,
+    $color-bg-muted 60%
+  );
+  background-size: 800px 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}

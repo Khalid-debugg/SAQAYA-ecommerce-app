@@ -1,0 +1,51 @@
+.team-member-card {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  &__photo {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background-color: $color-bg-muted;
+    border-radius: $radius-md;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+
+  &__name {
+    font-size: 32px;
+    font-weight: $font-weight-medium;
+    font-family: $font-family-heading;
+    line-height: 30px;
+    letter-spacing: 4%;
+  }
+
+  &__socials {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin: $spacing-sm 0;
+  }
+
+  &__social {
+    color: $color-text-primary;
+    cursor: pointer;
+    transition: $transition-fast;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}

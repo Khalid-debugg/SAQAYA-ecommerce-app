@@ -1,6 +1,5 @@
 <template>
   <div class="not-found">
-    <!-- TODO: add breadcrumb when understood-->
     <div class="container">
       <section class="not-found__content">
         <h1 class="not-found__title">404 Not Found</h1>

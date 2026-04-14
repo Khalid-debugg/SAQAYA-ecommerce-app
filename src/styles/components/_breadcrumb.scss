@@ -1,0 +1,32 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  padding-top: $spacing-lg;
+  padding-bottom: $spacing-lg;
+  font-size: $font-size-sm;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &__separator {
+    color: $color-text-secondary;
+  }
+
+  &__link {
+    color: $color-text-secondary;
+    transition: $transition-fast;
+
+    &:hover {
+      color: $color-text-primary;
+    }
+  }
+
+  &__current {
+    color: $color-text-primary;
+  }
+}

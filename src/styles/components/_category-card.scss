@@ -1,0 +1,27 @@
+.category-card {
+  @include flex-center;
+  flex-direction: column;
+  gap: $spacing-md;
+  padding: $spacing-lg;
+  aspect-ratio: 170 / 145;
+  border: 1px solid $color-text-secondary;
+  border-radius: $radius-sm;
+  transition: $transition-base;
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
+  @include respond-to("sm") {
+    gap: $spacing-xs;
+    padding: $spacing-sm;
+  }
+  &__name {
+    width: 100%;
+    text-align: center;
+    @include truncate;
+  }
+  &:hover {
+    background-color: $color-primary;
+    border-color: $color-primary;
+    color: $color-text-light;
+  }
+}

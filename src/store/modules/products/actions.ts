@@ -2,6 +2,7 @@ import {
   getProductById,
   getCategories,
   getProducts,
+  getProductsByCategory,
 } from "@/services/products/products.api"
 import { ProductsState, RootState } from "@/types/store"
 import { ActionContext } from "vuex"
@@ -18,7 +19,9 @@ export const productsActions = {
     )
     try {
       const data = await getProducts(limit, skip)
-      commit("SET_PRODUCTS_LIST", [...state.productsList, ...data.products])
+      const list =
+        skip === 0 ? data.products : [...state.productsList, ...data.products]
+      commit("SET_PRODUCTS_LIST", list)
       commit("SET_TOTAL_PRODUCTS", data.total)
     } catch (error) {
       commit(
@@ -91,5 +94,35 @@ export const productsActions = {
   ) {
     const data = await getProductById(id)
     commit("SET_SELECTED_PRODUCT", data)
+  },
+  async fetchProductsByCategory(
+    { commit, state }: ActionContext<ProductsState, RootState>,
+    { category, limit, skip }: { category: string; limit: number; skip: number }
+  ) {
+    commit(
+      "ui/SET_LOADING",
+      { key: "fetchProducts", value: true },
+      { root: true }
+    )
+    try {
+      const data = await getProductsByCategory(category, limit, skip)
+      const list =
+        skip === 0 ? data.products : [...state.productsList, ...data.products]
+      commit("SET_PRODUCTS_LIST", list)
+      commit("SET_TOTAL_PRODUCTS", data.total)
+    } catch (error) {
+      commit(
+        "ui/SET_ERROR",
+        { key: "fetchProducts", value: "Failed to load products" },
+        { root: true }
+      )
+      throw error
+    } finally {
+      commit(
+        "ui/SET_LOADING",
+        { key: "fetchProducts", value: false },
+        { root: true }
+      )
+    }
   },
 }

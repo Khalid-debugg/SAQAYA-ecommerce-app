@@ -7,7 +7,4 @@ export const productsGetters = {
       return b.discountPercentage - a.discountPercentage
     })
   },
-  GET_EXPLORE_PRODUCTS(state: ProductsState) {
-    return [...state.homeProducts].slice(0, 8)
-  },
 }

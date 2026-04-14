@@ -1,5 +1,5 @@
 <template>
-  <form class="contact-form" @submit.prevent="handleSubmit">
+  <form class="contact-form">
     <div class="contact-form__row">
       <app-input v-model="name" placeholder="Your Name *" required />
       <app-input
@@ -37,12 +37,6 @@ export default Vue.extend({
       email: "",
       message: "",
     }
-  },
-
-  methods: {
-    handleSubmit() {
-      // TODO: to be implemented
-    },
   },
 })
 </script>

@@ -7,6 +7,8 @@ export interface ProductsState {
   selectedProduct: Product | null
   productCategories: ProductCategory[]
   totalProducts: number
+  visibleCount: number
+  currentCategory: string
 }
 
 export interface CartState {

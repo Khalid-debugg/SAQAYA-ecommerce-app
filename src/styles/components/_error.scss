@@ -1,0 +1,12 @@
+.app-error {
+  @include flex-center;
+  flex-direction: column;
+  gap: $spacing-md;
+  padding: $spacing-2xl;
+  text-align: center;
+
+  &__message {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+  }
+}
