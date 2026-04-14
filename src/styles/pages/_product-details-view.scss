@@ -1,0 +1,39 @@
+.product-details {
+  padding: $spacing-2xl 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2xl;
+
+  &__layout {
+    display: grid;
+    grid-template-columns: 7fr 4fr;
+    gap: $spacing-xl;
+    align-items: start;
+
+    @include respond-to("xl") {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__related {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2xl;
+  }
+}
+
+.product-details__related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-lg;
+
+  @include respond-to("lg") {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @include respond-to("md") {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include respond-to("sm") {
+    grid-template-columns: 1fr;
+  }
+}
