@@ -35,6 +35,10 @@
 @import "components/product-info";
 @import "components/product-gallery";
 @import "components/breadcrumb";
+@import "components/stat-card";
+@import "components/team-member-card";
+@import "components/about-hero";
+@import "components/team-section";
 
 @import "pages/not-found";
 @import "pages/products-view";
@@ -42,3 +46,4 @@
 @import "pages/cart-view";
 @import "pages/home";
 @import "pages/product-details-view";
+@import "pages/about";
