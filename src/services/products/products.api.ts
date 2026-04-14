@@ -22,3 +22,14 @@ export async function getCategories(): Promise<ProductCategory[]> {
   )
   return response.data
 }
+
+export async function getProductsByCategory(
+  category: string,
+  limit = 0,
+  skip = 0
+): Promise<ProductsPaginated> {
+  const response = await axiosInstance.get<ProductsPaginated>(
+    `/products/category/${category}?limit=${limit}&skip=${skip}`
+  )
+  return response.data
+}

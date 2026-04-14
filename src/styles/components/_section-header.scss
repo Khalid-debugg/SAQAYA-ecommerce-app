@@ -1,0 +1,62 @@
+.section-header {
+  @include flex-between;
+  align-items: flex-end;
+
+  &__left {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    justify-content: flex-end;
+  }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &__indicator {
+    display: block;
+    width: 20px;
+    height: 40px;
+    background-color: $color-primary;
+    border-radius: $radius-sm;
+  }
+
+  &__label {
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+  }
+
+  &__title {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-semibold;
+    letter-spacing: 4%;
+    line-height: 48px;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: flex-end;
+    gap: $spacing-sm;
+  }
+
+  &__arrow {
+    @include flex-center;
+    border-radius: $radius-full;
+    background-color: $color-bg-muted;
+    padding: 11px;
+    cursor: pointer;
+    transition: $transition-fast;
+
+    &:hover:not(:disabled) {
+      background-color: $color-primary;
+      color: $color-text-light;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+}

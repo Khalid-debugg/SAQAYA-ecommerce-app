@@ -1,0 +1,34 @@
+.about-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-2xl;
+  align-items: center;
+
+  @include respond-to("md") {
+    grid-template-columns: 1fr;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  &__title {
+    font-size: 54px;
+    font-weight: $font-weight-semibold;
+    line-height: $line-height-tight;
+    margin-bottom: $spacing-lg;
+    letter-spacing: 6%;
+  }
+
+  &__image {
+    width: 100%;
+    background-color: $color-bg-muted;
+    border-radius: $radius-md;
+
+    @include respond-to("md") {
+      order: -1;
+    }
+  }
+}

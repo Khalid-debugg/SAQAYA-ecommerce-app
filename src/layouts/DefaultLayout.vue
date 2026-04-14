@@ -2,6 +2,7 @@
   <div class="page-layout">
     <Header @open-cart="isCartOpen = true" />
     <main class="page-layout__main">
+      <app-breadcrumb />
       <router-view />
     </main>
     <Footer @open-cart="isCartOpen = true" />
@@ -20,9 +21,10 @@ import Header from "@/components/layouts/Header.vue"
 import Footer from "@/components/layouts/Footer.vue"
 import CartView from "@/views/CartView.vue"
 import AppDrawer from "@/components/layouts/AppDrawer.vue"
+import AppBreadcrumb from "@/components/ui/AppBreadcrumb.vue"
 
 export default {
-  components: { Header, Footer, CartView, AppDrawer },
+  components: { Header, Footer, CartView, AppDrawer, AppBreadcrumb },
 
   data() {
     return {

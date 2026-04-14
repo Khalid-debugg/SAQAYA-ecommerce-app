@@ -17,4 +17,10 @@ export const productsMutations = {
   SET_TOTAL_PRODUCTS(state: ProductsState, payload: number) {
     state.totalProducts = payload
   },
+  SET_VISIBLE_COUNT(state: ProductsState, payload: number) {
+    state.visibleCount = payload
+  },
+  SET_CURRENT_CATEGORY(state: ProductsState, payload: string) {
+    state.currentCategory = payload
+  },
 }

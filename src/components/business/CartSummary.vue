@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <form class="cart-summary__form" @submit.prevent="handlePlaceOrder">
+    <form class="cart-summary__form">
       <div class="cart-summary__payment">
         <div class="cart-summary__payment-option">
           <div class="cart-summary__radio">
@@ -60,10 +60,7 @@
           class="cart-summary__coupon-input"
           placeholder="Coupon Code"
         />
-        <app-button
-          type="button"
-          @click="applyCoupon"
-          class="cart-summary__coupon-btn"
+        <app-button type="button" class="cart-summary__coupon-btn"
           >Apply</app-button
         >
       </div>
@@ -78,19 +75,20 @@
 <script lang="ts">
 import Vue from "vue"
 import AppButton from "@/components/ui/AppButton.vue"
+import bKash from "@/assets/images/logos/b-kash.png"
+import visa from "@/assets/images/logos/visa.png"
+import masterCard from "@/assets/images/logos/master-card.png"
+import indianBank from "@/assets/images/logos/indian-bank.png"
 
 type PaymentMethod = "bank" | "cash"
-type BankLogo = { name: string; fileName: string; src: string }
+type BankLogo = { name: string; src: string }
 
-export const bankLogos: BankLogo[] = [
-  { name: "B kash", fileName: "b-kash" },
-  { name: "Visa", fileName: "visa" },
-  { name: "Master Card", fileName: "master-card" },
-  { name: "Indian Bank", fileName: "indian-bank" },
-].map((logo) => ({
-  ...logo,
-  src: require(`@/assets/images/logos/${logo.fileName}.png`),
-}))
+const bankLogos: BankLogo[] = [
+  { name: "B kash", src: bKash },
+  { name: "Visa", src: visa },
+  { name: "Master Card", src: masterCard },
+  { name: "Indian Bank", src: indianBank },
+]
 
 export default Vue.extend({
   name: "CartSummary",
@@ -105,14 +103,6 @@ export default Vue.extend({
   computed: {
     totalUSD(): number {
       return this.$store.getters["cart/GET_TOTAL_USD"]
-    },
-  },
-  methods: {
-    handlePlaceOrder() {
-      // TODO: to be implemented
-    },
-    applyCoupon() {
-      // TODO: to be implemented
     },
   },
 })

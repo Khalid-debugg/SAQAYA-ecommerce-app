@@ -25,4 +25,21 @@
       color: $color-text-light;
     }
   }
+  &--dark {
+    background-color: $color-text-primary;
+    border: 1px solid $color-dark;
+    color: $color-text-light;
+
+    &:hover {
+      background-color: $color-bg-page;
+      color: $color-text-primary;
+    }
+  }
+
+  &:disabled {
+    background-color: $color-primary-hover;
+    border: 1px solid $color-dark;
+    color: $color-text-light;
+    cursor: none;
+  }
 }

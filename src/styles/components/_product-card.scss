@@ -1,0 +1,137 @@
+.product {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  &__image-container {
+    position: relative;
+    width: 100%;
+    height: 275px;
+    background-color: $color-bg-muted;
+    border-radius: $radius-sm;
+    overflow: hidden;
+
+    &:hover .product__cart-btn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  &__image-link {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
+  &__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: $spacing-lg;
+  }
+
+  &__badges {
+    position: absolute;
+    top: $spacing-md;
+    left: $spacing-md;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  &__badge {
+    color: $color-text-light;
+    font-size: $font-size-xs;
+    padding: $spacing-xs 12px;
+    border-radius: $radius-sm;
+
+    &--discount {
+      background-color: $color-primary;
+    }
+
+    &--new {
+      background-color: $color-success;
+    }
+  }
+
+  &__actions {
+    position: absolute;
+    top: $spacing-md;
+    right: $spacing-md;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    z-index: 1;
+  }
+
+  &__action-btn {
+    @include flex-center;
+    width: $spacing-xl;
+    height: $spacing-xl;
+    border-radius: $radius-full;
+    background-color: $color-bg-page;
+    transition: $transition-fast;
+
+    &:hover {
+      box-shadow: $shadow-hover;
+    }
+  }
+
+  &__cart-btn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: $spacing-sm $spacing-md;
+    width: 100%;
+    border-radius: 0 0 $spacing-sm $spacing-sm;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: $transition-base;
+    z-index: 1;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  &__title {
+    display: block;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+    color: $color-text-primary;
+    @include truncate;
+  }
+
+  &__prices {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    font-weight: $font-weight-medium;
+  }
+
+  &__price {
+    color: $color-primary;
+
+    &--original {
+      color: $color-text-secondary;
+      text-decoration: line-through;
+    }
+  }
+
+  &__ratings {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &__reviews {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+  }
+}
