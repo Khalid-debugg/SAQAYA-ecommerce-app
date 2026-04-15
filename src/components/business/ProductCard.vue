@@ -73,7 +73,11 @@ export default Vue.extend({
   },
   computed: {
     isProductNew(): boolean {
-      return this.product.id % 5 === 0
+      const createdAt = new Date(this.product.meta.createdAt)
+      const now = new Date()
+      const diffInDays =
+        (now.getTime() - createdAt.getTime()) / (1000 * 60 * 60 * 24)
+      return diffInDays >= 0 && diffInDays < 8
     },
     originalPrice(): number {
       return this.product.price / (1 - this.product.discountPercentage / 100)
