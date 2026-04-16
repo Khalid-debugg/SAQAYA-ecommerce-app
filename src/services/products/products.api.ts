@@ -3,10 +3,12 @@ import { axiosInstance } from "@/plugins/axios"
 
 export async function getProducts(
   limit = 0,
-  skip = 0
+  skip = 0,
+  sortBy = "",
+  order = ""
 ): Promise<ProductsPaginated> {
   const response = await axiosInstance.get<ProductsPaginated>(
-    `/products?limit=${limit}&skip=${skip}`
+    `/products?limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`
   )
   return response.data
 }
@@ -26,10 +28,12 @@ export async function getCategories(): Promise<ProductCategory[]> {
 export async function getProductsByCategory(
   category: string,
   limit = 0,
-  skip = 0
+  skip = 0,
+  sortBy = "",
+  order = ""
 ): Promise<ProductsPaginated> {
   const response = await axiosInstance.get<ProductsPaginated>(
-    `/products/category/${category}?limit=${limit}&skip=${skip}`
+    `/products/category/${category}?limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`
   )
   return response.data
 }

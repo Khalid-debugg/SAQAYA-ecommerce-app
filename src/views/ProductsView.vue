@@ -2,10 +2,14 @@
   <div class="products-view container">
     <div class="products-view__header">
       <section-header title="Explore Our Products" />
-      <sort-dropdown v-model="sortKey" :options="sortOptions" />
+      <sort-dropdown
+        v-model="selectedSort"
+        :options="sortOptions"
+        @input="resetAndLoad"
+      />
     </div>
     <products-grid
-      :products="sortedProducts"
+      :products="visibleProducts"
       :can-load-more="canLoadMore"
       :is-loading="isLoading"
       :error="error"
@@ -27,7 +31,12 @@ const INITIAL_FETCH = 24
 const RENDER_LIMIT = 12
 const REFILL_FETCH = INITIAL_FETCH - RENDER_LIMIT
 
-type SortKey = "default" | "price-high" | "price-low" | "discount" | "rating"
+interface SortOption {
+  label: string
+  value: string
+  sortBy: string
+  order: string
+}
 
 export default Vue.extend({
   name: "ProductsView",
@@ -36,15 +45,40 @@ export default Vue.extend({
 
   data() {
     return {
-      sortKey: "default" as SortKey,
+      selectedSort: {
+        label: "Default",
+        value: "default",
+        sortBy: "",
+        order: "",
+      } as SortOption,
       fetchSkip: INITIAL_FETCH,
       sortOptions: [
-        { label: "Default", value: "default" },
-        { label: "Highest Rating", value: "rating" },
-        { label: "Price: High to Low", value: "price-high" },
-        { label: "Price: Low to High", value: "price-low" },
-        { label: "Discount Percentage", value: "discount" },
-      ],
+        { label: "Default", value: "default", sortBy: "", order: "" },
+        {
+          label: "Highest Rating",
+          value: "rating",
+          sortBy: "rating",
+          order: "desc",
+        },
+        {
+          label: "Price: High to Low",
+          value: "price-high",
+          sortBy: "price",
+          order: "desc",
+        },
+        {
+          label: "Price: Low to High",
+          value: "price-low",
+          sortBy: "price",
+          order: "asc",
+        },
+        {
+          label: "Discount Percentage",
+          value: "discount",
+          sortBy: "discountPercentage",
+          order: "desc",
+        },
+      ] as SortOption[],
     }
   },
 
@@ -54,6 +88,7 @@ export default Vue.extend({
       "totalProducts",
       "visibleCount",
       "currentCategory",
+      "currentSort",
     ]),
 
     category(): string {
@@ -76,27 +111,27 @@ export default Vue.extend({
       return this.productsList.slice(0, this.visibleCount)
     },
 
-    sortedProducts(): Product[] {
-      const list = [...this.visibleProducts]
-      switch (this.sortKey) {
-        case "price-high":
-          return list.sort((a, b) => b.price - a.price)
-        case "price-low":
-          return list.sort((a, b) => a.price - b.price)
-        case "discount":
-          return list.sort(
-            (a, b) => b.discountPercentage - a.discountPercentage
-          )
-        case "rating":
-          return list.sort((a, b) => b.rating - a.rating)
-        default:
-          return list
-      }
+    isSameRequest(): boolean {
+      return (
+        this.productsList.length > 0 &&
+        this.currentCategory === this.category &&
+        this.currentSort.sortBy === this.selectedSort.sortBy &&
+        this.currentSort.order === this.selectedSort.order
+      )
     },
   },
 
   mounted() {
-    if (this.productsList.length && this.currentCategory === this.category) {
+    const matched = this.sortOptions.find(
+      (o) =>
+        o.sortBy === this.currentSort.sortBy &&
+        o.order === this.currentSort.order
+    )
+    if (matched) {
+      this.selectedSort = matched
+    }
+
+    if (this.isSameRequest) {
       this.fetchSkip = this.productsList.length
     } else {
       this.resetAndLoad()
@@ -109,6 +144,10 @@ export default Vue.extend({
       this.$store.commit("products/SET_PRODUCTS_LIST", [])
       this.$store.commit("products/SET_VISIBLE_COUNT", RENDER_LIMIT)
       this.$store.commit("products/SET_CURRENT_CATEGORY", this.category)
+      this.$store.commit("products/SET_CURRENT_SORT", {
+        sortBy: this.selectedSort.sortBy,
+        order: this.selectedSort.order,
+      })
       this.fetchProducts(0, INITIAL_FETCH)
     },
 
@@ -124,14 +163,19 @@ export default Vue.extend({
     },
 
     fetchProducts(skip: number, limit: number) {
+      const params = {
+        limit,
+        skip,
+        sortBy: this.selectedSort.sortBy,
+        order: this.selectedSort.order,
+      }
       if (this.category) {
         this.$store.dispatch("products/fetchProductsByCategory", {
           category: this.category,
-          limit,
-          skip,
+          ...params,
         })
       } else {
-        this.$store.dispatch("products/fetchProducts", { limit, skip })
+        this.$store.dispatch("products/fetchProducts", params)
       }
     },
   },
