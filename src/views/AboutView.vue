@@ -47,11 +47,15 @@ export default Vue.extend({
   data() {
     return {
       stats: [
-        { icon: "search", value: "10.5k", label: "Sallers active our site" },
-        { icon: "cart", value: "33k", label: "Monthly Product Sale" },
-        { icon: "heart", value: "45.5k", label: "Customer active in our site" },
+        { icon: "shop", value: "10.5k", label: "Sallers active our site" },
+        { icon: "sale", value: "33k", label: "Monthly Product Sale" },
         {
-          icon: "return",
+          icon: "shopping-bag",
+          value: "45.5k",
+          label: "Customer active in our site",
+        },
+        {
+          icon: "money-bag",
           value: "25k",
           label: "Annual gross sale in our site",
         },

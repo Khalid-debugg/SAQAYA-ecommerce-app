@@ -17,8 +17,9 @@
     </div>
     <div class="about-hero__image">
       <img
-        src="@/assets/images/about/about-hero.jpg"
+        src="@/assets/images/about/about-hero.webp"
         alt="two girls standing next to each other"
+        loading="eager"
       />
     </div>
   </div>
