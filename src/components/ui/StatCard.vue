@@ -2,11 +2,11 @@
   <div class="service-card stat-card">
     <div class="service-card__icon-wrapper">
       <div class="service-card__icon-inner">
-        <app-icon :name="icon" :size="32" />
+        <app-icon :name="icon" :size="40" />
       </div>
     </div>
     <span class="stat-card__value">{{ value }}</span>
-    <span>{{ label }}</span>
+    <span class="stat-card__label">{{ label }}</span>
   </div>
 </template>
 
