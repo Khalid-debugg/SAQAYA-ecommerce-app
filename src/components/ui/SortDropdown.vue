@@ -3,7 +3,7 @@
     <div class="sort-dropdown__wrapper">
       <span class="sort-dropdown__label">Sort by</span>
       <button class="sort-dropdown__trigger" @click="toggleDropdown">
-        <span>{{ value.label }}</span>
+        <span class="sort-dropdown__trigger-label">{{ value.label }}</span>
         <app-icon name="arrow-down" :size="16" />
       </button>
     </div>

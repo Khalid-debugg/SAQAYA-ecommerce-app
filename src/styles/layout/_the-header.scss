@@ -23,31 +23,31 @@
     align-items: center;
     gap: $spacing-xl;
 
-    a {
-      font-size: $font-size-sm;
-      color: $color-text-primary;
-      position: relative;
-      padding-bottom: $spacing-xs;
-
-      &::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 0;
-        height: 1px;
-        background-color: $color-text-primary;
-        transition: width 0.15s ease;
-      }
-
-      &:hover::after,
-      &.router-link-exact-active::after {
-        width: 100%;
-      }
-    }
-
     @include respond-to("md") {
       display: none;
+    }
+  }
+
+  &__link {
+    font-size: $font-size-sm;
+    color: $color-text-primary;
+    position: relative;
+    padding-bottom: $spacing-xs;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background-color: $color-text-primary;
+      transition: width 0.15s ease;
+    }
+
+    &:hover::after,
+    &.router-link-exact-active::after {
+      width: 100%;
     }
   }
 
@@ -70,10 +70,11 @@
     border-radius: $radius-sm;
     background-color: $color-bg-muted;
     padding: $spacing-sm $spacing-md;
-    input {
-      font-size: $font-size-xs;
-      padding: 0;
-    }
+  }
+
+  &__search-input {
+    font-size: $font-size-xs;
+    padding: 0;
   }
 
   &__cart {
@@ -116,17 +117,17 @@
     flex-direction: column;
     align-items: center;
     gap: $spacing-xl;
+  }
 
-    a {
-      font-size: $font-size-xl;
-      font-weight: $font-weight-medium;
-      color: $color-text-primary;
-      transition: $transition-fast;
+  &__link {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-medium;
+    color: $color-text-primary;
+    transition: $transition-fast;
 
-      &:hover,
-      &.router-link-exact-active {
-        color: $color-primary;
-      }
+    &:hover,
+    &.router-link-exact-active {
+      color: $color-primary;
     }
   }
 

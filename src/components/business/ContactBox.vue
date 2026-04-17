@@ -1,7 +1,7 @@
 <template>
   <div class="contact-box">
     <div class="contact-box__title">
-      <app-icon :name="icon" :size="40" />
+      <app-icon :name="icon" :size="40" class="contact-box__icon" />
       <p>{{ title }}</p>
     </div>
     <p class="contact-box__description">{{ description }}</p>

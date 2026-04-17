@@ -6,16 +6,17 @@
           <router-link to="/" class="the-footer__logo">Exclusive</router-link>
           <h3 class="the-footer__heading">Subscribe</h3>
           <p class="the-footer__text">Get 10% off your first order</p>
-          <form class="the-footer__subscribe">
+          <div class="the-footer__subscribe">
             <input
               v-model="email"
               type="email"
               placeholder="Enter your email"
+              class="the-footer__subscribe-input"
             />
-            <button type="submit">
+            <button type="button" class="the-footer__subscribe-btn">
               <app-icon name="send" />
             </button>
-          </form>
+          </div>
         </div>
 
         <div class="the-footer__col">
@@ -139,14 +140,8 @@ export default Vue.extend({
       ],
 
       appBadges: [
-        {
-          src: googlePlay,
-          alt: "Google Play Badge",
-        },
-        {
-          src: appStore,
-          alt: "App Store Badge",
-        },
+        { src: googlePlay, alt: "Google Play Badge" },
+        { src: appStore, alt: "App Store Badge" },
       ],
 
       socials: ["facebook", "twitter", "instagram", "linkedin"],

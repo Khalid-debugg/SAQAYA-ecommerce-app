@@ -1,7 +1,7 @@
 <template>
   <div class="team-card">
     <div class="team-card__photo">
-      <img :src="photo" :alt="name" />
+      <img :src="photo" :alt="name" class="team-card__photo-image" />
     </div>
     <div class="team-card__info">
       <h3 class="team-card__name">{{ name }}</h3>

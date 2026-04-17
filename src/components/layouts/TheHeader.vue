@@ -6,7 +6,9 @@
 
         <ul class="the-header__links">
           <li v-for="link in navLinks" :key="link.to">
-            <router-link :to="link.to">{{ link.label }}</router-link>
+            <router-link :to="link.to" class="the-header__link">{{
+              link.label
+            }}</router-link>
           </li>
         </ul>
 
@@ -15,6 +17,7 @@
             <app-input
               v-model="searchQuery"
               placeholder="What are you looking for?"
+              class="the-header__search-input"
             />
             <button type="submit">
               <app-icon name="search" :size="16" />
@@ -43,6 +46,7 @@
         <app-input
           v-model="searchQuery"
           placeholder="What are you looking for?"
+          class="the-header__search-input"
         />
         <button type="submit">
           <app-icon name="search" :size="16" />
@@ -51,7 +55,11 @@
 
       <ul class="nav-menu__links">
         <li v-for="link in navLinks" :key="link.to">
-          <router-link :to="link.to" @click.native="toggleMenu">
+          <router-link
+            :to="link.to"
+            class="nav-menu__link"
+            @click.native="toggleMenu"
+          >
             {{ link.label }}
           </router-link>
         </li>
@@ -87,6 +95,12 @@ export default Vue.extend({
     }
   },
 
+  computed: {
+    cartCount(): number {
+      return this.$store.getters["cart/GET_ITEMS_COUNT"]
+    },
+  },
+
   methods: {
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen
@@ -94,11 +108,6 @@ export default Vue.extend({
     openCart() {
       this.isMenuOpen = false
       this.$emit("open-cart")
-    },
-  },
-  computed: {
-    cartCount(): number {
-      return this.$store.getters["cart/GET_ITEMS_COUNT"]
     },
   },
 })
