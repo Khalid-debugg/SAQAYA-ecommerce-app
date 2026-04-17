@@ -17,7 +17,6 @@
             <app-input
               v-model="searchQuery"
               placeholder="What are you looking for?"
-              class="the-header__search-input"
             />
             <button type="submit">
               <app-icon name="search" :size="16" />
@@ -46,7 +45,6 @@
         <app-input
           v-model="searchQuery"
           placeholder="What are you looking for?"
-          class="the-header__search-input"
         />
         <button type="submit">
           <app-icon name="search" :size="16" />
