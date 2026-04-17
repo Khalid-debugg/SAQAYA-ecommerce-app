@@ -8,9 +8,12 @@
       @prev="prev"
       @next="next"
     />
-    <app-skeleton v-if="isLoadingHome" />
-    <app-error v-else-if="error" :message="error" @retry="retry" />
-    <div v-else class="flash-sale__grid">
+    <async-list
+      :is-loading="isLoading"
+      :error="error"
+      :is-empty="!products.length"
+      @retry="retry"
+    >
       <transition-group name="slide" tag="div" class="flash-sale__inner">
         <product-card
           v-for="product in paginatedItems"
@@ -19,7 +22,7 @@
           @add-to-cart="addToCart"
         />
       </transition-group>
-    </div>
+    </async-list>
     <div class="home__footer">
       <app-button modifier="primary" @click.native="viewAll">
         View All Products
@@ -36,12 +39,11 @@ import { paginationMixin } from "@/mixins/pagination"
 import ProductCard from "@/components/business/ProductCard.vue"
 import SectionHeader from "@/components/ui/SectionHeader.vue"
 import AppButton from "@/components/ui/AppButton.vue"
-import AppSkeleton from "@/components/ui/AppSkeleton.vue"
-import AppError from "@/components/ui/AppError.vue"
+import AsyncList from "@/components/ui/AsyncList.vue"
 
 export default Vue.extend({
   name: "FlashSale",
-  components: { ProductCard, SectionHeader, AppButton, AppSkeleton, AppError },
+  components: { ProductCard, SectionHeader, AppButton, AsyncList },
   mixins: [paginationMixin],
   props: {
     products: {

@@ -8,16 +8,21 @@
       @prev="prev"
       @next="next"
     />
-    <app-skeleton v-if="isLoadingHome" />
-    <app-error v-else-if="error" :message="error" @retry="retry" />
-    <transition-group v-else name="slide" tag="div" class="explore__grid">
-      <product-card
-        v-for="product in paginatedItems"
-        :key="product.id"
-        :product="product"
-        @add-to-cart="addToCart"
-      />
-    </transition-group>
+    <async-list
+      :is-loading="isLoading"
+      :error="error"
+      :is-empty="!products.length"
+      @retry="retry"
+    >
+      <transition-group name="slide" tag="div" class="explore__grid">
+        <product-card
+          v-for="product in paginatedItems"
+          :key="product.id"
+          :product="product"
+          @add-to-cart="addToCart"
+        />
+      </transition-group>
+    </async-list>
     <div class="home__footer">
       <app-button modifier="primary" @click.native="viewAllProducts">
         View All Products
@@ -34,12 +39,11 @@ import { paginationMixin } from "@/mixins/pagination"
 import ProductCard from "@/components/business/ProductCard.vue"
 import SectionHeader from "@/components/ui/SectionHeader.vue"
 import AppButton from "@/components/ui/AppButton.vue"
-import AppSkeleton from "@/components/ui/AppSkeleton.vue"
-import AppError from "@/components/ui/AppError.vue"
+import AsyncList from "@/components/ui/AsyncList.vue"
 
 export default Vue.extend({
   name: "ExploreProducts",
-  components: { ProductCard, SectionHeader, AppButton, AppSkeleton, AppError },
+  components: { ProductCard, SectionHeader, AppButton, AsyncList },
   mixins: [paginationMixin],
   props: {
     products: {

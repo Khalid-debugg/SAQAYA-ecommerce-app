@@ -10,6 +10,13 @@
 
     <div class="product-details__related">
       <section-header label="More of this category" />
+      <async-list
+        :is-loading="isLoading"
+        :error="error"
+        :is-empty="!relatedProducts.length"
+        empty-message="No related products found."
+        @retry="fetchRelated"
+      >
       <div class="product-details__related-grid">
         <product-card
           v-for="product in productsList"
@@ -18,6 +25,7 @@
           @add-to-cart="addToCart"
         />
       </div>
+      </async-list>
     </div>
   </div>
 </template>
@@ -31,13 +39,28 @@ import ProductGallery from "@/components/business/ProductGallery.vue"
 import ProductInfo from "@/components/business/ProductInfo.vue"
 import ProductCard from "@/components/business/ProductCard.vue"
 import SectionHeader from "@/components/ui/SectionHeader.vue"
+import AsyncList from "@/components/ui/AsyncList.vue"
 
 export default Vue.extend({
   name: "ProductDetailsView",
-  components: { ProductGallery, ProductInfo, ProductCard, SectionHeader },
+  components: {
+    ProductGallery,
+    ProductInfo,
+    ProductCard,
+    SectionHeader,
+    AsyncList,
+  },
 
   computed: {
     ...mapState("products", ["selectedProduct", "productsList"]),
+
+    isLoading(): boolean {
+      return this.$store.getters["ui/IS_LOADING"]("fetchProductsByCategory")
+    },
+
+    error(): string | null {
+      return this.$store.getters["ui/GET_ERROR"]("fetchProductsByCategory")
+    },
   },
 
   mounted() {

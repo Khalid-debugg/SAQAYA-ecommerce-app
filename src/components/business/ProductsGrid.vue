@@ -1,20 +1,21 @@
 <template>
   <div class="products-grid">
-    <app-skeleton v-if="isLoading && !products.length" />
-    <app-error
-      v-else-if="error && !products.length"
-      :message="error"
-      @retry="retry"
-    />
-    <p v-else-if="!products.length">No products to show</p>
-    <div v-else class="products-grid__inner">
-      <product-card
-        v-for="product in products"
-        :key="product.id"
-        :product="product"
-        @add-to-cart="addToCart"
-      />
-    </div>
+    <async-list
+      :is-loading="isLoading && !products.length"
+      :error="error && !products.length ? error : null"
+      :is-empty="!isLoading && !error && !products.length"
+      empty-message="No products to show."
+      @retry="$emit('retry')"
+    >
+      <div class="products-grid__inner">
+        <product-card
+          v-for="product in products"
+          :key="product.id"
+          :product="product"
+          @add-to-cart="addToCart"
+        />
+      </div>
+    </async-list>
 
     <div v-if="canLoadMore" class="products-grid__footer">
       <app-button :disabled="isLoading" @click.native="loadMore">
@@ -30,13 +31,12 @@ import { Product } from "@/types/product"
 import { CartItem } from "@/types/cart"
 import ProductCard from "@/components/business/ProductCard.vue"
 import AppButton from "@/components/ui/AppButton.vue"
-import AppSkeleton from "@/components/ui/AppSkeleton.vue"
-import AppError from "@/components/ui/AppError.vue"
+import AsyncList from "@/components/ui/AsyncList.vue"
 
 export default Vue.extend({
   name: "ProductsGrid",
 
-  components: { ProductCard, AppButton, AppSkeleton, AppError },
+  components: { ProductCard, AppButton, AsyncList },
 
   props: {
     products: {
