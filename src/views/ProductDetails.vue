@@ -17,14 +17,14 @@
         empty-message="No related products found."
         @retry="fetchRelated"
       >
-      <div class="product-details__related-grid">
-        <product-card
-          v-for="product in productsList"
-          :key="product.id"
-          :product="product"
-          @add-to-cart="addToCart"
-        />
-      </div>
+        <div class="product-details__related-grid">
+          <product-card
+            v-for="product in relatedProducts"
+            :key="product.id"
+            :product="product"
+            @add-to-cart="addToCart"
+          />
+        </div>
       </async-list>
     </div>
   </div>
@@ -54,6 +54,12 @@ export default Vue.extend({
   computed: {
     ...mapState("products", ["selectedProduct", "productsList"]),
 
+    relatedProducts(): Product[] {
+      return this.productsList
+        .filter((p: Product) => p.id !== this.selectedProduct.id)
+        .slice(0, 4)
+    },
+
     isLoading(): boolean {
       return this.$store.getters["ui/IS_LOADING"]("fetchProductsByCategory")
     },
@@ -63,16 +69,30 @@ export default Vue.extend({
     },
   },
 
+  watch: {
+    "$route.params.id"(newId) {
+      this.$store.dispatch("products/fetchProductById", { id: Number(newId) })
+    },
+  },
+
   mounted() {
-    this.$store.commit("products/SET_PRODUCTS_LIST", [])
-    this.$store.dispatch("products/fetchProductsByCategory", {
-      category: this.selectedProduct.category,
-      limit: 4,
-      skip: 0,
-    })
+    this.fetchRelated()
   },
 
   methods: {
+    fetchRelated() {
+      this.$store.commit("products/SET_PRODUCTS_LIST", [])
+      this.$store.commit(
+        "products/SET_CURRENT_CATEGORY",
+        this.selectedProduct.category
+      )
+      this.$store.dispatch("products/fetchProductsByCategory", {
+        category: this.selectedProduct.category,
+        limit: 5,
+        skip: 0,
+      })
+    },
+
     addToCart(product: Product) {
       const cartItem: CartItem = { product, quantity: 1 }
       this.$store.commit("cart/ADD_TO_CART", cartItem)
