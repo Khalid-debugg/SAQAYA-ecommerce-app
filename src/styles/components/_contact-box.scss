@@ -11,11 +11,12 @@
     margin-bottom: $spacing-sm;
   }
 
+  &__icon {
+    color: $color-primary;
+  }
+
   &__description {
     font-size: $font-size-sm;
     max-width: 70%;
-  }
-  svg {
-    color: $color-primary;
   }
 }

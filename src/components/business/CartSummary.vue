@@ -27,8 +27,9 @@
               name="paymentMethod"
               value="bank"
               id="bank"
+              class="cart-summary__radio-input"
             />
-            <label for="bank">Bank</label>
+            <label for="bank" class="cart-summary__radio-label">Bank</label>
           </div>
           <div class="cart-summary__bank-logos">
             <img
@@ -36,6 +37,7 @@
               :key="logo.name"
               :src="logo.src"
               :alt="logo.name"
+              class="cart-summary__bank-logo"
             />
           </div>
         </div>
@@ -47,8 +49,11 @@
               name="paymentMethod"
               value="cash"
               id="cash"
+              class="cart-summary__radio-input"
             />
-            <label for="cash">Cash on delivery</label>
+            <label for="cash" class="cart-summary__radio-label"
+              >Cash on delivery</label
+            >
           </div>
         </div>
       </div>

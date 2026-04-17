@@ -108,13 +108,14 @@
         transform: translateX($spacing-xs);
       }
     }
+  }
 
-    span {
-      border-bottom: 1px solid $color-text-light;
-      padding-bottom: 3px;
-      &:hover {
-        border-color: $color-primary;
-      }
+  &__cta-label {
+    border-bottom: 1px solid $color-text-light;
+    padding-bottom: 3px;
+
+    &:hover {
+      border-color: $color-primary;
     }
   }
 

@@ -9,5 +9,6 @@ export const productsState = (): ProductsState => {
     totalProducts: 0,
     visibleCount: 0,
     currentCategory: "",
+    currentSort: { sortBy: "", order: "" },
   }
 }

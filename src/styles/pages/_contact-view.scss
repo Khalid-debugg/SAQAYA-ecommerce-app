@@ -11,13 +11,13 @@
   &__image {
     flex: 3;
     min-width: 300px;
+  }
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: $radius-sm;
-    }
+  &__image-src {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: $radius-sm;
   }
 
   &__right {

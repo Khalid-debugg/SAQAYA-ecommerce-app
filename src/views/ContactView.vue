@@ -2,7 +2,11 @@
   <div class="contact">
     <div class="container contact__flex">
       <div class="contact__image">
-        <img src="@/assets/images/contact/contact-us.jpg" alt="Contact us" />
+        <img
+          src="@/assets/images/contact/contact-us.jpg"
+          alt="Contact us"
+          class="contact__image-src"
+        />
       </div>
       <div class="contact__right">
         <div class="contact__box">

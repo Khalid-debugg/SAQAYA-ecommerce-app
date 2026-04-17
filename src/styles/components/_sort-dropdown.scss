@@ -28,9 +28,10 @@
     padding: $spacing-sm $spacing-md;
     cursor: pointer;
     transition: $transition-fast;
-    span {
-      @include truncate;
-    }
+  }
+
+  &__trigger-label {
+    @include truncate;
   }
 
   &__menu {

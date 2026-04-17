@@ -1,12 +1,12 @@
 import Vue, { CreateElement } from "vue"
 import VueRouter, { RouteConfig } from "vue-router"
+import { Store } from "vuex"
 import { productDetailsGuard } from "./guards"
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    name: "default-layout",
     component: () =>
       import(
         /* webpackChunkName: "default-layout" */ "@/layouts/DefaultLayout.vue"
@@ -34,7 +34,6 @@ const routes: Array<RouteConfig> = [
       },
       {
         path: "products",
-        name: "products",
         meta: { breadcrumb: "Products" },
         component: { render: (h: CreateElement) => h("router-view") },
         children: [
@@ -49,10 +48,13 @@ const routes: Array<RouteConfig> = [
           {
             path: ":id",
             name: "product-details",
-            meta: { breadcrumb: null },
+            meta: {
+              breadcrumb: (store: Store<unknown>) =>
+                store.getters["products/selectedProductTitle"],
+            },
             component: () =>
               import(
-                /* webpackChunkName: "product-details" */ "@/views/ProductDetailsView.vue"
+                /* webpackChunkName: "product-details" */ "@/views/ProductDetails.vue"
               ),
             beforeEnter: productDetailsGuard,
           },
@@ -63,9 +65,7 @@ const routes: Array<RouteConfig> = [
         name: "not-found",
         meta: { breadcrumb: "404 Error" },
         component: () =>
-          import(
-            /* webpackChunkName: "not-found" */ "@/views/NotFoundView.vue"
-          ),
+          import(/* webpackChunkName: "not-found" */ "@/views/404View.vue"),
       },
     ],
   },
@@ -75,6 +75,9 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+  scrollBehavior() {
+    return { x: 0, y: 0 }
+  },
 })
 
 export default router

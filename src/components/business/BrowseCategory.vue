@@ -8,20 +8,20 @@
       @prev="prev"
       @next="next"
     />
-    <app-skeleton v-if="isLoadingCategories" />
-    <app-error v-else-if="error" :message="error" @retry="retry" />
-    <transition-group
-      v-else
-      name="slide"
-      tag="div"
-      class="browse-category__grid"
+    <async-list
+      :is-loading="isLoading"
+      :error="error"
+      :is-empty="!categories.length"
+      @retry="retry"
     >
-      <category-card
-        v-for="category in paginatedItems"
-        :key="category.slug"
-        :category="category"
-      />
-    </transition-group>
+      <transition-group name="slide" tag="div" class="browse-category__grid">
+        <category-card
+          v-for="category in paginatedItems"
+          :key="category.slug"
+          :category="category"
+        />
+      </transition-group>
+    </async-list>
   </div>
 </template>
 
@@ -31,12 +31,11 @@ import { ProductCategory } from "@/types/product"
 import { paginationMixin } from "@/mixins/pagination"
 import CategoryCard from "@/components/business/CategoryCard.vue"
 import SectionHeader from "@/components/ui/SectionHeader.vue"
-import AppSkeleton from "@/components/ui/AppSkeleton.vue"
-import AppError from "@/components/ui/AppError.vue"
+import AsyncList from "@/components/ui/AsyncList.vue"
 
 export default Vue.extend({
-  name: "BrowseByCategory",
-  components: { CategoryCard, SectionHeader, AppSkeleton, AppError },
+  name: "BrowseCategory",
+  components: { CategoryCard, SectionHeader, AsyncList },
   mixins: [paginationMixin],
   props: {
     categories: {
@@ -53,11 +52,11 @@ export default Vue.extend({
     items(): ProductCategory[] {
       return this.categories
     },
-    isLoadingCategories(): boolean {
+    isLoading(): boolean {
       return this.$store.getters["ui/IS_LOADING"]("fetchProductCategories")
     },
     error(): string | null {
-      return this.$store.getters["ui/GET_ERROR"]("fetchHomeProducts")
+      return this.$store.getters["ui/GET_ERROR"]("fetchProductCategories")
     },
   },
   methods: {

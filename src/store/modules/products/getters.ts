@@ -7,4 +7,8 @@ export const productsGetters = {
       return b.discountPercentage - a.discountPercentage
     })
   },
+
+  selectedProductTitle(state: ProductsState): string {
+    return state.selectedProduct?.title ?? ""
+  },
 }

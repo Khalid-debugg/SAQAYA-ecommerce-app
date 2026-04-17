@@ -5,6 +5,13 @@ interface Review {
   reviewerName: string
   reviewerEmail: string
 }
+interface ProductMeta {
+  createdAt: string
+  updatedAt: string
+  barcode: string
+  qrCode: string
+}
+
 export interface Product {
   id: number
   title: string
@@ -17,6 +24,7 @@ export interface Product {
   images: string[]
   thumbnail: string
   reviews: Review[]
+  meta: ProductMeta
 }
 
 export interface ProductCategory {
