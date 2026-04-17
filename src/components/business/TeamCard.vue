@@ -1,18 +1,18 @@
 <template>
-  <div class="team-member-card">
-    <div class="team-member-card__photo">
+  <div class="team-card">
+    <div class="team-card__photo">
       <img :src="photo" :alt="name" />
     </div>
-    <div class="team-member-card__info">
-      <h3 class="team-member-card__name">{{ name }}</h3>
+    <div class="team-card__info">
+      <h3 class="team-card__name">{{ name }}</h3>
       <p>{{ role }}</p>
-      <div class="team-member-card__socials">
+      <div class="team-card__socials">
         <app-icon
           v-for="social in socials"
           :key="social"
           :name="social"
           :size="20"
-          class="team-member-card__social"
+          class="team-card__social"
         />
       </div>
     </div>
@@ -24,7 +24,7 @@ import Vue from "vue"
 import AppIcon from "@/components/ui/AppIcon.vue"
 
 export default Vue.extend({
-  name: "TeamMemberCard",
+  name: "TeamCard",
   components: { AppIcon },
   props: {
     name: {

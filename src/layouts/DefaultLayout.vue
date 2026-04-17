@@ -1,11 +1,11 @@
 <template>
   <div class="page-layout">
-    <Header @open-cart="isCartOpen = true" />
+    <the-header @open-cart="isCartOpen = true" />
     <main class="page-layout__main">
       <app-breadcrumb />
       <router-view />
     </main>
-    <Footer @open-cart="isCartOpen = true" />
+    <the-footer @open-cart="isCartOpen = true" />
     <app-drawer
       title="Shopping Cart"
       :isOpen="isCartOpen"
@@ -17,14 +17,14 @@
 </template>
 
 <script>
-import Header from "@/components/layouts/Header.vue"
-import Footer from "@/components/layouts/Footer.vue"
+import TheHeader from "@/components/layouts/TheHeader.vue"
+import TheFooter from "@/components/layouts/TheFooter.vue"
 import CartView from "@/views/CartView.vue"
 import AppDrawer from "@/components/layouts/AppDrawer.vue"
 import AppBreadcrumb from "@/components/ui/AppBreadcrumb.vue"
 
 export default {
-  components: { Header, Footer, CartView, AppDrawer, AppBreadcrumb },
+  components: { TheHeader, TheFooter, CartView, AppDrawer, AppBreadcrumb },
 
   data() {
     return {

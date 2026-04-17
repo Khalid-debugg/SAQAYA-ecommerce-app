@@ -52,7 +52,7 @@ const routes: Array<RouteConfig> = [
             meta: { breadcrumb: null },
             component: () =>
               import(
-                /* webpackChunkName: "product-details" */ "@/views/ProductDetailsView.vue"
+                /* webpackChunkName: "product-details" */ "@/views/ProductDetails.vue"
               ),
             beforeEnter: productDetailsGuard,
           },
@@ -63,9 +63,7 @@ const routes: Array<RouteConfig> = [
         name: "not-found",
         meta: { breadcrumb: "404 Error" },
         component: () =>
-          import(
-            /* webpackChunkName: "not-found" */ "@/views/NotFoundView.vue"
-          ),
+          import(/* webpackChunkName: "not-found" */ "@/views/404View.vue"),
       },
     ],
   },

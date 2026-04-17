@@ -4,7 +4,7 @@
     <div class="home__divider" />
     <flash-sale :products="flashSaleProducts" />
     <div class="home__divider" />
-    <browse-by-category :categories="productCategories" />
+    <browse-category :categories="productCategories" />
     <div class="home__divider" />
     <explore-products :products="homeProducts" />
     <services-section :services="services" />
@@ -15,7 +15,7 @@
 import Vue from "vue"
 import { mapGetters, mapState } from "vuex"
 import FlashSale from "@/components/business/FlashSale.vue"
-import BrowseByCategory from "@/components/business/BrowseByCategory.vue"
+import BrowseCategory from "@/components/business/BrowseCategory.vue"
 import ExploreProducts from "@/components/business/ExploreProducts.vue"
 import HeroBanner from "@/components/ui/HeroBanner.vue"
 import ServicesSection from "@/components/business/ServicesSection.vue"
@@ -79,7 +79,7 @@ export default Vue.extend({
   },
   components: {
     FlashSale,
-    BrowseByCategory,
+    BrowseCategory,
     ExploreProducts,
     HeroBanner,
     ServicesSection,

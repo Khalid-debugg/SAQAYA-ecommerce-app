@@ -35,7 +35,7 @@ import AppSkeleton from "@/components/ui/AppSkeleton.vue"
 import AppError from "@/components/ui/AppError.vue"
 
 export default Vue.extend({
-  name: "BrowseByCategory",
+  name: "BrowseCategory",
   components: { CategoryCard, SectionHeader, AppSkeleton, AppError },
   mixins: [paginationMixin],
   props: {

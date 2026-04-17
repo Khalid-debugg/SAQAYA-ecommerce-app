@@ -25,7 +25,7 @@ import Vue from "vue"
 const THUMBNAIL_COUNT = 4
 
 export default Vue.extend({
-  name: "ProductImageGallery",
+  name: "ProductGallery",
   props: {
     images: { type: Array as () => string[], required: true },
     alt: { type: String, default: "" },

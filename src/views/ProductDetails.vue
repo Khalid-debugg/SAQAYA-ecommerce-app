@@ -1,7 +1,7 @@
 <template>
   <div class="product-details container">
     <div class="product-details__layout">
-      <product-image-gallery
+      <product-gallery
         :images="selectedProduct.images"
         :alt="selectedProduct.title"
       />
@@ -27,14 +27,14 @@ import Vue from "vue"
 import { mapState } from "vuex"
 import { Product } from "@/types/product"
 import { CartItem } from "@/types/cart"
-import ProductImageGallery from "@/components/business/ProductImageGallery.vue"
+import ProductGallery from "@/components/business/ProductGallery.vue"
 import ProductInfo from "@/components/business/ProductInfo.vue"
 import ProductCard from "@/components/business/ProductCard.vue"
 import SectionHeader from "@/components/ui/SectionHeader.vue"
 
 export default Vue.extend({
   name: "ProductDetailsView",
-  components: { ProductImageGallery, ProductInfo, ProductCard, SectionHeader },
+  components: { ProductGallery, ProductInfo, ProductCard, SectionHeader },
 
   computed: {
     ...mapState("products", ["selectedProduct", "productsList"]),
