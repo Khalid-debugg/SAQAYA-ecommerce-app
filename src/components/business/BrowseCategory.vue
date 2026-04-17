@@ -52,7 +52,7 @@ export default Vue.extend({
     items(): ProductCategory[] {
       return this.categories
     },
-    isLoadingCategories(): boolean {
+    isLoading(): boolean {
       return this.$store.getters["ui/IS_LOADING"]("fetchProductCategories")
     },
     error(): string | null {

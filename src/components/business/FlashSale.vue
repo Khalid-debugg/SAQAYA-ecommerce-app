@@ -60,7 +60,7 @@ export default Vue.extend({
     items(): Product[] {
       return this.products
     },
-    isLoadingHome(): boolean {
+    isLoading(): boolean {
       return this.$store.getters["ui/IS_LOADING"]("fetchHomeProducts")
     },
     error(): string | null {
