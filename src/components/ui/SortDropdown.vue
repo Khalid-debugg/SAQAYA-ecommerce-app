@@ -3,7 +3,7 @@
     <div class="sort-dropdown__wrapper">
       <span class="sort-dropdown__label">Sort by</span>
       <button class="sort-dropdown__trigger" @click="toggleDropdown">
-        <span>{{ selectedLabel }}</span>
+        <span class="sort-dropdown__trigger-label">{{ value.label }}</span>
         <app-icon name="arrow-down" :size="16" />
       </button>
     </div>
@@ -12,8 +12,8 @@
         v-for="option in options"
         :key="option.value"
         class="sort-dropdown__item"
-        :class="{ 'sort-dropdown__item--active': value === option.value }"
-        @click="select(option.value)"
+        :class="{ 'sort-dropdown__item--active': value.value === option.value }"
+        @click="select(option)"
       >
         {{ option.label }}
       </li>
@@ -28,6 +28,8 @@ import AppIcon from "@/components/ui/AppIcon.vue"
 interface SortOption {
   label: string
   value: string
+  sortBy: string
+  order: string
 }
 
 export default Vue.extend({
@@ -37,7 +39,7 @@ export default Vue.extend({
 
   props: {
     value: {
-      type: String,
+      type: Object as PropType<SortOption>,
       required: true,
     },
     options: {
@@ -52,20 +54,13 @@ export default Vue.extend({
     }
   },
 
-  computed: {
-    selectedLabel(): string {
-      const selected = this.options.find((o) => o.value === this.value)
-      return selected ? selected.label : ""
-    },
-  },
-
   methods: {
     toggleDropdown() {
       this.isOpen = !this.isOpen
     },
 
-    select(value: string) {
-      this.$emit("input", value)
+    select(option: SortOption) {
+      this.$emit("input", option)
       this.isOpen = false
     },
   },

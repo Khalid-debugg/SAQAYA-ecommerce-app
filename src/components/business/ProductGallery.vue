@@ -10,11 +10,19 @@
         }"
         @click="selectedIndex = index"
       >
-        <img :src="img" :alt="`Product thumbnail ${index + 1}`" />
+        <img
+          :src="img"
+          :alt="`Product thumbnail ${index + 1}`"
+          class="product-gallery__thumbnail-image"
+        />
       </button>
     </div>
     <div class="product-gallery__main">
-      <img :src="displayImages[selectedIndex]" :alt="alt" />
+      <img
+        :src="displayImages[selectedIndex]"
+        :alt="alt"
+        class="product-gallery__main-image"
+      />
     </div>
   </div>
 </template>
@@ -25,7 +33,7 @@ import Vue from "vue"
 const THUMBNAIL_COUNT = 4
 
 export default Vue.extend({
-  name: "ProductImageGallery",
+  name: "ProductGallery",
   props: {
     images: { type: Array as () => string[], required: true },
     alt: { type: String, default: "" },

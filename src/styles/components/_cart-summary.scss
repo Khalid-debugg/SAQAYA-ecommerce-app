@@ -40,29 +40,29 @@
     align-items: center;
     gap: $spacing-md;
     font-size: $font-size-sm;
+  }
 
-    label,
-    input {
-      cursor: pointer;
-    }
+  &__radio-label,
+  &__radio-input {
+    cursor: pointer;
+  }
 
-    input {
-      accent-color: $color-text-primary;
-      width: 24px;
-      height: 24px;
-    }
+  &__radio-input {
+    accent-color: $color-text-primary;
+    width: 24px;
+    height: 24px;
   }
 
   &__bank-logos {
     display: flex;
     align-items: center;
     gap: $spacing-xs;
+  }
 
-    img {
-      width: 42px;
-      height: 28px;
-      object-fit: contain;
-    }
+  &__bank-logo {
+    width: 42px;
+    height: 28px;
+    object-fit: contain;
   }
 
   &__coupon {

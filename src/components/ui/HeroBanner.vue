@@ -17,7 +17,7 @@
           </div>
           <h2 class="hero-banner__title">{{ slide.title }}</h2>
           <router-link to="/products" class="hero-banner__cta">
-            <span>Shop Now</span>
+            <span class="hero-banner__cta-label">Shop Now</span>
             <app-icon name="arrow-right" class="hero-banner__cta-arrow" />
           </router-link>
         </div>
@@ -39,6 +39,7 @@
 <script lang="ts">
 import Vue, { PropType } from "vue"
 import AppIcon from "@/components/ui/AppIcon.vue"
+
 interface BannerSlide {
   brandIcon: string
   brandName: string

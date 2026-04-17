@@ -1,17 +1,19 @@
 <template>
-  <header class="header">
+  <header class="the-header">
     <div class="container">
-      <nav class="header__nav">
-        <router-link to="/" class="header__logo">Exclusive</router-link>
+      <nav class="the-header__nav">
+        <router-link to="/" class="the-header__logo">Exclusive</router-link>
 
-        <ul class="header__links">
+        <ul class="the-header__links">
           <li v-for="link in navLinks" :key="link.to">
-            <router-link :to="link.to">{{ link.label }}</router-link>
+            <router-link :to="link.to" class="the-header__link">{{
+              link.label
+            }}</router-link>
           </li>
         </ul>
 
-        <div class="header__actions">
-          <form class="header__search">
+        <div class="the-header__actions">
+          <form class="the-header__search">
             <app-input
               v-model="searchQuery"
               placeholder="What are you looking for?"
@@ -21,22 +23,25 @@
             </button>
           </form>
 
-          <button class="header__cart" @click="openCart">
+          <button class="the-header__cart" @click="openCart">
             <app-icon name="cart" />
-            <span v-if="cartCount > 0" class="header__cart-count">{{
+            <span v-if="cartCount > 0" class="the-header__cart-count">{{
               cartCount
             }}</span>
           </button>
         </div>
 
-        <button class="header__burger" @click="toggleMenu">
+        <button class="the-header__burger" @click="toggleMenu">
           <app-icon :name="isMenuOpen ? 'close' : 'burger'" />
         </button>
       </nav>
     </div>
 
     <app-drawer title="Menu" :isOpen="isMenuOpen" @close="isMenuOpen = false">
-      <form class="header__search nav-menu__search" @submit.prevent="onSearch">
+      <form
+        class="the-header__search nav-menu__search"
+        @submit.prevent="onSearch"
+      >
         <app-input
           v-model="searchQuery"
           placeholder="What are you looking for?"
@@ -48,7 +53,11 @@
 
       <ul class="nav-menu__links">
         <li v-for="link in navLinks" :key="link.to">
-          <router-link :to="link.to" @click.native="toggleMenu">
+          <router-link
+            :to="link.to"
+            class="nav-menu__link"
+            @click.native="toggleMenu"
+          >
             {{ link.label }}
           </router-link>
         </li>
@@ -84,6 +93,12 @@ export default Vue.extend({
     }
   },
 
+  computed: {
+    cartCount(): number {
+      return this.$store.getters["cart/GET_ITEMS_COUNT"]
+    },
+  },
+
   methods: {
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen
@@ -91,11 +106,6 @@ export default Vue.extend({
     openCart() {
       this.isMenuOpen = false
       this.$emit("open-cart")
-    },
-  },
-  computed: {
-    cartCount(): number {
-      return this.$store.getters["cart/GET_ITEMS_COUNT"]
     },
   },
 })

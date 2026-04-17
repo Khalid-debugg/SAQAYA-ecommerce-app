@@ -23,4 +23,10 @@ export const productsMutations = {
   SET_CURRENT_CATEGORY(state: ProductsState, payload: string) {
     state.currentCategory = payload
   },
+  SET_CURRENT_SORT(
+    state: ProductsState,
+    payload: { sortBy: string; order: string }
+  ) {
+    state.currentSort = payload
+  },
 }

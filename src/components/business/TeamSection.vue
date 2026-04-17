@@ -1,7 +1,7 @@
 <template>
   <div class="team-section">
     <transition-group name="team-fade" tag="div" class="team-section__grid">
-      <team-member-card
+      <team-card
         v-for="member in paginatedItems"
         :key="member.name"
         :name="member.name"
@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import Vue, { PropType } from "vue"
-import TeamMemberCard from "@/components/business/TeamMemberCard.vue"
+import TeamCard from "@/components/business/TeamCard.vue"
 import { paginationMixin } from "@/mixins/pagination"
 
 interface TeamMember {
@@ -34,7 +34,7 @@ interface TeamMember {
 
 export default Vue.extend({
   name: "TeamSection",
-  components: { TeamMemberCard },
+  components: { TeamCard },
   mixins: [paginationMixin],
   props: {
     members: {

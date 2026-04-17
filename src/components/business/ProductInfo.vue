@@ -30,6 +30,7 @@
       Category:&nbsp;
       <router-link
         :to="{ name: 'products', query: { category: product.category } }"
+        class="product-info__category-link"
       >
         {{ product.category }}
       </router-link>
@@ -37,11 +38,17 @@
 
     <div class="product-info__actions">
       <div class="product-info__quantity">
-        <button class="product-info__quantity-minus" @click="decrement">
+        <button
+          class="product-info__quantity-btn product-info__quantity-minus"
+          @click="decrement"
+        >
           <app-icon name="minus" :size="20" />
         </button>
-        <span>{{ quantity }}</span>
-        <button class="product-info__quantity-plus" @click="increment">
+        <span class="product-info__quantity-value">{{ quantity }}</span>
+        <button
+          class="product-info__quantity-btn product-info__quantity-plus"
+          @click="increment"
+        >
           <app-icon name="plus" :size="20" />
         </button>
       </div>

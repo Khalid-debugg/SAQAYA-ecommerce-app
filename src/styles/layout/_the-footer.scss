@@ -1,4 +1,4 @@
-.footer {
+.the-footer {
   background-color: $color-text-primary;
   padding-top: $spacing-2xl;
 
@@ -52,31 +52,31 @@
     border: 1.5px solid $color-text-light;
     border-radius: $radius-sm;
     overflow: hidden;
+  }
 
-    input {
-      flex: 1;
-      background: none;
-      padding: $spacing-sm $spacing-md;
+  &__subscribe-input {
+    flex: 1;
+    background: none;
+    padding: $spacing-sm $spacing-md;
+    color: $color-text-light;
+    border: none;
+    &::placeholder {
       color: $color-text-light;
-      border: none;
-      &::placeholder {
-        color: $color-text-light;
-        opacity: 0.5;
-      }
-
-      &:focus {
-        outline: none;
-      }
+      opacity: 0.5;
     }
 
-    button {
-      padding: $spacing-sm $spacing-md;
-      color: $color-text-light;
-      transition: $transition-fast;
+    &:focus {
+      outline: none;
+    }
+  }
 
-      &:hover {
-        color: $color-primary-hover;
-      }
+  &__subscribe-btn {
+    padding: $spacing-sm $spacing-md;
+    color: $color-text-light;
+    transition: $transition-fast;
+
+    &:hover {
+      color: $color-primary-hover;
     }
   }
 

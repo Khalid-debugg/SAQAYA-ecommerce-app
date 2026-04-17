@@ -18,6 +18,6 @@
 import Vue from "vue"
 
 export default Vue.extend({
-  name: "NotFoundView",
+  name: "404View",
 })
 </script>

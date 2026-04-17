@@ -10,7 +10,12 @@ import { ActionContext } from "vuex"
 export const productsActions = {
   async fetchProducts(
     { commit, state }: ActionContext<ProductsState, RootState>,
-    { limit, skip }: { limit: number; skip: number }
+    {
+      limit,
+      skip,
+      sortBy = "",
+      order = "",
+    }: { limit: number; skip: number; sortBy: string; order: string }
   ) {
     commit(
       "ui/SET_LOADING",
@@ -18,7 +23,7 @@ export const productsActions = {
       { root: true }
     )
     try {
-      const data = await getProducts(limit, skip)
+      const data = await getProducts(limit, skip, sortBy, order)
       const list =
         skip === 0 ? data.products : [...state.productsList, ...data.products]
       commit("SET_PRODUCTS_LIST", list)
@@ -97,7 +102,19 @@ export const productsActions = {
   },
   async fetchProductsByCategory(
     { commit, state }: ActionContext<ProductsState, RootState>,
-    { category, limit, skip }: { category: string; limit: number; skip: number }
+    {
+      category,
+      limit,
+      skip,
+      sortBy = "",
+      order = "",
+    }: {
+      category: string
+      limit: number
+      skip: number
+      sortBy: string
+      order: string
+    }
   ) {
     commit(
       "ui/SET_LOADING",
@@ -105,7 +122,13 @@ export const productsActions = {
       { root: true }
     )
     try {
-      const data = await getProductsByCategory(category, limit, skip)
+      const data = await getProductsByCategory(
+        category,
+        limit,
+        skip,
+        sortBy,
+        order
+      )
       const list =
         skip === 0 ? data.products : [...state.productsList, ...data.products]
       commit("SET_PRODUCTS_LIST", list)
