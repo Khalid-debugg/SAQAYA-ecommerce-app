@@ -24,6 +24,7 @@
           class="product__image"
           :src="product.thumbnail"
           :alt="product.title"
+          data-test="product-image"
         />
       </router-link>
       <app-button
@@ -38,18 +39,22 @@
       <router-link
         :to="{ name: 'product-details', params: { id: String(product.id) } }"
         class="product__title"
+data-test="product-title"
       >
         {{ product.title }}
       </router-link>
       <div class="product__prices">
-        <span class="product__price">${{ product.price.toFixed(2) }}</span>
-        <span v-if="product.discountPercentage" class="product__price--original"
+        <span class="product__price" data-test="product-price">{{
+          product.price === 0 ? "Free" : "$" + product.price.toFixed(2)
+        }}</span>
           >${{ originalPrice.toFixed(2) }}</span
         >
       </div>
       <div class="product__ratings">
         <star-rating :rating="product.rating" />
-        <span class="product__reviews">({{ product.reviews.length }})</span>
+        <span class="product__reviews" data-test="review-count"
+          >({{ product.reviews.length }})</span
+        >
       </div>
     </div>
   </div>
