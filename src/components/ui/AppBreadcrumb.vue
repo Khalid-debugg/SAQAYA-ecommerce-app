@@ -13,8 +13,6 @@
 
 <script lang="ts">
 import Vue from "vue"
-import { mapState } from "vuex"
-import { RouteRecord } from "vue-router"
 
 interface Crumb {
   label: string
@@ -25,26 +23,23 @@ export default Vue.extend({
   name: "AppBreadcrumb",
 
   computed: {
-    ...mapState("products", ["selectedProduct"]),
-
     crumbs(): Crumb[] {
-      return this.$route.matched
-        .filter((route) => "breadcrumb" in route.meta)
-        .map((route, index, arr) => ({
-          label: route.meta.breadcrumb ?? this.selectedProduct?.title ?? "",
-          to: index < arr.length - 1 ? this.buildPath(route) : undefined,
-        }))
-    },
-  },
+      const matched = this.$route.matched.filter(
+        (route) => "breadcrumb" in route.meta
+      )
 
-  methods: {
-    buildPath(routeRecord: RouteRecord): string {
-      const index = this.$route.matched.indexOf(routeRecord)
-      return this.$route.matched
-        .slice(0, index + 1)
-        .map((r) => r.path)
-        .join("/")
-        .replace(/\/+/g, "/")
+      return matched.map((route, index) => {
+        const isLast = index === matched.length - 1
+        const { breadcrumb } = route.meta
+
+        return {
+          label:
+            typeof breadcrumb === "function"
+              ? breadcrumb(this.$store)
+              : breadcrumb,
+          to: isLast ? undefined : route.path || "/",
+        }
+      })
     },
   },
 })

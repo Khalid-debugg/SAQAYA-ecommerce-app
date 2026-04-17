@@ -1,5 +1,6 @@
 import Vue, { CreateElement } from "vue"
 import VueRouter, { RouteConfig } from "vue-router"
+import { Store } from "vuex"
 import { productDetailsGuard } from "./guards"
 Vue.use(VueRouter)
 
@@ -49,7 +50,10 @@ const routes: Array<RouteConfig> = [
           {
             path: ":id",
             name: "product-details",
-            meta: { breadcrumb: null },
+            meta: {
+              breadcrumb: (store: Store<unknown>) =>
+                store.getters["products/selectedProductTitle"],
+            },
             component: () =>
               import(
                 /* webpackChunkName: "product-details" */ "@/views/ProductDetails.vue"
