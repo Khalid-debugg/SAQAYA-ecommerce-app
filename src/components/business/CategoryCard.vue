@@ -22,7 +22,7 @@ export default Vue.extend({
   methods: {
     navigate() {
       this.$router.push({
-        name: "products",
+        name: "products-list",
         query: { category: this.category.slug },
       })
     },

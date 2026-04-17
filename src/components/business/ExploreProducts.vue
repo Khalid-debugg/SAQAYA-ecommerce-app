@@ -69,7 +69,7 @@ export default Vue.extend({
       this.$store.commit("cart/ADD_TO_CART", cartItem)
     },
     viewAllProducts() {
-      this.$router.push({ name: "products" })
+      this.$router.push({ name: "products-list" })
     },
     retry() {
       this.$store.dispatch("products/fetchHomeProducts")
