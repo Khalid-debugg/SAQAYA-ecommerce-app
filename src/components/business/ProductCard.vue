@@ -34,6 +34,7 @@
       <app-button
         modifier="dark"
         class="product__cart-btn"
+        data-test="add-to-cart-btn"
         @click.native="addToCart"
       >
         Add to cart
@@ -43,7 +44,7 @@
       <router-link
         :to="{ name: 'product-details', params: { id: String(product.id) } }"
         class="product__title"
-data-test="product-title"
+        data-test="product-title"
       >
         {{ product.title }}
       </router-link>

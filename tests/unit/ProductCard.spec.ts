@@ -191,4 +191,28 @@ describe("ProductCard", () => {
       expect(wrapper.find('[data-test="new-badge"]').exists()).toBe(true)
     })
   })
+  describe("add to cart", () => {
+    it("emits add-to-cart when button is clicked", async () => {
+      const wrapper = mountCardWrapper(baseProduct)
+      await wrapper.find('[data-test="add-to-cart-btn"]').trigger("click")
+      expect(wrapper.emitted("add-to-cart")).toBeTruthy()
+    })
+
+    it("emits add-to-cart multiple times when clicked multiple times", async () => {
+      const wrapper = mountCardWrapper(baseProduct)
+      await wrapper.find('[data-test="add-to-cart-btn"]').trigger("click")
+      await wrapper.find('[data-test="add-to-cart-btn"]').trigger("click")
+      await wrapper.find('[data-test="add-to-cart-btn"]').trigger("click")
+      expect(wrapper.emitted("add-to-cart")).toHaveLength(3)
+    })
+
+    it("emits the correct product payload on each click", async () => {
+      const wrapper = mountCardWrapper(baseProduct)
+      await wrapper.find('[data-test="add-to-cart-btn"]').trigger("click")
+      await wrapper.find('[data-test="add-to-cart-btn"]').trigger("click")
+      const emitted = wrapper.emitted("add-to-cart")
+      expect(emitted?.[0][0]).toEqual(baseProduct)
+      expect(emitted?.[1][0]).toEqual(baseProduct)
+    })
+  })
 })
