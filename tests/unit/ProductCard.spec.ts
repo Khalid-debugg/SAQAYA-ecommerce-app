@@ -59,6 +59,17 @@ const productMultipleReviews: Product = {
     },
   ],
 }
+const productNoDiscount: Product = { ...baseProduct, discountPercentage: 0 }
+const productZeroPriceWithDiscount: Product = {
+  ...baseProduct,
+  price: 0,
+  discountPercentage: 10,
+}
+const productWithKnownDiscount: Product = {
+  ...baseProduct,
+  price: 90,
+  discountPercentage: 10,
+}
 const mountCardWrapper = (product: Product) =>
   shallowMount(ProductCard, {
     propsData: { product },
@@ -70,16 +81,16 @@ describe("ProductCard", () => {
     it("renders the product title", () => {
       expect(
         mountCardWrapper(baseProduct).find('[data-test="product-title"]').text()
-      ).toContain("Test Product")
+      ).toBe("Test Product")
     })
 
     it.each([
-      [productFloatPrice, "99.50"],
+      [productFloatPrice, "$99.50"],
       [productZeroPrice, "Free"],
     ])("renders the correct product price", (product, expected) => {
       expect(
         mountCardWrapper(product).find('[data-test="product-price"]').text()
-      ).toContain(expected)
+      ).toBe(expected)
     })
 
     it.each([
@@ -89,7 +100,7 @@ describe("ProductCard", () => {
     ])("renders the correct review count", (product, expected) => {
       expect(
         mountCardWrapper(product).find('[data-test="review-count"]').text()
-      ).toContain(expected)
+      ).toBe(expected)
     })
 
     it.each([
@@ -101,6 +112,35 @@ describe("ProductCard", () => {
           .find('[data-test="product-image"]')
           .attributes(attr)
       ).toBe(expected)
+    })
+  })
+  describe("discount badge", () => {
+    it.each([
+      [baseProduct, true],
+      [productNoDiscount, false],
+      [productZeroPriceWithDiscount, false],
+    ])("shows or hides the discount badge correctly", (product, expected) => {
+      expect(
+        mountCardWrapper(product).find('[data-test="discount-badge"]').exists()
+      ).toBe(expected)
+    })
+
+    it.each([
+      [baseProduct, true],
+      [productNoDiscount, false],
+      [productZeroPriceWithDiscount, false],
+    ])("shows or hides the original price correctly", (product, expected) => {
+      expect(
+        mountCardWrapper(product).find('[data-test="original-price"]').exists()
+      ).toBe(expected)
+    })
+
+    it("computes the correct original price", () => {
+      expect(
+        mountCardWrapper(productWithKnownDiscount)
+          .find('[data-test="original-price"]')
+          .text()
+      ).toBe("$100.00")
     })
   })
 })

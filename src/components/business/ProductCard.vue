@@ -3,8 +3,9 @@
     <div class="product__image-container">
       <div class="product__badges">
         <span
-          v-if="product.discountPercentage"
+          v-if="product.discountPercentage > 0 && product.price > 0"
           class="product__badge product__badge--discount"
+          data-test="discount-badge"
         >
           -{{ Math.ceil(product.discountPercentage) }}%
         </span>
@@ -47,6 +48,10 @@ data-test="product-title"
         <span class="product__price" data-test="product-price">{{
           product.price === 0 ? "Free" : "$" + product.price.toFixed(2)
         }}</span>
+        <span
+          v-if="product.discountPercentage > 0 && product.price > 0"
+          class="product__price--original"
+          data-test="original-price"
           >${{ originalPrice.toFixed(2) }}</span
         >
       </div>
