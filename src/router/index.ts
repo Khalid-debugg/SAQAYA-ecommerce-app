@@ -7,7 +7,6 @@ Vue.use(VueRouter)
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    name: "default-layout",
     component: () =>
       import(
         /* webpackChunkName: "default-layout" */ "@/layouts/DefaultLayout.vue"
@@ -35,7 +34,6 @@ const routes: Array<RouteConfig> = [
       },
       {
         path: "products",
-        name: "products",
         meta: { breadcrumb: "Products" },
         component: { render: (h: CreateElement) => h("router-view") },
         children: [
