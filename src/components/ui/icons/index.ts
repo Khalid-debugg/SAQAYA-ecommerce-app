@@ -27,6 +27,10 @@ import HeadPhoneIcon from "./HeadPhoneIcon.vue"
 import PlusIcon from "./PlusIcon.vue"
 import MinusIcon from "./MinusIcon.vue"
 import ReturnIcon from "./ReturnIcon.vue"
+import ShopIcon from "./ShopIcon.vue"
+import SaleIcon from "./SaleIcon.vue"
+import ShoppingBagIcon from "./ShoppingBagIcon.vue"
+import MoneyBagIcon from "./MoneyBagIcon.vue"
 
 export const icons = {
   search: SearchIcon,
@@ -58,6 +62,10 @@ export const icons = {
   plus: PlusIcon,
   minus: MinusIcon,
   return: ReturnIcon,
+  shop: ShopIcon,
+  sale: SaleIcon,
+  "shopping-bag": ShoppingBagIcon,
+  "money-bag": MoneyBagIcon,
 } as const
 
 export type IconName = keyof typeof icons
