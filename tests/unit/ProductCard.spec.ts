@@ -70,6 +70,36 @@ const productWithKnownDiscount: Product = {
   price: 90,
   discountPercentage: 10,
 }
+const productNewRelease: Product = {
+  ...baseProduct,
+  meta: { ...baseProduct.meta, createdAt: new Date().toISOString() },
+}
+const productFutureRelease: Product = {
+  ...baseProduct,
+  meta: {
+    ...baseProduct.meta,
+    createdAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+}
+const productSevenDaysOld: Product = {
+  ...baseProduct,
+  meta: {
+    ...baseProduct.meta,
+    createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+}
+const productEightDaysOld: Product = {
+  ...baseProduct,
+  meta: {
+    ...baseProduct.meta,
+    createdAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+}
+const productNewWithDiscount: Product = {
+  ...baseProduct,
+  discountPercentage: 10,
+  meta: { ...baseProduct.meta, createdAt: new Date().toISOString() },
+}
 const mountCardWrapper = (product: Product) =>
   shallowMount(ProductCard, {
     propsData: { product },
@@ -141,6 +171,24 @@ describe("ProductCard", () => {
           .find('[data-test="original-price"]')
           .text()
       ).toBe("$100.00")
+    })
+  })
+  describe("new badge", () => {
+    it.each([
+      [productNewRelease, true],
+      [productSevenDaysOld, true],
+      [productEightDaysOld, false],
+      [productFutureRelease, false],
+    ])("shows or hides the New badge correctly", (product, expected) => {
+      expect(
+        mountCardWrapper(product).find('[data-test="new-badge"]').exists()
+      ).toBe(expected)
+    })
+
+    it("shows both badges when product is new and has a discount", () => {
+      const wrapper = mountCardWrapper(productNewWithDiscount)
+      expect(wrapper.find('[data-test="discount-badge"]').exists()).toBe(true)
+      expect(wrapper.find('[data-test="new-badge"]').exists()).toBe(true)
     })
   })
 })

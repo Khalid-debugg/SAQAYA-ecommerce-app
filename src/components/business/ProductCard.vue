@@ -9,7 +9,10 @@
         >
           -{{ Math.ceil(product.discountPercentage) }}%
         </span>
-        <span v-if="isProductNew" class="product__badge product__badge--new"
+        <span
+          v-if="isProductNew"
+          class="product__badge product__badge--new"
+          data-test="new-badge"
           >New</span
         >
       </div>
