@@ -1,6 +1,11 @@
 import { CartItem } from "./cart"
 import { Product, ProductCategory } from "./product"
 
+export interface CurrentSort {
+  sortBy: string
+  order: string
+}
+
 export interface ProductsState {
   homeProducts: Product[]
   productsList: Product[]
@@ -9,6 +14,7 @@ export interface ProductsState {
   totalProducts: number
   visibleCount: number
   currentCategory: string
+  currentSort: CurrentSort
 }
 
 export interface CartState {
