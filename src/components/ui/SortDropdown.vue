@@ -1,18 +1,27 @@
 <template>
   <div class="sort-dropdown" ref="dropdown">
     <div class="sort-dropdown__wrapper">
-      <span class="sort-dropdown__label">Sort by</span>
-      <button class="sort-dropdown__trigger" @click="toggleDropdown">
-        <span class="sort-dropdown__trigger-label">{{ value.label }}</span>
+      <span class="sort-dropdown__label" data-test="sort-label">Sort by</span>
+      <button
+        class="sort-dropdown__trigger"
+        data-test="sort-trigger"
+        @click="toggleDropdown"
+      >
+        <span
+          class="sort-dropdown__trigger-label"
+          data-test="sort-selected-label"
+          >{{ value.label }}</span
+        >
         <app-icon name="arrow-down" :size="16" />
       </button>
     </div>
-    <ul v-if="isOpen" class="sort-dropdown__menu">
+    <ul v-if="isOpen" class="sort-dropdown__menu" data-test="sort-menu">
       <li
         v-for="option in options"
         :key="option.value"
         class="sort-dropdown__item"
         :class="{ 'sort-dropdown__item--active': value.value === option.value }"
+        :data-test="`sort-option-${option.value}`"
         @click="select(option)"
       >
         {{ option.label }}
