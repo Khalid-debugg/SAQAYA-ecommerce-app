@@ -1,12 +1,23 @@
 <template>
-  <nav v-if="crumbs.length" class="breadcrumb container">
+  <nav
+    v-if="crumbs.length"
+    class="breadcrumb container"
+    data-test="breadcrumb-nav"
+  >
     <router-link to="/" class="breadcrumb__link">Home</router-link>
     <span v-for="crumb in crumbs" :key="crumb.label" class="breadcrumb__item">
       <span class="breadcrumb__separator">/</span>
-      <router-link v-if="crumb.to" :to="crumb.to" class="breadcrumb__link">
+      <router-link
+        v-if="crumb.to"
+        :to="crumb.to"
+        class="breadcrumb__link"
+        data-test="crumb-link"
+      >
         {{ crumb.label }}
       </router-link>
-      <span v-else class="breadcrumb__current">{{ crumb.label }}</span>
+      <span v-else class="breadcrumb__current" data-test="crumb-current">{{
+        crumb.label
+      }}</span>
     </span>
   </nav>
 </template>
