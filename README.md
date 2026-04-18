@@ -69,6 +69,8 @@ src/
 │   └── pages/             # page-level styles
 ├── types/                 # TypeScript type definitions
 └── views/                 # route-level page components
+tests/
+└── unit/                  # Jest unit tests (one spec file per component)
 ```
 
 ---
@@ -104,11 +106,43 @@ Follows [Conventional Commits](https://www.conventionalcommits.org/):
 - Vuex 3
 - SCSS (7-1 inspired architecture)
 - ESLint + Prettier
+- Jest + Vue Test Utils
 - GitHub Actions (CI)
 
 ---
 
 ## Progress Log
+
+### Week 3 — Routing & Testing
+
+**Cart Store Enhancements**
+
+- Added `shippingCost` state to the cart module with an initial value of `0`
+- Extracted a `calculateSubtotal` helper function shared between getters
+- Added `GET_SUBTOTAL_USD` and `GET_SHIPPING_COST` getters alongside the existing `GET_TOTAL_USD` which now computes subtotal + shipping
+
+**Components**
+
+- Updated `CartSummary` to consume the new getters and display shipping cost dynamically
+- Added `data-test` attributes across `CartItem`, `CartList`, `CartSummary`, `AppBreadcrumb`, and `SortDropdown` to support testability
+
+**Testing Setup**
+
+- Configured `coveragePathIgnorePatterns` in `jest.config.js` to exclude the icon registry and assets from coverage reports, keeping the output focused on actual source logic
+
+**Unit Tests**
+
+- `ProductCard` — rendering, discount badge, new badge, and add-to-cart emit behavior
+- `SortDropdown` — menu toggle, option rendering, active class, selection emit
+- `CartSummary` — subtotal, shipping, and total display with varied decimal inputs and combined scenarios
+- `CartList` — empty state, item count rendering, `removeFromCart` and `updateQuantity` mutations via child event stubs
+- `CartItem` — title, quantity, total rendering, remove and quantity control emit payloads
+- `AppButton` — modifier class, type attribute, disabled state
+- `AppIcon` — correct icon resolution, fallback to `CloseIcon` for unknown names, size prop
+- `StarRating` — full, empty, and partial fill logic via `getFill`
+- `AppBreadcrumb` — nav visibility, link vs current span rendering, string and function breadcrumb label resolution
+
+---
 
 ### Week 2 — Pages & Features
 
