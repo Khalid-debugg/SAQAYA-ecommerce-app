@@ -19,6 +19,7 @@ export interface ProductsState {
 
 export interface CartState {
   cartItems: CartItem[]
+  shippingCost: number
 }
 
 export interface UiState {
