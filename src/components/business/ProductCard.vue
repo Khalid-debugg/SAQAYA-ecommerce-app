@@ -3,12 +3,16 @@
     <div class="product__image-container">
       <div class="product__badges">
         <span
-          v-if="product.discountPercentage"
+          v-if="product.discountPercentage > 0 && product.price > 0"
           class="product__badge product__badge--discount"
+          data-test="discount-badge"
         >
           -{{ Math.ceil(product.discountPercentage) }}%
         </span>
-        <span v-if="isProductNew" class="product__badge product__badge--new"
+        <span
+          v-if="isProductNew"
+          class="product__badge product__badge--new"
+          data-test="new-badge"
           >New</span
         >
       </div>
@@ -24,11 +28,13 @@
           class="product__image"
           :src="product.thumbnail"
           :alt="product.title"
+          data-test="product-image"
         />
       </router-link>
       <app-button
         modifier="dark"
         class="product__cart-btn"
+        data-test="add-to-cart-btn"
         @click.native="addToCart"
       >
         Add to cart
@@ -38,18 +44,26 @@
       <router-link
         :to="{ name: 'product-details', params: { id: String(product.id) } }"
         class="product__title"
+        data-test="product-title"
       >
         {{ product.title }}
       </router-link>
       <div class="product__prices">
-        <span class="product__price">${{ product.price.toFixed(2) }}</span>
-        <span v-if="product.discountPercentage" class="product__price--original"
+        <span class="product__price" data-test="product-price">{{
+          product.price === 0 ? "Free" : "$" + product.price.toFixed(2)
+        }}</span>
+        <span
+          v-if="product.discountPercentage > 0 && product.price > 0"
+          class="product__price--original"
+          data-test="original-price"
           >${{ originalPrice.toFixed(2) }}</span
         >
       </div>
       <div class="product__ratings">
         <star-rating :rating="product.rating" />
-        <span class="product__reviews">({{ product.reviews.length }})</span>
+        <span class="product__reviews" data-test="review-count"
+          >({{ product.reviews.length }})</span
+        >
       </div>
     </div>
   </div>

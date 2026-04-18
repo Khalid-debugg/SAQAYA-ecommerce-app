@@ -3,17 +3,19 @@
     <div class="cart-summary__totals">
       <div class="cart-summary__row">
         <span>Subtotal:</span>
-        <span>${{ totalUSD.toFixed(2) }}</span>
+        <span data-test="subtotal">${{ subtotalUSD.toFixed(2) }}</span>
       </div>
       <div class="cart-summary__divider" />
       <div class="cart-summary__row">
         <span>Shipping:</span>
-        <span>Free</span>
+        <span data-test="shipping">{{
+          shippingCost === 0 ? "Free" : "$" + shippingCost.toFixed(2)
+        }}</span>
       </div>
       <div class="cart-summary__divider" />
       <div class="cart-summary__row">
         <span>Total:</span>
-        <span>${{ totalUSD.toFixed(2) }}</span>
+        <span data-test="total">${{ totalUSD.toFixed(2) }}</span>
       </div>
     </div>
 
@@ -106,6 +108,12 @@ export default Vue.extend({
     }
   },
   computed: {
+    subtotalUSD(): number {
+      return this.$store.getters["cart/GET_SUBTOTAL_USD"]
+    },
+    shippingCost(): number {
+      return this.$store.getters["cart/GET_SHIPPING_COST"]
+    },
     totalUSD(): number {
       return this.$store.getters["cart/GET_TOTAL_USD"]
     },

@@ -1,6 +1,8 @@
 <template>
   <div class="cart-list">
-    <p v-if="!cartItems.length" class="cart-list__empty">Your cart is empty</p>
+    <p v-if="!cartItems.length" class="cart-list__empty" data-test="cart-empty">
+      Your cart is empty
+    </p>
     <cart-item-component
       v-for="item in cartItems"
       :key="item.product.id"

@@ -1,26 +1,41 @@
 <template>
   <div class="cart-item">
-    <button class="cart-item__remove" @click="removeItem">
+    <button
+      class="cart-item__remove"
+      data-test="remove-btn"
+      @click="removeItem"
+    >
       <app-icon name="close" :width="16" :height="16" />
     </button>
     <img
       class="cart-item__image"
       :src="cartItem.product.thumbnail"
       :alt="cartItem.product.title"
+      data-test="product-image"
     />
-    <p class="cart-item__title">{{ cartItem.product.title }}</p>
+    <p class="cart-item__title" data-test="product-title">
+      {{ cartItem.product.title }}
+    </p>
     <div class="cart-item__quantity">
-      <span>{{ cartItem.quantity }}</span>
+      <span data-test="quantity">{{ cartItem.quantity }}</span>
       <div class="cart-item__qty-controls">
-        <button class="cart-item__qty-btn" @click="incrementItemQuantity">
+        <button
+          class="cart-item__qty-btn"
+          data-test="increment-btn"
+          @click="incrementItemQuantity"
+        >
           <app-icon name="arrow-up" width="9" height="6" />
         </button>
-        <button class="cart-item__qty-btn" @click="decrementItemQuantity">
+        <button
+          class="cart-item__qty-btn"
+          data-test="decrement-btn"
+          @click="decrementItemQuantity"
+        >
           <app-icon name="arrow-down" width="9" height="6" />
         </button>
       </div>
     </div>
-    <p class="cart-item__total">
+    <p class="cart-item__total" data-test="total">
       ${{ (cartItem.product.price * cartItem.quantity).toFixed(2) }}
     </p>
   </div>
