@@ -48,7 +48,7 @@
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.team-fade-enter,
+.team-fade-enter-from,
 .team-fade-leave-to {
   opacity: 0;
   transform: translateY(8px);
