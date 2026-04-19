@@ -1,14 +1,7 @@
-import { createStore } from "vuex"
-import { productsModule } from "./modules/products"
-import { cartModule } from "./modules/cart"
-import { uiModule } from "./modules/ui"
-import { cartPersistencePlugin } from "@/plugins/cartPersistence"
+import { createPinia } from "pinia"
 
-export default createStore({
-  modules: {
-    products: productsModule,
-    cart: cartModule,
-    ui: uiModule,
-  },
-  plugins: [cartPersistencePlugin],
-})
+export const pinia = createPinia()
+
+export { useUiStore } from "./modules/ui"
+export { useCartStore } from "./modules/cart"
+export { useProductsStore } from "./modules/products"

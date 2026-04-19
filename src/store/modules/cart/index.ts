@@ -1,13 +1,10 @@
-import { Module } from "vuex"
-
-import { CartState, RootState } from "@/types/store"
+import { defineStore } from "pinia"
 import { cartState } from "./state"
-import { cartMutations } from "./mutations"
 import { cartGetters } from "./getters"
+import { cartActions } from "./actions"
 
-export const cartModule: Module<CartState, RootState> = {
-  namespaced: true,
+export const useCartStore = defineStore("cart", {
   state: cartState,
-  mutations: cartMutations,
   getters: cartGetters,
-}
+  actions: cartActions,
+})

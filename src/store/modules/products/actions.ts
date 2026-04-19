@@ -1,126 +1,79 @@
+import { ProductCategory } from "@/types/product"
+import { ProductsState } from "@/types/store"
 import {
+  getProducts,
   getProductById,
   getCategories,
-  getProducts,
   getProductsByCategory,
 } from "@/services/products/products.api"
-import { ProductsState, RootState } from "@/types/store"
-import { ActionContext } from "vuex"
+import { useUiStore } from "../ui"
 
 export const productsActions = {
-  async fetchProducts(
-    { commit, state }: ActionContext<ProductsState, RootState>,
-    {
-      limit,
-      skip,
-      sortBy = "",
-      order = "",
-    }: { limit: number; skip: number; sortBy: string; order: string }
-  ) {
-    commit(
-      "ui/SET_LOADING",
-      { key: "fetchProducts", value: true },
-      { root: true }
-    )
-    try {
-      const data = await getProducts(limit, skip, sortBy, order)
-      const list =
-        skip === 0 ? data.products : [...state.productsList, ...data.products]
-      commit("SET_PRODUCTS_LIST", list)
-      commit("SET_TOTAL_PRODUCTS", data.total)
-    } catch (error) {
-      commit(
-        "ui/SET_ERROR",
-        { key: "fetchProducts", value: "Failed to load products" },
-        { root: true }
-      )
-      throw error
-    } finally {
-      commit(
-        "ui/SET_LOADING",
-        { key: "fetchProducts", value: false },
-        { root: true }
-      )
-    }
-  },
-  async fetchHomeProducts({ commit }: ActionContext<ProductsState, RootState>) {
-    commit(
-      "ui/SET_LOADING",
-      { key: "fetchHomeProducts", value: true },
-      { root: true }
-    )
+  async fetchHomeProducts(this: ProductsState) {
+    const ui = useUiStore()
+    ui.setLoading("fetchHomeProducts", true)
     try {
       const data = await getProducts()
-      commit("SET_HOME_PRODUCTS", data.products)
-    } catch (error) {
-      commit(
-        "ui/SET_ERROR",
-        { key: "fetchHomeProducts", value: "Failed to load products" },
-        { root: true }
-      )
-      throw error
+      this.homeProducts = data.products
+    } catch {
+      ui.setError("fetchHomeProducts", "Failed to load products")
+      throw new Error("Failed to load products")
     } finally {
-      commit(
-        "ui/SET_LOADING",
-        { key: "fetchHomeProducts", value: false },
-        { root: true }
-      )
+      ui.setLoading("fetchHomeProducts", false)
     }
   },
-  async fetchProductCategories({
-    commit,
-  }: ActionContext<ProductsState, RootState>) {
-    commit(
-      "ui/SET_LOADING",
-      { key: "fetchProductCategories", value: true },
-      { root: true }
-    )
+
+  async fetchProducts(
+    this: ProductsState,
+    limit: number,
+    skip: number,
+    sortBy = "",
+    order = ""
+  ) {
+    const ui = useUiStore()
+    ui.setLoading("fetchProducts", true)
+    try {
+      const data = await getProducts(limit, skip, sortBy, order)
+      this.productsList =
+        skip === 0 ? data.products : [...this.productsList, ...data.products]
+      this.totalProducts = data.total
+    } catch {
+      ui.setError("fetchProducts", "Failed to load products")
+      throw new Error("Failed to load products")
+    } finally {
+      ui.setLoading("fetchProducts", false)
+    }
+  },
+
+  async fetchProductById(this: ProductsState, id: number) {
+    const data = await getProductById(id)
+    this.selectedProduct = data
+  },
+
+  async fetchProductCategories(this: ProductsState) {
+    const ui = useUiStore()
+    ui.setLoading("fetchProductCategories", true)
     try {
       const data = await getCategories()
-      commit("SET_PRODUCT_CATEGORIES", data)
-    } catch (error) {
-      commit(
-        "ui/SET_ERROR",
-        { key: "fetchProductCategories", value: "Failed to load products" },
-        { root: true }
-      )
-      throw error
+      this.productCategories = data as ProductCategory[]
+    } catch {
+      ui.setError("fetchProductCategories", "Failed to load categories")
+      throw new Error("Failed to load categories")
     } finally {
-      commit(
-        "ui/SET_LOADING",
-        { key: "fetchProductCategories", value: false },
-        { root: true }
-      )
+      ui.setLoading("fetchProductCategories", false)
     }
   },
-  async fetchProductById(
-    { commit }: ActionContext<ProductsState, RootState>,
-    { id }: { id: number }
-  ) {
-    const data = await getProductById(id)
-    commit("SET_SELECTED_PRODUCT", data)
-  },
+
   async fetchProductsByCategory(
-    { commit, state }: ActionContext<ProductsState, RootState>,
-    {
-      category,
-      limit,
-      skip,
-      sortBy = "",
-      order = "",
-    }: {
-      category: string
-      limit: number
-      skip: number
-      sortBy: string
-      order: string
-    }
+    this: ProductsState,
+    category: string,
+    limit: number,
+    skip: number,
+    sortBy = "",
+    order = ""
   ) {
-    commit(
-      "ui/SET_LOADING",
-      { key: "fetchProducts", value: true },
-      { root: true }
-    )
+    const ui = useUiStore()
+    ui.setLoading("fetchProducts", true)
     try {
       const data = await getProductsByCategory(
         category,
@@ -129,23 +82,14 @@ export const productsActions = {
         sortBy,
         order
       )
-      const list =
-        skip === 0 ? data.products : [...state.productsList, ...data.products]
-      commit("SET_PRODUCTS_LIST", list)
-      commit("SET_TOTAL_PRODUCTS", data.total)
-    } catch (error) {
-      commit(
-        "ui/SET_ERROR",
-        { key: "fetchProducts", value: "Failed to load products" },
-        { root: true }
-      )
-      throw error
+      this.productsList =
+        skip === 0 ? data.products : [...this.productsList, ...data.products]
+      this.totalProducts = data.total
+    } catch {
+      ui.setError("fetchProducts", "Failed to load products")
+      throw new Error("Failed to load products")
     } finally {
-      commit(
-        "ui/SET_LOADING",
-        { key: "fetchProducts", value: false },
-        { root: true }
-      )
+      ui.setLoading("fetchProducts", false)
     }
   },
 }

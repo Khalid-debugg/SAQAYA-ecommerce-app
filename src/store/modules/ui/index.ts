@@ -1,12 +1,10 @@
-import { RootState, UiState } from "@/types/store"
-import { Module } from "vuex"
+import { defineStore } from "pinia"
 import { uiState } from "./state"
-import { uiMutations } from "./mutations"
 import { uiGetters } from "./getters"
+import { uiActions } from "./actions"
 
-export const uiModule: Module<UiState, RootState> = {
-  namespaced: true,
+export const useUiStore = defineStore("ui", {
   state: uiState,
-  mutations: uiMutations,
   getters: uiGetters,
-}
+  actions: uiActions,
+})
