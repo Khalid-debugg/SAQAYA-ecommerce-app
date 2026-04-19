@@ -1,20 +1,20 @@
 <template>
   <textarea
     v-if="type === 'textarea'"
-    :value="value"
+    :value="modelValue"
     :placeholder="placeholder"
     :required="required"
     class="textarea"
-    @input="$emit('input', $event.target.value)"
+    @input="updateValue($event)"
   />
   <input
     v-else
     :type="type"
-    :value="value"
+    :value="modelValue"
     :placeholder="placeholder"
     :required="required"
     class="input"
-    @input="$emit('input', $event.target.value)"
+    @input="updateValue($event)"
   />
 </template>
 
@@ -25,7 +25,7 @@ export default Vue.extend({
   name: "AppInput",
 
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: "",
     },
@@ -40,6 +40,11 @@ export default Vue.extend({
     required: {
       type: Boolean,
       default: false,
+    },
+  },
+  methods: {
+    updateValue(event: Event) {
+      this.$emit("update:modelValue", (event.target as HTMLInputElement).value)
     },
   },
 })

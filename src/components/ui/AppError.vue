@@ -1,9 +1,7 @@
 <template>
   <div class="app-error">
     <p class="app-error__message">{{ message }}</p>
-    <app-button modifier="outline" @click.native="retry">
-      Try again
-    </app-button>
+    <app-button modifier="outline" @click="retry"> Try again </app-button>
   </div>
 </template>
 

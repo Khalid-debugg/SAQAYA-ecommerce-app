@@ -24,7 +24,7 @@
       </transition-group>
     </async-list>
     <div class="home__footer">
-      <app-button modifier="primary" @click.native="viewAllProducts">
+      <app-button modifier="primary" @click="viewAllProducts">
         View All Products
       </app-button>
     </div>

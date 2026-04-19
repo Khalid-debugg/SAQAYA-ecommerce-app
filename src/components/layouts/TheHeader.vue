@@ -53,11 +53,7 @@
 
       <ul class="nav-menu__links">
         <li v-for="link in navLinks" :key="link.to">
-          <router-link
-            :to="link.to"
-            class="nav-menu__link"
-            @click.native="toggleMenu"
-          >
+          <router-link :to="link.to" class="nav-menu__link" @click="toggleMenu">
             {{ link.label }}
           </router-link>
         </li>

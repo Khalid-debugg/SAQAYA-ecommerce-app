@@ -18,7 +18,7 @@
     </async-list>
 
     <div v-if="canLoadMore" class="products-grid__footer">
-      <app-button :disabled="isLoading" @click.native="loadMore">
+      <app-button :disabled="isLoading" @click="loadMore">
         {{ isLoading ? "Loading..." : "Load More" }}
       </app-button>
     </div>

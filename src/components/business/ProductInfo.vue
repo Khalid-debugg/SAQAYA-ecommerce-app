@@ -55,7 +55,7 @@
       <app-button
         modifier="primary"
         class="product-info__buy-btn"
-        @click.native="addToCart"
+        @click="addToCart"
       >
         Buy Now
       </app-button>

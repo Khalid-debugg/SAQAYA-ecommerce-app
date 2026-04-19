@@ -5,7 +5,7 @@
       <sort-dropdown
         v-model="selectedSort"
         :options="sortOptions"
-        @input="resetAndLoad"
+        @update:modelValue="resetAndLoad"
       />
     </div>
     <products-grid

@@ -35,7 +35,7 @@
         modifier="dark"
         class="product__cart-btn"
         data-test="add-to-cart-btn"
-        @click.native="addToCart"
+        @click="addToCart"
       >
         Add to cart
       </app-button>

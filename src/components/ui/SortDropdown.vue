@@ -10,7 +10,7 @@
         <span
           class="sort-dropdown__trigger-label"
           data-test="sort-selected-label"
-          >{{ value.label }}</span
+          >{{ modelValue.label }}</span
         >
         <app-icon name="arrow-down" :size="16" />
       </button>
@@ -20,7 +20,9 @@
         v-for="option in options"
         :key="option.value"
         class="sort-dropdown__item"
-        :class="{ 'sort-dropdown__item--active': value.value === option.value }"
+        :class="{
+          'sort-dropdown__item--active': modelValue.value === option.value,
+        }"
         :data-test="`sort-option-${option.value}`"
         @click="select(option)"
       >
@@ -47,7 +49,7 @@ export default Vue.extend({
   components: { AppIcon },
 
   props: {
-    value: {
+    modelValue: {
       type: Object as PropType<SortOption>,
       required: true,
     },
@@ -69,7 +71,7 @@ export default Vue.extend({
     },
 
     select(option: SortOption) {
-      this.$emit("input", option)
+      this.$emit("update:modelValue", option)
       this.isOpen = false
     },
   },
