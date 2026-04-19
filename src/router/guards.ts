@@ -1,9 +1,9 @@
 import store from "@/store"
-import { NavigationGuardNext, Route } from "vue-router"
+import { RouteLocationNormalized, NavigationGuardNext } from "vue-router"
 
 export const productDetailsGuard = async (
-  to: Route,
-  _from: Route,
+  to: RouteLocationNormalized,
+  _from: RouteLocationNormalized,
   next: NavigationGuardNext
 ) => {
   const id = Number(to.params.id)

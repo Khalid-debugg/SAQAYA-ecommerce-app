@@ -1,11 +1,9 @@
-import Vue from "vue"
 import { h } from "vue"
-import VueRouter, { RouteConfig } from "vue-router"
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
 import { Store } from "vuex"
 import { productDetailsGuard } from "./guards"
-Vue.use(VueRouter)
 
-const routes: Array<RouteConfig> = [
+const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     component: () =>
@@ -62,7 +60,7 @@ const routes: Array<RouteConfig> = [
         ],
       },
       {
-        path: "*",
+        path: "/:pathMatch(.*)*",
         name: "not-found",
         meta: { breadcrumb: "404 Error" },
         component: () =>
@@ -72,12 +70,11 @@ const routes: Array<RouteConfig> = [
   },
 ]
 
-const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL,
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
   routes,
   scrollBehavior() {
-    return { x: 0, y: 0 }
+    return { left: 0, top: 0 }
   },
 })
 
