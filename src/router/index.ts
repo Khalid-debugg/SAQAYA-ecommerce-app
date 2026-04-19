@@ -1,4 +1,5 @@
-import Vue, { CreateElement } from "vue"
+import Vue from "vue"
+import { h } from "vue"
 import VueRouter, { RouteConfig } from "vue-router"
 import { Store } from "vuex"
 import { productDetailsGuard } from "./guards"
@@ -35,7 +36,7 @@ const routes: Array<RouteConfig> = [
       {
         path: "products",
         meta: { breadcrumb: "Products" },
-        component: { render: (h: CreateElement) => h("router-view") },
+        component: { render: () => h("router-view") },
         children: [
           {
             path: "",

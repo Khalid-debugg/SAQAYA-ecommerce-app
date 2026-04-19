@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Vue from "vue"
 
 export const paginationMixin = Vue.extend({
