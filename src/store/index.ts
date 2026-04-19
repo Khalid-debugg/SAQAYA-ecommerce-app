@@ -1,13 +1,10 @@
-import Vue from "vue"
-import Vuex from "vuex"
+import { createStore } from "vuex"
 import { productsModule } from "./modules/products"
 import { cartModule } from "./modules/cart"
 import { uiModule } from "./modules/ui"
 import { cartPersistencePlugin } from "@/plugins/cartPersistence"
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+export default createStore({
   modules: {
     products: productsModule,
     cart: cartModule,
