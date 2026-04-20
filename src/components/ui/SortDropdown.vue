@@ -32,8 +32,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue, { PropType } from "vue"
+<script setup lang="ts">
+import { ref } from "vue"
 import AppIcon from "@/components/ui/AppIcon.vue"
 
 interface SortOption {
@@ -43,37 +43,20 @@ interface SortOption {
   order: string
 }
 
-export default Vue.extend({
-  name: "SortDropdown",
+defineProps<{
+  modelValue: SortOption
+  options: SortOption[]
+}>()
 
-  components: { AppIcon },
+const emit = defineEmits(["update:modelValue"])
 
-  props: {
-    modelValue: {
-      type: Object as PropType<SortOption>,
-      required: true,
-    },
-    options: {
-      type: Array as PropType<SortOption[]>,
-      required: true,
-    },
-  },
+const isOpen = ref(false)
 
-  data() {
-    return {
-      isOpen: false,
-    }
-  },
-
-  methods: {
-    toggleDropdown() {
-      this.isOpen = !this.isOpen
-    },
-
-    select(option: SortOption) {
-      this.$emit("update:modelValue", option)
-      this.isOpen = false
-    },
-  },
-})
+function toggleDropdown() {
+  isOpen.value = !isOpen.value
+}
+const select = (option: SortOption) => {
+  emit("update:modelValue", option)
+  isOpen.value = false
+}
 </script>

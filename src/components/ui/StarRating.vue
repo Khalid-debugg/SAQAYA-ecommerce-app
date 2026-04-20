@@ -9,33 +9,18 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue"
+<script setup lang="ts">
 import AppIcon from "@/components/ui/AppIcon.vue"
 
-export default Vue.extend({
-  name: "StarRating",
+const props = defineProps<{
+  rating: number
+  size?: number
+}>()
 
-  components: { AppIcon },
-
-  props: {
-    rating: {
-      type: Number,
-      required: true,
-    },
-    size: {
-      type: Number,
-      default: 20,
-    },
-  },
-
-  methods: {
-    getFill(index: number): number {
-      const diff = this.rating - (index - 1)
-      if (diff >= 1) return 100
-      if (diff <= 0) return 0
-      return Math.round(diff * 100)
-    },
-  },
-})
+const getFill = (index: number): number => {
+  const diff = props.rating - (index - 1)
+  if (diff >= 1) return 100
+  if (diff <= 0) return 0
+  return Math.round(diff * 100)
+}
 </script>

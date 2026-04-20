@@ -19,9 +19,11 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue"
-import { mapState } from "vuex"
+<script setup lang="ts">
+import { ref, computed, onMounted } from "vue"
+import { useRoute } from "vue-router"
+import { useProductsStore } from "@/store/products"
+import { useUiStore } from "@/store/ui"
 import { Product } from "@/types/product"
 import ProductsGrid from "@/components/business/ProductsGrid.vue"
 import SectionHeader from "@/components/ui/SectionHeader.vue"
@@ -38,146 +40,108 @@ interface SortOption {
   order: string
 }
 
-export default Vue.extend({
-  name: "ProductsView",
+const route = useRoute()
+const productsStore = useProductsStore()
+const uiStore = useUiStore()
 
-  components: { ProductsGrid, SectionHeader, SortDropdown },
+const selectedSort = ref<SortOption>({
+  label: "Default",
+  value: "default",
+  sortBy: "",
+  order: "",
+})
 
-  data() {
-    return {
-      selectedSort: {
-        label: "Default",
-        value: "default",
-        sortBy: "",
-        order: "",
-      } as SortOption,
-      fetchSkip: INITIAL_FETCH,
-      sortOptions: [
-        { label: "Default", value: "default", sortBy: "", order: "" },
-        {
-          label: "Highest Rating",
-          value: "rating",
-          sortBy: "rating",
-          order: "desc",
-        },
-        {
-          label: "Price: High to Low",
-          value: "price-high",
-          sortBy: "price",
-          order: "desc",
-        },
-        {
-          label: "Price: Low to High",
-          value: "price-low",
-          sortBy: "price",
-          order: "asc",
-        },
-        {
-          label: "Discount Percentage",
-          value: "discount",
-          sortBy: "discountPercentage",
-          order: "desc",
-        },
-      ] as SortOption[],
-    }
+const fetchSkip = ref(INITIAL_FETCH)
+
+const sortOptions: SortOption[] = [
+  { label: "Default", value: "default", sortBy: "", order: "" },
+  { label: "Highest Rating", value: "rating", sortBy: "rating", order: "desc" },
+  {
+    label: "Price: High to Low",
+    value: "price-high",
+    sortBy: "price",
+    order: "desc",
   },
-
-  computed: {
-    ...mapState("products", [
-      "productsList",
-      "totalProducts",
-      "visibleCount",
-      "currentCategory",
-      "currentSort",
-    ]),
-
-    category(): string {
-      return (this.$route.query.category as string) || ""
-    },
-
-    isLoading(): boolean {
-      return this.$store.getters["ui/IS_LOADING"]("fetchProducts")
-    },
-
-    error(): string | null {
-      return this.$store.getters["ui/GET_ERROR"]("fetchProducts")
-    },
-
-    canLoadMore(): boolean {
-      return this.visibleCount < this.totalProducts
-    },
-
-    visibleProducts(): Product[] {
-      return this.productsList.slice(0, this.visibleCount)
-    },
-
-    isSameRequest(): boolean {
-      return (
-        this.productsList.length > 0 &&
-        this.currentCategory === this.category &&
-        this.currentSort.sortBy === this.selectedSort.sortBy &&
-        this.currentSort.order === this.selectedSort.order
-      )
-    },
+  {
+    label: "Price: Low to High",
+    value: "price-low",
+    sortBy: "price",
+    order: "asc",
   },
-
-  mounted() {
-    const matched = this.sortOptions.find(
-      (o) =>
-        o.sortBy === this.currentSort.sortBy &&
-        o.order === this.currentSort.order
-    )
-    if (matched) {
-      this.selectedSort = matched
-    }
-
-    if (this.isSameRequest) {
-      this.fetchSkip = this.productsList.length
-    } else {
-      this.resetAndLoad()
-    }
+  {
+    label: "Discount Percentage",
+    value: "discount",
+    sortBy: "discountPercentage",
+    order: "desc",
   },
+]
 
-  methods: {
-    resetAndLoad() {
-      this.fetchSkip = INITIAL_FETCH
-      this.$store.commit("products/SET_PRODUCTS_LIST", [])
-      this.$store.commit("products/SET_VISIBLE_COUNT", RENDER_LIMIT)
-      this.$store.commit("products/SET_CURRENT_CATEGORY", this.category)
-      this.$store.commit("products/SET_CURRENT_SORT", {
-        sortBy: this.selectedSort.sortBy,
-        order: this.selectedSort.order,
-      })
-      this.fetchProducts(0, INITIAL_FETCH)
-    },
+const category = computed(() => (route.query.category as string) || "")
+const isLoading = computed(() => uiStore.isLoading("fetchProducts"))
+const error = computed(() => uiStore.getError("fetchProducts"))
+const canLoadMore = computed(
+  () => productsStore.visibleCount < productsStore.totalProducts
+)
+const visibleProducts = computed((): Product[] =>
+  productsStore.productsList.slice(0, productsStore.visibleCount)
+)
 
-    loadMore() {
-      this.$store.commit(
-        "products/SET_VISIBLE_COUNT",
-        this.visibleCount + RENDER_LIMIT
-      )
-      if (this.productsList.length < this.visibleCount + RENDER_LIMIT) {
-        this.fetchProducts(this.fetchSkip, REFILL_FETCH)
-        this.fetchSkip += REFILL_FETCH
-      }
-    },
+const isSameRequest = computed(
+  () =>
+    productsStore.productsList.length > 0 &&
+    productsStore.currentCategory === category.value &&
+    productsStore.currentSort.sortBy === selectedSort.value.sortBy &&
+    productsStore.currentSort.order === selectedSort.value.order
+)
 
-    fetchProducts(skip: number, limit: number) {
-      const params = {
-        limit,
-        skip,
-        sortBy: this.selectedSort.sortBy,
-        order: this.selectedSort.order,
-      }
-      if (this.category) {
-        this.$store.dispatch("products/fetchProductsByCategory", {
-          category: this.category,
-          ...params,
-        })
-      } else {
-        this.$store.dispatch("products/fetchProducts", params)
-      }
-    },
-  },
+const resetAndLoad = () => {
+  fetchSkip.value = INITIAL_FETCH
+  productsStore.productsList = []
+  productsStore.visibleCount = RENDER_LIMIT
+  productsStore.currentCategory = category.value
+  productsStore.currentSort = {
+    sortBy: selectedSort.value.sortBy,
+    order: selectedSort.value.order,
+  }
+  fetchProducts(0, INITIAL_FETCH)
+}
+const loadMore = () => {
+  productsStore.visibleCount += RENDER_LIMIT
+  if (productsStore.productsList.length < productsStore.visibleCount) {
+    fetchProducts(fetchSkip.value, REFILL_FETCH)
+    fetchSkip.value += REFILL_FETCH
+  }
+}
+const fetchProducts = (skip: number, limit: number) => {
+  const params = {
+    limit,
+    skip,
+    sortBy: selectedSort.value.sortBy,
+    order: selectedSort.value.order,
+  }
+
+  if (category.value) {
+    productsStore.fetchProductsByCategory({
+      ...params,
+      category: category.value,
+    })
+  } else {
+    productsStore.fetchProducts(params)
+  }
+}
+
+onMounted(() => {
+  const matched = sortOptions.find(
+    (o) =>
+      o.sortBy === productsStore.currentSort.sortBy &&
+      o.order === productsStore.currentSort.order
+  )
+  if (matched) selectedSort.value = matched
+
+  if (isSameRequest.value) {
+    fetchSkip.value = productsStore.productsList.length
+  } else {
+    resetAndLoad()
+  }
 })
 </script>

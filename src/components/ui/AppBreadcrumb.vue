@@ -22,36 +22,33 @@
   </nav>
 </template>
 
-<script lang="ts">
-import Vue from "vue"
+<script setup lang="ts">
+import { computed } from "vue"
+import { useRoute } from "vue-router"
+import { useProductsStore } from "@/store/products"
 
 interface Crumb {
   label: string
   to?: string
 }
 
-export default Vue.extend({
-  name: "AppBreadcrumb",
+const route = useRoute()
+const productsStore = useProductsStore()
 
-  computed: {
-    crumbs(): Crumb[] {
-      const matched = this.$route.matched.filter(
-        (route) => "breadcrumb" in route.meta
-      )
+const crumbs = computed((): Crumb[] => {
+  const matched = route.matched.filter((route) => "breadcrumb" in route.meta)
 
-      return matched.map((route, index) => {
-        const isLast = index === matched.length - 1
-        const { breadcrumb } = route.meta
+  return matched.map((route, index) => {
+    const isLast = index === matched.length - 1
+    const { breadcrumb } = route.meta
 
-        return {
-          label:
-            typeof breadcrumb === "function"
-              ? breadcrumb(this.$store)
-              : breadcrumb,
-          to: isLast ? undefined : route.path || "/",
-        }
-      })
-    },
-  },
+    return {
+      label:
+        typeof breadcrumb === "function"
+          ? breadcrumb(productsStore)
+          : (breadcrumb as string),
+      to: isLast ? undefined : route.path || "/",
+    }
+  })
 })
 </script>

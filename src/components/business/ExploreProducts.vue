@@ -12,7 +12,8 @@
       :is-loading="isLoading"
       :error="error"
       :is-empty="!products.length"
-      @retry="retry"
+      @retry="productsStore.fetchHomeProducts"
+      empty-message="No Products to show"
     >
       <transition-group name="slide" tag="div" class="explore__grid">
         <product-card
@@ -31,53 +32,42 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue, { PropType } from "vue"
+<script setup lang="ts">
+import { computed } from "vue"
+import { useRouter } from "vue-router"
 import { Product } from "@/types/product"
-import { CartItem } from "@/types/cart"
-import { paginationMixin } from "@/mixins/pagination"
+import { useCartStore } from "@/store/cart"
+import { useProductsStore } from "@/store/products"
+import { useUiStore } from "@/store/ui"
+import { usePagination } from "@/composables/usePagination"
 import ProductCard from "@/components/business/ProductCard.vue"
 import SectionHeader from "@/components/ui/SectionHeader.vue"
 import AppButton from "@/components/ui/AppButton.vue"
 import AsyncList from "@/components/ui/AsyncList.vue"
 
-export default Vue.extend({
-  name: "ExploreProducts",
-  components: { ProductCard, SectionHeader, AppButton, AsyncList },
-  mixins: [paginationMixin],
-  props: {
-    products: {
-      type: Array as PropType<Product[]>,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      itemsPerPage: 8,
-    }
-  },
-  computed: {
-    items(): Product[] {
-      return this.products
-    },
-    isLoading(): boolean {
-      return this.$store.getters["ui/IS_LOADING"]("fetchHomeProducts")
-    },
-    error(): string | null {
-      return this.$store.getters["ui/GET_ERROR"]("fetchHomeProducts")
-    },
-  },
-  methods: {
-    addToCart(product: Product) {
-      const cartItem: CartItem = { product, quantity: 1 }
-      this.$store.commit("cart/ADD_TO_CART", cartItem)
-    },
-    viewAllProducts() {
-      this.$router.push({ name: "products-list" })
-    },
-    retry() {
-      this.$store.dispatch("products/fetchHomeProducts")
-    },
-  },
-})
+const props = defineProps<{
+  products: Product[]
+}>()
+
+const router = useRouter()
+const cartStore = useCartStore()
+const productsStore = useProductsStore()
+const uiStore = useUiStore()
+
+const itemsPerPage = 8
+const items = computed(() => props.products)
+const { hasPrev, hasNext, paginatedItems, prev, next } = usePagination(
+  items,
+  itemsPerPage
+)
+
+const isLoading = computed(() => uiStore.isLoading("fetchHomeProducts"))
+const error = computed(() => uiStore.getError("fetchHomeProducts"))
+
+const addToCart = (product: Product) => {
+  cartStore.addToCart(product, 1)
+}
+const viewAllProducts = () => {
+  router.push({ name: "products-list" })
+}
 </script>

@@ -5,7 +5,7 @@
       :error="error && !products.length ? error : null"
       :is-empty="!isLoading && !error && !products.length"
       empty-message="No products to show."
-      @retry="$emit('retry')"
+      @retry="retry"
     >
       <div class="products-grid__inner">
         <product-card
@@ -25,49 +25,30 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue, { PropType } from "vue"
+<script setup lang="ts">
 import { Product } from "@/types/product"
-import { CartItem } from "@/types/cart"
+import { useCartStore } from "@/store/cart"
 import ProductCard from "@/components/business/ProductCard.vue"
 import AppButton from "@/components/ui/AppButton.vue"
 import AsyncList from "@/components/ui/AsyncList.vue"
 
-export default Vue.extend({
-  name: "ProductsGrid",
+defineProps<{
+  products: Product[]
+  canLoadMore: boolean
+  isLoading: boolean
+  error: string | null
+}>()
 
-  components: { ProductCard, AppButton, AsyncList },
+const emit = defineEmits(["retry", "load-more"])
+const cartStore = useCartStore()
 
-  props: {
-    products: {
-      type: Array as PropType<Product[]>,
-      required: true,
-    },
-    canLoadMore: {
-      type: Boolean,
-      default: false,
-    },
-    isLoading: {
-      type: Boolean,
-      default: false,
-    },
-    error: {
-      type: String as () => string | null,
-      default: null,
-    },
-  },
-
-  methods: {
-    addToCart(product: Product) {
-      const cartItem: CartItem = { product, quantity: 1 }
-      this.$store.commit("cart/ADD_TO_CART", cartItem)
-    },
-    retry() {
-      this.$emit("retry")
-    },
-    loadMore() {
-      this.$emit("load-more")
-    },
-  },
-})
+const retry = () => {
+  emit("retry")
+}
+const loadMore = () => {
+  emit("load-more")
+}
+const addToCart = (product: Product) => {
+  cartStore.addToCart(product, 1)
+}
 </script>

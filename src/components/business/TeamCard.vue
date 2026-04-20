@@ -10,7 +10,7 @@
         <app-icon
           v-for="social in socials"
           :key="social"
-          :name="social"
+          :name="social as IconName"
           :size="20"
           class="team-card__social"
         />
@@ -19,31 +19,15 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue"
+<script setup lang="ts">
 import AppIcon from "@/components/ui/AppIcon.vue"
+import { IconName } from "../ui/icons"
 
-export default Vue.extend({
-  name: "TeamCard",
-  components: { AppIcon },
-  props: {
-    name: {
-      type: String,
-      required: true,
-    },
-    role: {
-      type: String,
-      required: true,
-    },
-    photo: {
-      type: String,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      socials: ["twitter", "instagram", "linkedin"],
-    }
-  },
-})
+defineProps<{
+  name: string
+  role: string
+  photo: string
+}>()
+
+const socials = ["twitter", "instagram", "linkedin"]
 </script>

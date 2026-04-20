@@ -78,7 +78,7 @@
             <app-icon
               v-for="social in socials"
               :key="social"
-              :name="social"
+              :name="social as IconName"
               class="the-footer__social"
             />
           </div>
@@ -96,56 +96,49 @@
   </footer>
 </template>
 
-<script lang="ts">
-import Vue from "vue"
+<script setup lang="ts">
+import { ref } from "vue"
 import AppIcon from "@/components/ui/AppIcon.vue"
 import googlePlay from "@/assets/images/footer/google-play.svg"
 import appStore from "@/assets/images/footer/app-store.svg"
+import { IconName } from "../ui/icons"
 
-export default Vue.extend({
-  name: "TheFooter",
+const emit = defineEmits(["open-cart"])
 
-  components: { AppIcon },
+const email = ref("")
 
-  data() {
-    return {
-      email: "",
+const support = {
+  address: "111 Bijoy sarani, Dhaka, DH 1515, Bangladesh.",
+  email: "exclusive@gmail.com",
+  phone: "+88015-88888-9999",
+}
 
-      support: {
-        address: "111 Bijoy sarani, Dhaka, DH 1515, Bangladesh.",
-        email: "exclusive@gmail.com",
-        phone: "+88015-88888-9999",
-      },
-
-      navColumns: [
-        {
-          heading: "Account",
-          links: [
-            { label: "My Account", to: "#" },
-            { label: "Login / Register", to: "#" },
-            { label: "Cart", to: null, action: () => this.$emit("open-cart") },
-            { label: "Wishlist", to: "#" },
-            { label: "Shop", to: "/products" },
-          ],
-        },
-        {
-          heading: "Quick Link",
-          links: [
-            { label: "Privacy Policy", to: "#" },
-            { label: "Terms Of Use", to: "#" },
-            { label: "FAQ", to: "#" },
-            { label: "Contact", to: "/contact" },
-          ],
-        },
-      ],
-
-      appBadges: [
-        { src: googlePlay, alt: "Google Play Badge" },
-        { src: appStore, alt: "App Store Badge" },
-      ],
-
-      socials: ["facebook", "twitter", "instagram", "linkedin"],
-    }
+const navColumns = [
+  {
+    heading: "Account",
+    links: [
+      { label: "My Account", to: "#", action: null },
+      { label: "Login / Register", to: "#", action: null },
+      { label: "Cart", to: null, action: () => emit("open-cart") },
+      { label: "Wishlist", to: "#", action: null },
+      { label: "Shop", to: "/products", action: null },
+    ],
   },
-})
+  {
+    heading: "Quick Link",
+    links: [
+      { label: "Privacy Policy", to: "#", action: null },
+      { label: "Terms Of Use", to: "#", action: null },
+      { label: "FAQ", to: "#", action: null },
+      { label: "Contact", to: "/contact", action: null },
+    ],
+  },
+]
+
+const appBadges = [
+  { src: googlePlay, alt: "Google Play Badge" },
+  { src: appStore, alt: "App Store Badge" },
+]
+
+const socials = ["facebook", "twitter", "instagram", "linkedin"]
 </script>

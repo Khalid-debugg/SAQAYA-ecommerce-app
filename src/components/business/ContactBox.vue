@@ -15,8 +15,7 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue"
+<script setup lang="ts">
 import AppIcon from "@/components/ui/AppIcon.vue"
 import { IconName } from "@/components/ui/icons/index"
 
@@ -25,28 +24,10 @@ interface ContactDetail {
   value: string
 }
 
-export default Vue.extend({
-  name: "ContactBox",
-
-  components: { AppIcon },
-
-  props: {
-    icon: {
-      type: String as () => IconName,
-      required: true,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    contact: {
-      type: Array as () => ContactDetail[],
-      default: () => [],
-    },
-  },
-})
+defineProps<{
+  icon: IconName
+  title: string
+  description: string
+  contact?: ContactDetail[]
+}>()
 </script>

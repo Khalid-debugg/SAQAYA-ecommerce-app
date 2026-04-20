@@ -25,9 +25,11 @@
 
           <button class="the-header__cart" @click="openCart">
             <app-icon name="cart" />
-            <span v-if="cartCount > 0" class="the-header__cart-count">{{
-              cartCount
-            }}</span>
+            <span
+              v-if="cartStore.itemsCount > 0"
+              class="the-header__cart-count"
+              >{{ cartStore.itemsCount }}</span
+            >
           </button>
         </div>
 
@@ -38,10 +40,7 @@
     </div>
 
     <app-drawer title="Menu" :isOpen="isMenuOpen" @close="isMenuOpen = false">
-      <form
-        class="the-header__search nav-menu__search"
-        @submit.prevent="onSearch"
-      >
+      <form class="the-header__search nav-menu__search" @submit.prevent>
         <app-input
           v-model="searchQuery"
           placeholder="What are you looking for?"
@@ -65,44 +64,31 @@
   </header>
 </template>
 
-<script lang="ts">
-import Vue from "vue"
+<script setup lang="ts">
+import { ref } from "vue"
+import { useCartStore } from "@/store/cart"
 import AppIcon from "@/components/ui/AppIcon.vue"
 import AppInput from "@/components/ui/AppInput.vue"
 import AppDrawer from "@/components/layouts/AppDrawer.vue"
 
-export default Vue.extend({
-  name: "TheHeader",
+const emit = defineEmits(["open-cart"])
+const cartStore = useCartStore()
 
-  components: { AppIcon, AppInput, AppDrawer },
+const searchQuery = ref("")
+const isMenuOpen = ref(false)
 
-  data() {
-    return {
-      searchQuery: "",
-      isMenuOpen: false,
-      navLinks: [
-        { to: "/", label: "Home" },
-        { to: "/contact", label: "Contact" },
-        { to: "/products", label: "Products" },
-        { to: "/about", label: "About" },
-      ],
-    }
-  },
+const navLinks = [
+  { to: "/", label: "Home" },
+  { to: "/contact", label: "Contact" },
+  { to: "/products", label: "Products" },
+  { to: "/about", label: "About" },
+]
 
-  computed: {
-    cartCount(): number {
-      return this.$store.getters["cart/GET_ITEMS_COUNT"]
-    },
-  },
-
-  methods: {
-    toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen
-    },
-    openCart() {
-      this.isMenuOpen = false
-      this.$emit("open-cart")
-    },
-  },
-})
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
+const openCart = () => {
+  isMenuOpen.value = false
+  emit("open-cart")
+}
 </script>

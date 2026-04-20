@@ -29,7 +29,7 @@
     <p class="product-info__category">
       Category:&nbsp;
       <router-link
-        :to="{ name: 'products', query: { category: product.category } }"
+        :to="{ name: 'products-list', query: { category: product.category } }"
         class="product-info__category-link"
       >
         {{ product.category }}
@@ -91,35 +91,30 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue, { PropType } from "vue"
+<script setup lang="ts">
+import { ref } from "vue"
 import { Product } from "@/types/product"
-import { CartItem } from "@/types/cart"
+import { useCartStore } from "@/store/cart"
 import StarRating from "@/components/ui/StarRating.vue"
 import AppButton from "@/components/ui/AppButton.vue"
 import AppIcon from "@/components/ui/AppIcon.vue"
 
-export default Vue.extend({
-  name: "ProductInfo",
-  components: { StarRating, AppButton, AppIcon },
-  props: { product: { type: Object as PropType<Product>, required: true } },
-  data() {
-    return { quantity: 1 }
-  },
-  methods: {
-    increment() {
-      if (this.quantity < this.product.stock) this.quantity++
-    },
-    decrement() {
-      if (this.quantity > 1) this.quantity--
-    },
-    addToCart() {
-      const cartItem: CartItem = {
-        product: this.product,
-        quantity: this.quantity,
-      }
-      this.$store.commit("cart/ADD_TO_CART", cartItem)
-    },
-  },
-})
+const props = defineProps<{
+  product: Product
+}>()
+
+const cartStore = useCartStore()
+const quantity = ref(1)
+
+function increment() {
+  if (quantity.value < props.product.stock) quantity.value++
+}
+
+function decrement() {
+  if (quantity.value > 1) quantity.value--
+}
+
+function addToCart() {
+  cartStore.addToCart(props.product, quantity.value)
+}
 </script>

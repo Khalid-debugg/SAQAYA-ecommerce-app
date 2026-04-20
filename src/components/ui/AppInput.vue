@@ -5,7 +5,7 @@
     :placeholder="placeholder"
     :required="required"
     class="textarea"
-    @input="updateValue($event)"
+    @input="updateValue"
   />
   <input
     v-else
@@ -14,38 +14,26 @@
     :placeholder="placeholder"
     :required="required"
     class="input"
-    @input="updateValue($event)"
+    @input="updateValue"
   />
 </template>
 
-<script lang="ts">
-import Vue from "vue"
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    modelValue: string
+    type?: string
+    placeholder?: string
+    required?: boolean
+  }>(),
+  {
+    type: "text",
+    placeholder: "",
+  }
+)
 
-export default Vue.extend({
-  name: "AppInput",
+const emit = defineEmits(["update:modelValue"])
 
-  props: {
-    modelValue: {
-      type: String,
-      default: "",
-    },
-    type: {
-      type: String,
-      default: "text",
-    },
-    placeholder: {
-      type: String,
-      default: "",
-    },
-    required: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  methods: {
-    updateValue(event: Event) {
-      this.$emit("update:modelValue", (event.target as HTMLInputElement).value)
-    },
-  },
-})
+const updateValue = (event: Event) =>
+  emit("update:modelValue", (event.target as HTMLInputElement).value)
 </script>

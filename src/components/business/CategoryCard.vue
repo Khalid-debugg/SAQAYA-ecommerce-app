@@ -1,31 +1,26 @@
 <template>
   <button class="category-card" @click="navigate">
-    <app-icon :name="category.slug" :width="56" :height="56" />
+    <app-icon :name="category.slug as IconName" :size="56" />
     <span class="category-card__name">{{ category.name }}</span>
   </button>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { useRouter } from "vue-router"
 import { ProductCategory } from "@/types/product"
-import Vue, { PropType } from "vue"
-import AppIcon from "../ui/AppIcon.vue"
+import AppIcon from "@/components/ui/AppIcon.vue"
+import { IconName } from "../ui/icons"
 
-export default Vue.extend({
-  name: "CategoryCard",
-  components: { AppIcon },
-  props: {
-    category: {
-      type: Object as PropType<ProductCategory>,
-      required: true,
-    },
-  },
-  methods: {
-    navigate() {
-      this.$router.push({
-        name: "products-list",
-        query: { category: this.category.slug },
-      })
-    },
-  },
-})
+const props = defineProps<{
+  category: ProductCategory
+}>()
+
+const router = useRouter()
+
+function navigate() {
+  router.push({
+    name: "products-list",
+    query: { category: props.category.slug },
+  })
+}
 </script>

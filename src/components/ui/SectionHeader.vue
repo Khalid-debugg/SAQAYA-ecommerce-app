@@ -26,38 +26,22 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue"
+<script setup lang="ts">
 import AppIcon from "@/components/ui/AppIcon.vue"
 
-export default Vue.extend({
-  name: "SectionHeader",
-  components: { AppIcon },
-  props: {
-    label: {
-      type: String,
-      default: "",
-    },
-    title: {
-      type: String,
-      default: "",
-    },
-    hasPrev: {
-      type: Boolean,
-      default: undefined,
-    },
-    hasNext: {
-      type: Boolean,
-      default: undefined,
-    },
-  },
-  methods: {
-    onPrev() {
-      this.$emit("prev")
-    },
-    onNext() {
-      this.$emit("next")
-    },
-  },
-})
+defineProps<{
+  label?: string
+  title?: string
+  hasPrev?: boolean
+  hasNext?: boolean
+}>()
+
+const emit = defineEmits(["prev", "next"])
+
+const onPrev = () => {
+  emit("prev")
+}
+const onNext = () => {
+  emit("next")
+}
 </script>
