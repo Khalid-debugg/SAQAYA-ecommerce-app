@@ -52,7 +52,7 @@
   transition: transform 0.3s ease;
 }
 
-.drawer-slide-right-enter,
+.drawer-slide-right-enter-from,
 .drawer-slide-right-leave-to {
   transform: translateX(100%);
 }
@@ -62,7 +62,7 @@
   transition: opacity 0.3s ease;
 }
 
-.drawer-overlay-enter,
+.drawer-overlay-enter-from,
 .drawer-overlay-leave-to {
   opacity: 0;
 }

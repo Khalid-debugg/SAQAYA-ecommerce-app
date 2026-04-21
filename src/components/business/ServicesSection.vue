@@ -10,24 +10,17 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue, { PropType } from "vue"
+<script setup lang="ts">
 import ServiceCard from "@/components/business/ServiceCard.vue"
+import { IconName } from "../ui/icons"
 
 interface Service {
-  icon: string
+  icon: IconName
   title: string
   subtitle: string
 }
 
-export default Vue.extend({
-  name: "ServicesSection",
-  components: { ServiceCard },
-  props: {
-    services: {
-      type: Array as PropType<Service[]>,
-      required: true,
-    },
-  },
-})
+defineProps<{
+  services: Service[]
+}>()
 </script>

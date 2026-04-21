@@ -1,18 +1,30 @@
 import { shallowMount } from "@vue/test-utils"
 import CartSummary from "@/components/business/CartSummary.vue"
 
-const mountCartSummary = (subtotal = 0, shippingCost = 0, total = 0) =>
-  shallowMount(CartSummary, {
-    mocks: {
-      $store: {
-        getters: {
-          "cart/GET_SUBTOTAL_USD": subtotal,
-          "cart/GET_SHIPPING_COST": shippingCost,
-          "cart/GET_TOTAL_USD": total,
-        },
-      },
+let mockSubtotal = 0
+let mockShippingCost = 0
+let mockTotal = 0
+
+jest.mock("@/store/cart", () => ({
+  useCartStore: () => ({
+    get subtotalUSD() {
+      return mockSubtotal
     },
-  })
+    get shippingCost() {
+      return mockShippingCost
+    },
+    get totalUSD() {
+      return mockTotal
+    },
+  }),
+}))
+
+const mountCartSummary = (subtotalUSD = 0, shippingCost = 0, totalUSD = 0) => {
+  mockSubtotal = subtotalUSD
+  mockShippingCost = shippingCost
+  mockTotal = totalUSD
+  return shallowMount(CartSummary)
+}
 
 describe("CartSummary", () => {
   describe("totals", () => {

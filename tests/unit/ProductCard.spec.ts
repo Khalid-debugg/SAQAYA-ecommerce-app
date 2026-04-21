@@ -102,8 +102,12 @@ const productNewWithDiscount: Product = {
 }
 const mountCardWrapper = (product: Product) =>
   shallowMount(ProductCard, {
-    propsData: { product },
-    stubs: { RouterLink: true },
+    props: { product },
+    global: {
+      stubs: {
+        RouterLink: { template: "<a><slot /></a>" },
+      },
+    },
   })
 
 describe("ProductCard", () => {

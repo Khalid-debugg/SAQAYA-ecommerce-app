@@ -1,12 +1,16 @@
-import Vue from "vue"
+import { createApp } from "vue"
+import { pinia } from "./store"
 import App from "./App.vue"
 import router from "./router"
-import store from "./store"
 import "@/styles/main.scss"
-Vue.config.productionTip = false
 
-new Vue({
-  router,
-  store,
-  render: (h) => h(App),
-}).$mount("#app")
+const app = createApp(App)
+
+app.use(pinia)
+app.use(router)
+app.mount("#app")
+
+import { useCartStore } from "@/store/cart"
+const cartStore = useCartStore()
+cartStore.loadFromStorage()
+cartStore.persistToStorage()

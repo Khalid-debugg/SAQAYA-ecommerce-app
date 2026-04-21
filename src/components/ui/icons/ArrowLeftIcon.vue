@@ -16,13 +16,15 @@
   </svg>
 </template>
 
-<script lang="ts">
-import Vue from "vue"
-export default Vue.extend({
-  name: "ArrowLeftIcon",
-  props: {
-    width: { type: Number, default: 24 },
-    height: { type: Number, default: 24 },
-  },
-})
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    width?: number
+    height?: number
+  }>(),
+  {
+    width: 24,
+    height: 24,
+  }
+)
 </script>

@@ -19,25 +19,17 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue"
+<script setup lang="ts">
 import AppIcon from "@/components/ui/AppIcon.vue"
-export default Vue.extend({
-  components: { AppIcon },
-  props: {
-    isOpen: {
-      type: Boolean,
-      default: false,
-    },
-    title: {
-      type: String,
-      default: "",
-    },
-  },
-  methods: {
-    close() {
-      this.$emit("close")
-    },
-  },
-})
+
+defineProps<{
+  isOpen: boolean
+  title: string
+}>()
+
+const emit = defineEmits(["close"])
+
+const close = () => {
+  emit("close")
+}
 </script>

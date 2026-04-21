@@ -1,46 +1,39 @@
 <template>
   <textarea
     v-if="type === 'textarea'"
-    :value="value"
+    :value="modelValue"
     :placeholder="placeholder"
     :required="required"
     class="textarea"
-    @input="$emit('input', $event.target.value)"
+    @input="updateValue"
   />
   <input
     v-else
     :type="type"
-    :value="value"
+    :value="modelValue"
     :placeholder="placeholder"
     :required="required"
     class="input"
-    @input="$emit('input', $event.target.value)"
+    @input="updateValue"
   />
 </template>
 
-<script lang="ts">
-import Vue from "vue"
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    modelValue: string
+    type?: string
+    placeholder?: string
+    required?: boolean
+  }>(),
+  {
+    type: "text",
+    placeholder: "",
+  }
+)
 
-export default Vue.extend({
-  name: "AppInput",
+const emit = defineEmits(["update:modelValue"])
 
-  props: {
-    value: {
-      type: String,
-      default: "",
-    },
-    type: {
-      type: String,
-      default: "text",
-    },
-    placeholder: {
-      type: String,
-      default: "",
-    },
-    required: {
-      type: Boolean,
-      default: false,
-    },
-  },
-})
+const updateValue = (event: Event) =>
+  emit("update:modelValue", (event.target as HTMLInputElement).value)
 </script>

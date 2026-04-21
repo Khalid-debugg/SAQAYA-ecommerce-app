@@ -21,10 +21,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue, { PropType } from "vue"
+<script setup lang="ts">
+import { computed } from "vue"
+import { usePagination } from "@/composables/usePagination"
 import TeamCard from "@/components/business/TeamCard.vue"
-import { paginationMixin } from "@/mixins/pagination"
 
 interface TeamMember {
   name: string
@@ -32,25 +32,14 @@ interface TeamMember {
   photo: string
 }
 
-export default Vue.extend({
-  name: "TeamSection",
-  components: { TeamCard },
-  mixins: [paginationMixin],
-  props: {
-    members: {
-      type: Array as PropType<TeamMember[]>,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      itemsPerPage: 3,
-    }
-  },
-  computed: {
-    items(): TeamMember[] {
-      return this.members
-    },
-  },
-})
+const props = defineProps<{
+  members: TeamMember[]
+}>()
+
+const itemsPerPage = 3
+const items = computed(() => props.members)
+const { currentPage, totalPages, paginatedItems } = usePagination(
+  items,
+  itemsPerPage
+)
 </script>

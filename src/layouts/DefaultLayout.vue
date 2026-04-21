@@ -16,20 +16,13 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from "vue"
 import TheHeader from "@/components/layouts/TheHeader.vue"
 import TheFooter from "@/components/layouts/TheFooter.vue"
 import CartView from "@/views/CartView.vue"
 import AppDrawer from "@/components/layouts/AppDrawer.vue"
 import AppBreadcrumb from "@/components/ui/AppBreadcrumb.vue"
 
-export default {
-  components: { TheHeader, TheFooter, CartView, AppDrawer, AppBreadcrumb },
-
-  data() {
-    return {
-      isCartOpen: false,
-    }
-  },
-}
+const isCartOpen = ref(false)
 </script>

@@ -5,7 +5,7 @@
       data-test="remove-btn"
       @click="removeItem"
     >
-      <app-icon name="close" :width="16" :height="16" />
+      <app-icon name="close" :size="16" />
     </button>
     <img
       class="cart-item__image"
@@ -24,14 +24,14 @@
           data-test="increment-btn"
           @click="incrementItemQuantity"
         >
-          <app-icon name="arrow-up" width="9" height="6" />
+          <app-icon name="arrow-up" :size="9" />
         </button>
         <button
           class="cart-item__qty-btn"
           data-test="decrement-btn"
           @click="decrementItemQuantity"
         >
-          <app-icon name="arrow-down" width="9" height="6" />
+          <app-icon name="arrow-down" :size="9" />
         </button>
       </div>
     </div>
@@ -41,36 +41,29 @@
   </div>
 </template>
 
-<script lang="ts">
-import { CartItem } from "@/types/cart"
-import Vue, { PropType } from "vue"
+<script setup lang="ts">
 import AppIcon from "@/components/ui/AppIcon.vue"
+import { CartItem } from "@/types/cart"
 
-export default Vue.extend({
-  name: "CartItem",
-  components: { AppIcon },
-  props: {
-    cartItem: {
-      type: Object as PropType<CartItem>,
-      required: true,
-    },
-  },
-  methods: {
-    removeItem() {
-      this.$emit("remove", this.cartItem.product.id)
-    },
-    incrementItemQuantity() {
-      this.$emit("update-quantity", {
-        id: this.cartItem.product.id,
-        quantity: this.cartItem.quantity + 1,
-      })
-    },
-    decrementItemQuantity() {
-      this.$emit("update-quantity", {
-        id: this.cartItem.product.id,
-        quantity: this.cartItem.quantity - 1,
-      })
-    },
-  },
-})
+const props = defineProps<{
+  cartItem: CartItem
+}>()
+
+const emit = defineEmits(["update-quantity", "remove"])
+
+const removeItem = () => {
+  emit("remove", props.cartItem.product.id)
+}
+const incrementItemQuantity = () => {
+  emit("update-quantity", {
+    id: props.cartItem.product.id,
+    quantity: props.cartItem.quantity + 1,
+  })
+}
+const decrementItemQuantity = () => {
+  emit("update-quantity", {
+    id: props.cartItem.product.id,
+    quantity: props.cartItem.quantity - 1,
+  })
+}
 </script>

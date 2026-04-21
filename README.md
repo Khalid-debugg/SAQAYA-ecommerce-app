@@ -1,6 +1,6 @@
 # Saqaya E-commerce App
 
-A Vue 2 e-commerce application built as part of the Saqaya internship program.
+A Vue 3 e-commerce application built as part of the Saqaya internship program.
 
 ---
 
@@ -55,12 +55,13 @@ src/
 │   ├── forms/             # form components
 │   ├── layouts/           # Header, Footer, AppDrawer
 │   └── ui/                # reusable primitives and icon registry
+├── composables/           # usePagination composable (replaces mixins/)
 ├── layouts/               # page layout wrappers (DefaultLayout)
-├── mixins/                # shared Vue mixins (pagination)
 ├── plugins/               # Vue plugins (axios, cart persistence)
-├── router/                # Vue Router 3 config with guards and lazy-loaded routes
+├── router/                # Vue Router 4 config with guards and lazy-loaded routes
 ├── services/              # API call functions
-├── store/                 # Vuex store with namespaced modules (products, cart, ui)
+├── store/                 # flat Pinia stores (cart.ts, products.ts, ui.ts)
+│   └── index.ts           # createPinia() + re-exports
 ├── styles/
 │   ├── abstracts/         # design tokens and mixins
 │   ├── base/              # reset, typography, font declarations
@@ -100,18 +101,49 @@ Follows [Conventional Commits](https://www.conventionalcommits.org/):
 
 ## Tech Stack
 
-- Vue 2 + Vue CLI
+- Vue 3 + Vue CLI
 - TypeScript
-- Vue Router 3
-- Vuex 3
+- Vue Router 4
+- Pinia
 - SCSS (7-1 inspired architecture)
 - ESLint + Prettier
-- Jest + Vue Test Utils
+- Jest + Vue Test Utils v2
 - GitHub Actions (CI)
 
 ---
 
 ## Progress Log
+
+### Week 4 — Migration + Documentation + Polishing
+
+**Vue 3 Migration**
+
+- Installed `@vue/compat` as a compatibility bridge to surface Vue 2 patterns as warnings before removing them entirely
+- Updated transition class names from `.slide-enter` to `.slide-enter-from` following Vue 3's renamed hooks
+- Migrated `main.ts` from `new Vue()` to `createApp()` and upgraded Vue Router 3 → 4 and Vuex 3 → 4
+- Fixed all Vue 3 runtime warnings — removed `@click.native`, migrated `AppInput` and `SortDropdown` to the new `v-model` convention (`modelValue` + `update:modelValue`)
+- Removed `@vue/compat` and switched to pure Vue 3
+
+**Pinia Migration**
+
+- Replaced Vuex with Pinia — no more mutations, namespaced modules, or string-based dispatch calls
+- Adopted flat single-file store structure (`cart.ts`, `products.ts`, `ui.ts`) following the official Pinia docs recommendation
+- Stores are imported and called directly in components via `useCartStore()`, `useProductsStore()`, `useUiStore()`
+
+**Composition API**
+
+- Migrated all 40+ components from Options API to `<script setup>`
+- Converted the `paginationMixin` to a `usePagination<T>` composable — mixins are deprecated in Vue 3
+- Replaced `$store`, `$route`, and `$router` globals with `useCartStore()`, `useRoute()`, and `useRouter()` direct imports
+- Refactored API functions and store actions to accept params objects instead of individual arguments
+
+**Testing**
+
+- Upgraded Vue Test Utils v1 → v2 and `@vue/vue2-jest` → `@vue/vue3-jest`
+- Migrated all 9 test suites — key changes: `propsData` → `props`, global options moved under `global`, store mocking via `jest.mock` on Pinia store modules instead of `$store` global mock, `RouterLink` stub updated to render slot content
+- Added `coverageProvider: "v8"` to `jest.config.js` for accurate coverage reporting on Vue SFCs
+
+---
 
 ### Week 3 — Routing & Testing
 

@@ -27,29 +27,24 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue"
+<script setup lang="ts">
+import { ref, computed } from "vue"
 
 const THUMBNAIL_COUNT = 4
 
-export default Vue.extend({
-  name: "ProductGallery",
-  props: {
-    images: { type: Array as () => string[], required: true },
-    alt: { type: String, default: "" },
-  },
-  data() {
-    return { selectedIndex: 0 }
-  },
-  computed: {
-    displayImages(): string[] {
-      if (!this.images.length) return []
-      const result: string[] = []
-      for (let i = 0; i < THUMBNAIL_COUNT; i++) {
-        result.push(this.images[i % this.images.length])
-      }
-      return result
-    },
-  },
+const props = defineProps<{
+  images: string[]
+  alt: string
+}>()
+
+const selectedIndex = ref(0)
+
+const displayImages = computed((): string[] => {
+  if (!props.images.length) return []
+  const result: string[] = []
+  for (let i = 0; i < THUMBNAIL_COUNT; i++) {
+    result.push(props.images[i % props.images.length])
+  }
+  return result
 })
 </script>

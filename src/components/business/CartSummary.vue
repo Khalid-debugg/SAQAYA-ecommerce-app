@@ -3,19 +3,23 @@
     <div class="cart-summary__totals">
       <div class="cart-summary__row">
         <span>Subtotal:</span>
-        <span data-test="subtotal">${{ subtotalUSD.toFixed(2) }}</span>
+        <span data-test="subtotal"
+          >${{ cartStore.subtotalUSD.toFixed(2) }}</span
+        >
       </div>
       <div class="cart-summary__divider" />
       <div class="cart-summary__row">
         <span>Shipping:</span>
         <span data-test="shipping">{{
-          shippingCost === 0 ? "Free" : "$" + shippingCost.toFixed(2)
+          cartStore.shippingCost === 0
+            ? "Free"
+            : "$" + cartStore.shippingCost.toFixed(2)
         }}</span>
       </div>
       <div class="cart-summary__divider" />
       <div class="cart-summary__row">
         <span>Total:</span>
-        <span data-test="total">${{ totalUSD.toFixed(2) }}</span>
+        <span data-test="total">${{ cartStore.totalUSD.toFixed(2) }}</span>
       </div>
     </div>
 
@@ -79,16 +83,21 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue"
+<script setup lang="ts">
+import { ref } from "vue"
+import { useCartStore } from "@/store/cart"
 import AppButton from "@/components/ui/AppButton.vue"
 import bKash from "@/assets/images/logos/b-kash.png"
 import visa from "@/assets/images/logos/visa.png"
 import masterCard from "@/assets/images/logos/master-card.png"
 import indianBank from "@/assets/images/logos/indian-bank.png"
+type BankLogo = { name: string; src: string }
+
+const cartStore = useCartStore()
 
 type PaymentMethod = "bank" | "cash"
-type BankLogo = { name: string; src: string }
+const paymentMethod = ref<PaymentMethod>("cash")
+const couponCode = ref("")
 
 const bankLogos: BankLogo[] = [
   { name: "B kash", src: bKash },
@@ -96,27 +105,4 @@ const bankLogos: BankLogo[] = [
   { name: "Master Card", src: masterCard },
   { name: "Indian Bank", src: indianBank },
 ]
-
-export default Vue.extend({
-  name: "CartSummary",
-  components: { AppButton },
-  data() {
-    return {
-      paymentMethod: "cash" as PaymentMethod,
-      bankLogos,
-      couponCode: "" as string,
-    }
-  },
-  computed: {
-    subtotalUSD(): number {
-      return this.$store.getters["cart/GET_SUBTOTAL_USD"]
-    },
-    shippingCost(): number {
-      return this.$store.getters["cart/GET_SHIPPING_COST"]
-    },
-    totalUSD(): number {
-      return this.$store.getters["cart/GET_TOTAL_USD"]
-    },
-  },
-})
 </script>

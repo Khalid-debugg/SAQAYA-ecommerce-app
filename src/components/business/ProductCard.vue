@@ -35,7 +35,7 @@
         modifier="dark"
         class="product__cart-btn"
         data-test="add-to-cart-btn"
-        @click.native="addToCart"
+        @click="addToCart"
       >
         Add to cart
       </app-button>
@@ -69,38 +69,32 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { computed } from "vue"
 import { Product } from "@/types/product"
-import Vue, { PropType } from "vue"
-import AppIcon from "../ui/AppIcon.vue"
-import AppButton from "../ui/AppButton.vue"
+import AppIcon from "@/components/ui/AppIcon.vue"
+import AppButton from "@/components/ui/AppButton.vue"
 import StarRating from "@/components/ui/StarRating.vue"
 
-export default Vue.extend({
-  name: "ProductCard",
-  components: { AppIcon, AppButton, StarRating },
-  props: {
-    product: {
-      type: Object as PropType<Product>,
-      required: true,
-    },
-  },
-  computed: {
-    isProductNew(): boolean {
-      const createdAt = new Date(this.product.meta.createdAt)
-      const now = new Date()
-      const diffInDays =
-        (now.getTime() - createdAt.getTime()) / (1000 * 60 * 60 * 24)
-      return diffInDays >= 0 && diffInDays < 8
-    },
-    originalPrice(): number {
-      return this.product.price / (1 - this.product.discountPercentage / 100)
-    },
-  },
-  methods: {
-    addToCart() {
-      this.$emit("add-to-cart", this.product)
-    },
-  },
+const props = defineProps<{
+  product: Product
+}>()
+
+const emit = defineEmits(["add-to-cart"])
+
+const isProductNew = computed((): boolean => {
+  const createdAt = new Date(props.product.meta.createdAt)
+  const now = new Date()
+  const diffInDays =
+    (now.getTime() - createdAt.getTime()) / (1000 * 60 * 60 * 24)
+  return diffInDays >= 0 && diffInDays < 8
 })
+
+const originalPrice = computed((): number => {
+  return props.product.price / (1 - props.product.discountPercentage / 100)
+})
+
+const addToCart = () => {
+  emit("add-to-cart", props.product)
+}
 </script>
