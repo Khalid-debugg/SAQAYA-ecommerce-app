@@ -10,7 +10,7 @@ app.use(pinia)
 app.use(router)
 app.mount("#app")
 
-import { useCartStore } from "@/store/modules/cart"
+import { useCartStore } from "@/store/cart"
 const cartStore = useCartStore()
 cartStore.loadFromStorage()
 cartStore.persistToStorage()

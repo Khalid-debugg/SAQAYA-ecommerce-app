@@ -1,5 +1,5 @@
-import store from "@/store"
 import { RouteLocationNormalized, NavigationGuardNext } from "vue-router"
+import { useProductsStore } from "@/store/products"
 
 export const productDetailsGuard = async (
   to: RouteLocationNormalized,
@@ -13,7 +13,8 @@ export const productDetailsGuard = async (
   }
 
   try {
-    await store.dispatch("products/fetchProductById", { id })
+    const productsStore = useProductsStore()
+    await productsStore.fetchProductById(id)
     next()
   } catch {
     next("/not-found")

@@ -1,7 +1,12 @@
 import { h } from "vue"
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
-import { Store } from "vuex"
+import {
+  createRouter,
+  createWebHistory,
+  RouteRecordRaw,
+  RouterView,
+} from "vue-router"
 import { productDetailsGuard } from "./guards"
+import { useProductsStore } from "@/store"
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -34,7 +39,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "products",
         meta: { breadcrumb: "Products" },
-        component: { render: () => h("router-view") },
+        component: { render: () => h(RouterView) },
         children: [
           {
             path: "",
@@ -48,8 +53,8 @@ const routes: Array<RouteRecordRaw> = [
             path: ":id",
             name: "product-details",
             meta: {
-              breadcrumb: (store: Store<unknown>) =>
-                store.getters["products/selectedProductTitle"],
+              breadcrumb: (store: ReturnType<typeof useProductsStore>) =>
+                store.selectedProductTitle,
             },
             component: () =>
               import(
