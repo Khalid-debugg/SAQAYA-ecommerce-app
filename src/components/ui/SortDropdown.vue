@@ -10,7 +10,7 @@
         <span
           class="sort-dropdown__trigger-label"
           data-test="sort-selected-label"
-          >{{ value.label }}</span
+          >{{ modelValue.label }}</span
         >
         <app-icon name="arrow-down" :size="16" />
       </button>
@@ -20,7 +20,9 @@
         v-for="option in options"
         :key="option.value"
         class="sort-dropdown__item"
-        :class="{ 'sort-dropdown__item--active': value.value === option.value }"
+        :class="{
+          'sort-dropdown__item--active': modelValue.value === option.value,
+        }"
         :data-test="`sort-option-${option.value}`"
         @click="select(option)"
       >
@@ -30,8 +32,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue, { PropType } from "vue"
+<script setup lang="ts">
+import { ref } from "vue"
 import AppIcon from "@/components/ui/AppIcon.vue"
 
 interface SortOption {
@@ -41,37 +43,20 @@ interface SortOption {
   order: string
 }
 
-export default Vue.extend({
-  name: "SortDropdown",
+defineProps<{
+  modelValue: SortOption
+  options: SortOption[]
+}>()
 
-  components: { AppIcon },
+const emit = defineEmits(["update:modelValue"])
 
-  props: {
-    value: {
-      type: Object as PropType<SortOption>,
-      required: true,
-    },
-    options: {
-      type: Array as PropType<SortOption[]>,
-      required: true,
-    },
-  },
+const isOpen = ref(false)
 
-  data() {
-    return {
-      isOpen: false,
-    }
-  },
-
-  methods: {
-    toggleDropdown() {
-      this.isOpen = !this.isOpen
-    },
-
-    select(option: SortOption) {
-      this.$emit("input", option)
-      this.isOpen = false
-    },
-  },
-})
+function toggleDropdown() {
+  isOpen.value = !isOpen.value
+}
+const select = (option: SortOption) => {
+  emit("update:modelValue", option)
+  isOpen.value = false
+}
 </script>

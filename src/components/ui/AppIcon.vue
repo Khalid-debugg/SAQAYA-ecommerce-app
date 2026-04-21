@@ -2,30 +2,16 @@
   <component :is="icon" :width="size" :height="size" class="app-icon" />
 </template>
 
-<script lang="ts">
-import Vue from "vue"
+<script setup lang="ts">
+import { computed } from "vue"
 import { icons, IconName } from "./icons/index"
 
-export default Vue.extend({
-  name: "AppIcon",
+const props = defineProps<{
+  name: IconName
+  size?: number
+}>()
 
-  props: {
-    name: {
-      type: String as () => IconName,
-      required: true,
-    },
-    size: {
-      type: Number,
-      default: 24,
-    },
-  },
-
-  computed: {
-    icon() {
-      return icons[this.name as string as IconName] ?? icons["close"]
-    },
-  },
-})
+const icon = computed(() => icons[props.name as IconName] ?? icons["close"])
 </script>
 
 <style lang="scss" scoped>

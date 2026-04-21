@@ -40,13 +40,15 @@
   </svg>
 </template>
 
-<script lang="ts">
-import Vue from "vue"
-export default Vue.extend({
-  name: "ShopIcon",
-  props: {
-    width: { type: Number, default: 40 },
-    height: { type: Number, default: 40 },
-  },
-})
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    width?: number
+    height?: number
+  }>(),
+  {
+    width: 40,
+    height: 40,
+  }
+)
 </script>

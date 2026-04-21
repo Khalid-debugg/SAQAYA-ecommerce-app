@@ -1,14 +1,14 @@
 import { ProductsPaginated, Product, ProductCategory } from "@/types/product"
 import { axiosInstance } from "@/plugins/axios"
 
-export async function getProducts(
-  limit = 0,
-  skip = 0,
-  sortBy = "",
-  order = ""
-): Promise<ProductsPaginated> {
+export async function getProducts(params?: {
+  limit?: number
+  skip?: number
+  sortBy?: string
+  order?: string
+}): Promise<ProductsPaginated> {
   const response = await axiosInstance.get<ProductsPaginated>("/products", {
-    params: { limit, skip, sortBy, order },
+    params,
   })
   return response.data
 }
@@ -25,16 +25,16 @@ export async function getCategories(): Promise<ProductCategory[]> {
   return response.data
 }
 
-export async function getProductsByCategory(
-  category: string,
-  limit = 0,
-  skip = 0,
-  sortBy = "",
-  order = ""
-): Promise<ProductsPaginated> {
+export async function getProductsByCategory(params: {
+  category: string
+  limit?: number
+  skip?: number
+  sortBy?: string
+  order?: string
+}): Promise<ProductsPaginated> {
   const response = await axiosInstance.get<ProductsPaginated>(
-    `/products/category/${category}`,
-    { params: { limit, skip, sortBy, order } }
+    `/products/category/${params.category}`,
+    { params }
   )
   return response.data
 }

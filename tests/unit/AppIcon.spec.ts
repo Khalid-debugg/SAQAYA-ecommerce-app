@@ -2,7 +2,7 @@ import { shallowMount } from "@vue/test-utils"
 import AppIcon from "@/components/ui/AppIcon.vue"
 
 const mountAppIcon = (name: string, size = 24) =>
-  shallowMount(AppIcon, { propsData: { name, size } })
+  shallowMount(AppIcon, { props: { name, size } })
 
 describe("AppIcon", () => {
   it("renders the correct icon for a valid name", () => {

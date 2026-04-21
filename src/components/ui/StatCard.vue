@@ -10,27 +10,13 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue"
+<script setup lang="ts">
 import AppIcon from "@/components/ui/AppIcon.vue"
 import { IconName } from "@/components/ui/icons/index"
 
-export default Vue.extend({
-  name: "StatCard",
-  components: { AppIcon },
-  props: {
-    icon: {
-      type: String as () => IconName,
-      required: true,
-    },
-    value: {
-      type: String,
-      required: true,
-    },
-    label: {
-      type: String,
-      required: true,
-    },
-  },
-})
+defineProps<{
+  icon: IconName
+  value: string
+  label: string
+}>()
 </script>

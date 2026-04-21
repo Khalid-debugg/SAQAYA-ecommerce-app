@@ -9,34 +9,19 @@
         required
       />
     </div>
-    <app-input
-      v-model="message"
-      type="textarea"
-      modifier="textarea"
-      placeholder="Your Message"
-    />
+    <app-input v-model="message" type="textarea" placeholder="Your Message" />
     <div class="contact-form__footer">
       <app-button type="submit" modifier="primary">Send Message</app-button>
     </div>
   </form>
 </template>
 
-<script lang="ts">
-import Vue from "vue"
+<script setup lang="ts">
+import { ref } from "vue"
 import AppInput from "@/components/ui/AppInput.vue"
 import AppButton from "@/components/ui/AppButton.vue"
 
-export default Vue.extend({
-  name: "ContactForm",
-
-  components: { AppInput, AppButton },
-
-  data() {
-    return {
-      name: "",
-      email: "",
-      message: "",
-    }
-  },
-})
+const name = ref("")
+const email = ref("")
+const message = ref("")
 </script>

@@ -1,8 +1,7 @@
 import { shallowMount } from "@vue/test-utils"
 import AppButton from "@/components/ui/AppButton.vue"
 
-const mountAppButton = (propsData = {}) =>
-  shallowMount(AppButton, { propsData })
+const mountAppButton = (props = {}) => shallowMount(AppButton, { props })
 
 describe("AppButton", () => {
   describe("modifier", () => {
@@ -34,9 +33,9 @@ describe("AppButton", () => {
     })
 
     it("is disabled when disabled prop is true", () => {
-      expect(mountAppButton({ disabled: true }).attributes("disabled")).toBe(
-        "disabled"
-      )
+      expect(
+        mountAppButton({ disabled: true }).attributes("disabled")
+      ).toBeDefined()
     })
   })
 })

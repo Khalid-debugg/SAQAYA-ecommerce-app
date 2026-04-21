@@ -1,10 +1,14 @@
-import Vue, { CreateElement } from "vue"
-import VueRouter, { RouteConfig } from "vue-router"
-import { Store } from "vuex"
+import { h } from "vue"
+import {
+  createRouter,
+  createWebHistory,
+  RouteRecordRaw,
+  RouterView,
+} from "vue-router"
 import { productDetailsGuard } from "./guards"
-Vue.use(VueRouter)
+import { useProductsStore } from "@/store"
 
-const routes: Array<RouteConfig> = [
+const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     component: () =>
@@ -35,7 +39,7 @@ const routes: Array<RouteConfig> = [
       {
         path: "products",
         meta: { breadcrumb: "Products" },
-        component: { render: (h: CreateElement) => h("router-view") },
+        component: { render: () => h(RouterView) },
         children: [
           {
             path: "",
@@ -49,8 +53,8 @@ const routes: Array<RouteConfig> = [
             path: ":id",
             name: "product-details",
             meta: {
-              breadcrumb: (store: Store<unknown>) =>
-                store.getters["products/selectedProductTitle"],
+              breadcrumb: (store: ReturnType<typeof useProductsStore>) =>
+                store.selectedProductTitle,
             },
             component: () =>
               import(
@@ -61,7 +65,7 @@ const routes: Array<RouteConfig> = [
         ],
       },
       {
-        path: "*",
+        path: "/:pathMatch(.*)*",
         name: "not-found",
         meta: { breadcrumb: "404 Error" },
         component: () =>
@@ -71,12 +75,11 @@ const routes: Array<RouteConfig> = [
   },
 ]
 
-const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL,
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
   routes,
   scrollBehavior() {
-    return { x: 0, y: 0 }
+    return { left: 0, top: 0 }
   },
 })
 

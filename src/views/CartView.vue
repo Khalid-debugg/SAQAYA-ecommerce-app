@@ -5,13 +5,7 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue"
+<script setup lang="ts">
 import CartList from "@/components/business/CartList.vue"
 import CartSummary from "@/components/business/CartSummary.vue"
-
-export default Vue.extend({
-  name: "CartView",
-  components: { CartList, CartSummary },
-})
 </script>

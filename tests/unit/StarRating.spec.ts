@@ -2,7 +2,7 @@ import { shallowMount } from "@vue/test-utils"
 import StarRating from "@/components/ui/StarRating.vue"
 
 const mountStarRating = (rating: number) =>
-  shallowMount(StarRating, { propsData: { rating } })
+  shallowMount(StarRating, { props: { rating } })
 
 describe("StarRating", () => {
   it("returns 100 when the star is fully filled", () => {

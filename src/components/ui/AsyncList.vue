@@ -7,38 +7,25 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue"
+<script setup lang="ts">
 import AppSkeleton from "@/components/ui/AppSkeleton.vue"
 import AppError from "@/components/ui/AppError.vue"
 
-export default Vue.extend({
-  name: "AsyncList",
+withDefaults(
+  defineProps<{
+    isLoading: boolean
+    error: string | null
+    isEmpty: boolean
+    emptyMessage?: string
+  }>(),
+  {
+    emptyMessage: "Nothing to show",
+  }
+)
 
-  components: { AppSkeleton, AppError },
+const emit = defineEmits(["retry"])
 
-  props: {
-    isLoading: {
-      type: Boolean,
-      default: false,
-    },
-    error: {
-      type: String as () => string | null,
-      default: null,
-    },
-    isEmpty: {
-      type: Boolean,
-      default: false,
-    },
-    emptyMessage: {
-      type: String,
-      default: "Nothing to show.",
-    },
-  },
-  methods: {
-    retry() {
-      this.$emit("retry")
-    },
-  },
-})
+const retry = () => {
+  emit("retry")
+}
 </script>

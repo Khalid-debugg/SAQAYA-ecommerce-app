@@ -12,7 +12,8 @@
       :is-loading="isLoading"
       :error="error"
       :is-empty="!categories.length"
-      @retry="retry"
+      @retry="productsStore.fetchProductCategories()"
+      empty-message="No categories to show"
     >
       <transition-group name="slide" tag="div" class="browse-category__grid">
         <category-card
@@ -25,44 +26,30 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue, { PropType } from "vue"
+<script setup lang="ts">
+import { computed } from "vue"
 import { ProductCategory } from "@/types/product"
-import { paginationMixin } from "@/mixins/pagination"
+import { useProductsStore } from "@/store/products"
+import { useUiStore } from "@/store/ui"
+import { usePagination } from "@/composables/usePagination"
 import CategoryCard from "@/components/business/CategoryCard.vue"
 import SectionHeader from "@/components/ui/SectionHeader.vue"
 import AsyncList from "@/components/ui/AsyncList.vue"
 
-export default Vue.extend({
-  name: "BrowseCategory",
-  components: { CategoryCard, SectionHeader, AsyncList },
-  mixins: [paginationMixin],
-  props: {
-    categories: {
-      type: Array as PropType<ProductCategory[]>,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      itemsPerPage: 6,
-    }
-  },
-  computed: {
-    items(): ProductCategory[] {
-      return this.categories
-    },
-    isLoading(): boolean {
-      return this.$store.getters["ui/IS_LOADING"]("fetchProductCategories")
-    },
-    error(): string | null {
-      return this.$store.getters["ui/GET_ERROR"]("fetchProductCategories")
-    },
-  },
-  methods: {
-    retry() {
-      this.$store.dispatch("products/fetchProductCategories")
-    },
-  },
-})
+const props = defineProps<{
+  categories: ProductCategory[]
+}>()
+
+const productsStore = useProductsStore()
+const uiStore = useUiStore()
+
+const itemsPerPage = 6
+const items = computed(() => props.categories)
+const { hasPrev, hasNext, paginatedItems, prev, next } = usePagination(
+  items,
+  itemsPerPage
+)
+
+const isLoading = computed(() => uiStore.isLoading("fetchProductCategories"))
+const error = computed(() => uiStore.getError("fetchProductCategories"))
 </script>

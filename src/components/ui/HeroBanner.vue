@@ -36,8 +36,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue, { PropType } from "vue"
+<script setup lang="ts">
+import { ref, computed, onMounted, onBeforeUnmount } from "vue"
 import AppIcon from "@/components/ui/AppIcon.vue"
 
 interface BannerSlide {
@@ -47,50 +47,33 @@ interface BannerSlide {
   image: string
 }
 
-export default Vue.extend({
-  name: "HeroBanner",
-  components: { AppIcon },
-  props: {
-    slides: {
-      type: Array as PropType<BannerSlide[]>,
-      default: () => [],
-    },
-  },
-  data() {
-    return {
-      currentSlide: 0,
-      timer: null as ReturnType<typeof setInterval> | null,
-    }
-  },
-  computed: {
-    trackStyle(): object {
-      return { transform: `translateX(-${this.currentSlide * 100}%)` }
-    },
-  },
-  mounted() {
-    this.startTimer()
-  },
-  beforeDestroy() {
-    this.stopTimer()
-  },
-  methods: {
-    goToSlide(index: number) {
-      this.currentSlide = index
-      this.restartTimer()
-    },
-    next() {
-      this.currentSlide = (this.currentSlide + 1) % this.slides.length
-    },
-    startTimer() {
-      this.timer = setInterval(this.next, 5000)
-    },
-    stopTimer() {
-      if (this.timer) clearInterval(this.timer)
-    },
-    restartTimer() {
-      this.stopTimer()
-      this.startTimer()
-    },
-  },
-})
+const props = defineProps<{ slides: BannerSlide[] }>()
+
+const currentSlide = ref(0)
+const timer = ref<ReturnType<typeof setInterval> | null>(null)
+
+const trackStyle = computed(() => ({
+  transform: `translateX(-${currentSlide.value * 100}%)`,
+}))
+
+const goToSlide = (index: number) => {
+  currentSlide.value = index
+  restartTimer()
+}
+const next = () => {
+  currentSlide.value = (currentSlide.value + 1) % props.slides.length
+}
+const startTimer = () => {
+  timer.value = setInterval(next, 5000)
+}
+const stopTimer = () => {
+  if (timer.value) clearInterval(timer.value)
+}
+const restartTimer = () => {
+  stopTimer()
+  startTimer()
+}
+
+onMounted(() => startTimer())
+onBeforeUnmount(() => stopTimer())
 </script>

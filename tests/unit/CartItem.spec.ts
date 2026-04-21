@@ -26,7 +26,7 @@ const baseCartItem: CartItemType = {
 }
 
 const mountCartItem = (cartItem: CartItemType = baseCartItem) =>
-  shallowMount(CartItem, { propsData: { cartItem } })
+  shallowMount(CartItem, { props: { cartItem } })
 
 describe("CartItem", () => {
   describe("rendering", () => {
