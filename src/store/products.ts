@@ -44,13 +44,20 @@ export const useProductsStore = defineStore("products", {
       }
     },
 
-    async fetchProducts(limit: number, skip: number, sortBy = "", order = "") {
+    async fetchProducts(params: {
+      limit?: number
+      skip?: number
+      sortBy?: string
+      order?: string
+    }) {
       const ui = useUiStore()
       ui.setLoading("fetchProducts", true)
       try {
-        const data = await getProducts(limit, skip, sortBy, order)
+        const data = await getProducts(params)
         this.productsList =
-          skip === 0 ? data.products : [...this.productsList, ...data.products]
+          params.skip === 0
+            ? data.products
+            : [...this.productsList, ...data.products]
         this.totalProducts = data.total
       } catch {
         ui.setError("fetchProducts", "Failed to load products")
@@ -79,25 +86,21 @@ export const useProductsStore = defineStore("products", {
       }
     },
 
-    async fetchProductsByCategory(
-      category: string,
-      limit: number,
-      skip: number,
-      sortBy = "",
-      order = ""
-    ) {
+    async fetchProductsByCategory(params: {
+      category: string
+      limit?: number
+      skip?: number
+      sortBy?: string
+      order?: string
+    }) {
       const ui = useUiStore()
       ui.setLoading("fetchProducts", true)
       try {
-        const data = await getProductsByCategory(
-          category,
-          limit,
-          skip,
-          sortBy,
-          order
-        )
+        const data = await getProductsByCategory(params)
         this.productsList =
-          skip === 0 ? data.products : [...this.productsList, ...data.products]
+          params.skip === 0
+            ? data.products
+            : [...this.productsList, ...data.products]
         this.totalProducts = data.total
       } catch {
         ui.setError("fetchProducts", "Failed to load products")
