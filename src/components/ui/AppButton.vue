@@ -9,9 +9,14 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  modifier?: "primary" | "outline" | "dark"
-  type?: "button" | "reset" | "submit"
-  disabled?: boolean
-}>()
+withDefaults(
+  defineProps<{
+    modifier?: "primary" | "outline" | "dark"
+    type?: "button" | "reset" | "submit"
+    disabled?: boolean
+  }>(),
+  {
+    modifier: "primary",
+  }
+)
 </script>
