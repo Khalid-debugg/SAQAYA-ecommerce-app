@@ -33,9 +33,9 @@ const options: SortOption[] = [
 
 const defaultValue: SortOption = options[0]
 
-const mountDropdown = (value: SortOption = defaultValue) =>
+const mountDropdown = (modelValue: SortOption = defaultValue) =>
   shallowMount(SortDropdown, {
-    propsData: { value, options },
+    props: { modelValue, options },
   })
 
 const openMenu = async (wrapper: ReturnType<typeof mountDropdown>) => {
@@ -96,7 +96,7 @@ describe("SortDropdown", () => {
         await wrapper
           .find(`[data-test="sort-option-${(option as SortOption).value}"]`)
           .trigger("click")
-        const emitted = wrapper.emitted("input")
+        const emitted = wrapper.emitted("update:modelValue")
         expect(emitted).toBeTruthy()
         expect(emitted?.[0][0]).toEqual(option)
       }

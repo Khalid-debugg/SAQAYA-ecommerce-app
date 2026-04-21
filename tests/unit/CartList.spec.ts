@@ -4,7 +4,19 @@ import CartItemComponent from "@/components/business/CartItem.vue"
 import { CartItem } from "@/types/cart"
 import { Product } from "@/types/product"
 
-const mockCommit = jest.fn()
+const mockRemoveFromCart = jest.fn()
+const mockUpdateQuantity = jest.fn()
+let mockCartItems: CartItem[] = []
+
+jest.mock("@/store/cart", () => ({
+  useCartStore: () => ({
+    get cartItems() {
+      return mockCartItems
+    },
+    removeFromCart: mockRemoveFromCart,
+    updateQuantity: mockUpdateQuantity,
+  }),
+}))
 
 const baseProduct: Product = {
   id: 1,
@@ -36,14 +48,15 @@ const thirdCartItem: CartItem = {
   quantity: 1,
 }
 
-const mountCartList = (cartItems: CartItem[]) =>
-  shallowMount(CartList, {
-    mocks: { $store: { commit: mockCommit } },
-    computed: { cartItems: () => cartItems },
-    stubs: { CartItemComponent: { props: ["cartItem"], template: "<div />" } },
-  })
+const mountCartList = (cartItems: CartItem[]) => {
+  mockCartItems = cartItems
+  return shallowMount(CartList)
+}
 
-beforeEach(() => mockCommit.mockClear())
+beforeEach(() => {
+  mockRemoveFromCart.mockClear()
+  mockUpdateQuantity.mockClear()
+})
 
 describe("CartList", () => {
   describe("rendering", () => {
@@ -75,7 +88,7 @@ describe("CartList", () => {
       await mountCartList([baseCartItem])
         .findComponent(CartItemComponent)
         .vm.$emit("remove", 1)
-      expect(mockCommit).toHaveBeenCalledWith("cart/REMOVE_FROM_CART", 1)
+      expect(mockRemoveFromCart).toHaveBeenCalledWith(1)
     })
   })
 
@@ -84,10 +97,7 @@ describe("CartList", () => {
       await mountCartList([baseCartItem])
         .findComponent(CartItemComponent)
         .vm.$emit("update-quantity", { id: 1, quantity: 2 })
-      expect(mockCommit).toHaveBeenCalledWith("cart/UPDATE_QUANTITY", {
-        productId: 1,
-        quantity: 2,
-      })
+      expect(mockUpdateQuantity).toHaveBeenCalledWith(1, 2)
     })
 
     it.each([0, -1])(
@@ -96,7 +106,7 @@ describe("CartList", () => {
         await mountCartList([baseCartItem])
           .findComponent(CartItemComponent)
           .vm.$emit("update-quantity", { id: 1, quantity })
-        expect(mockCommit).toHaveBeenCalledWith("cart/REMOVE_FROM_CART", 1)
+        expect(mockRemoveFromCart).toHaveBeenCalledWith(1)
       }
     )
   })
