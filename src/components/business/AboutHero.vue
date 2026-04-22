@@ -19,6 +19,7 @@
       <img
         src="@/assets/images/about/about-hero.webp"
         alt="two girls standing next to each other"
+        class="about-hero__image-src"
         loading="eager"
       />
     </div>
