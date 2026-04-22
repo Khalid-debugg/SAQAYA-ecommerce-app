@@ -9,6 +9,7 @@ export interface CurrentSort {
 export interface ProductsState {
   homeProducts: Product[]
   productsList: Product[]
+  relatedProducts: Product[]
   selectedProduct: Product | null
   productCategories: ProductCategory[]
   totalProducts: number
