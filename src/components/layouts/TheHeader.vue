@@ -13,15 +13,13 @@
         </ul>
 
         <div class="the-header__actions">
-          <form class="the-header__search">
-            <app-input
-              v-model="searchQuery"
-              placeholder="What are you looking for?"
-            />
-            <button type="submit">
-              <app-icon name="search" :size="16" />
-            </button>
-          </form>
+          <search-input
+            v-model="searchQuery"
+            :results="searchResults"
+            :is-searching="isSearching"
+            class="the-header__search"
+            @select="navigateToProduct"
+          />
 
           <button class="the-header__cart" @click="openCart">
             <app-icon name="cart" />
@@ -40,15 +38,13 @@
     </div>
 
     <app-drawer title="Menu" :isOpen="isMenuOpen" @close="isMenuOpen = false">
-      <form class="the-header__search nav-menu__search" @submit.prevent>
-        <app-input
-          v-model="searchQuery"
-          placeholder="What are you looking for?"
-        />
-        <button type="submit">
-          <app-icon name="search" :size="16" />
-        </button>
-      </form>
+      <search-input
+        v-model="searchQuery"
+        :results="searchResults"
+        :is-searching="isSearching"
+        class="nav-menu__search"
+        @select="navigateToProduct"
+      />
 
       <ul class="nav-menu__links">
         <li v-for="link in navLinks" :key="link.to">
@@ -65,16 +61,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, watch } from "vue"
+import { useRouter } from "vue-router"
 import { useCartStore } from "@/store/cart"
+import { useDebounce } from "@/composables/useDebounce"
+import { searchProducts } from "@/services/products/products.api"
+import { Product } from "@/types/product"
 import AppIcon from "@/components/ui/AppIcon.vue"
-import AppInput from "@/components/ui/AppInput.vue"
 import AppDrawer from "@/components/layouts/AppDrawer.vue"
+import SearchInput from "@/components/ui/SearchInput.vue"
 
 const emit = defineEmits(["open-cart"])
+const router = useRouter()
 const cartStore = useCartStore()
 
 const searchQuery = ref("")
+const debouncedQuery = useDebounce(searchQuery, 500)
+const searchResults = ref<Product[]>([])
+const isSearching = ref(false)
 const isMenuOpen = ref(false)
 
 const navLinks = [
@@ -83,6 +87,27 @@ const navLinks = [
   { to: "/products", label: "Products" },
   { to: "/about", label: "About" },
 ]
+
+watch(debouncedQuery, async (query) => {
+  if (!query.trim()) {
+    searchResults.value = []
+    return
+  }
+  isSearching.value = true
+  try {
+    const data = await searchProducts({ query, limit: 5 })
+    searchResults.value = data.products
+  } finally {
+    isSearching.value = false
+  }
+})
+
+const navigateToProduct = (id: number) => {
+  searchQuery.value = ""
+  searchResults.value = []
+  isMenuOpen.value = false
+  router.push({ name: "product-details", params: { id: String(id) } })
+}
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
