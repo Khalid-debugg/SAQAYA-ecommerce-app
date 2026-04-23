@@ -23,12 +23,21 @@
   }
 
   &__image {
-    width: 100%;
-    background-color: $color-bg-muted;
-    border-radius: $radius-md;
+    border-radius: $radius-sm;
+    aspect-ratio: 705 / 609;
+    width: calc(50vw);
+    margin-right: calc(-50vw + 50%);
 
     @include respond-to("md") {
+      width: 100%;
+      margin-right: 0;
       order: -1;
     }
+  }
+
+  &__image-src {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }

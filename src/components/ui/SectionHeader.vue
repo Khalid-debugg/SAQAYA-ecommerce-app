@@ -7,7 +7,10 @@
       </div>
       <h2 v-if="title" class="section-header__title">{{ title }}</h2>
     </div>
-    <div v-if="hasPrev !== undefined" class="section-header__nav">
+    <div
+      v-if="hasPrev !== undefined && hasNext !== undefined"
+      class="section-header__nav"
+    >
       <button
         class="section-header__arrow"
         :disabled="!hasPrev"
@@ -29,12 +32,18 @@
 <script setup lang="ts">
 import AppIcon from "@/components/ui/AppIcon.vue"
 
-defineProps<{
-  label?: string
-  title?: string
-  hasPrev?: boolean
-  hasNext?: boolean
-}>()
+withDefaults(
+  defineProps<{
+    label?: string
+    title?: string
+    hasPrev?: boolean
+    hasNext?: boolean
+  }>(),
+  {
+    hasPrev: undefined,
+    hasNext: undefined,
+  }
+)
 
 const emit = defineEmits(["prev", "next"])
 

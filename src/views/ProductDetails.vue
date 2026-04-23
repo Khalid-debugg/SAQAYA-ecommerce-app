@@ -50,26 +50,20 @@ const productsStore = useProductsStore()
 const uiStore = useUiStore()
 const cartStore = useCartStore()
 
-const isLoading = computed(() => uiStore.isLoading("fetchProducts"))
-const error = computed(() => uiStore.getError("fetchProducts"))
+const isLoading = computed(() => uiStore.isLoading("fetchRelatedProducts"))
+const error = computed(() => uiStore.getError("fetchRelatedProducts"))
 
-const relatedProducts = computed((): Product[] =>
-  productsStore.productsList
-    .filter((p) => p.id !== productsStore.selectedProduct?.id)
-    .slice(0, 4)
-)
+const relatedProducts = computed(() => productsStore.relatedProducts)
+
 const addToCart = (product: Product) => {
   cartStore.addToCart(product, 1)
 }
 const fetchRelated = () => {
   if (!productsStore.selectedProduct) return
-  productsStore.productsList = []
-  productsStore.currentCategory = productsStore.selectedProduct.category
-  productsStore.fetchProductsByCategory({
-    category: productsStore.selectedProduct.category,
-    limit: 5,
-    skip: 0,
-  })
+  productsStore.fetchRelatedProducts(
+    productsStore.selectedProduct.category,
+    productsStore.selectedProduct.id
+  )
 }
 
 watch(

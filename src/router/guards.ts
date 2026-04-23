@@ -8,7 +8,7 @@ export const productDetailsGuard = async (
 ) => {
   const id = Number(to.params.id)
   if (!id) {
-    next("/not-found")
+    next({ name: "not-found" })
     return
   }
 
@@ -17,6 +17,6 @@ export const productDetailsGuard = async (
     await productsStore.fetchProductById(id)
     next()
   } catch {
-    next("/not-found")
+    next({ name: "not-found" })
   }
 }
