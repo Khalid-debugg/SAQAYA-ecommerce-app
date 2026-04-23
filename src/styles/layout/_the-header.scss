@@ -106,6 +106,7 @@
 .nav-menu {
   &__search {
     width: 80%;
+    align-self: center;
     padding: $spacing-sm $spacing-md;
     background-color: $color-bg-muted;
     border-radius: $radius-sm;
