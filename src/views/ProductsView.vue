@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue"
+import { ref, computed, onMounted, reactive } from "vue"
 import { useRoute } from "vue-router"
 import { useProductsStore } from "@/store/products"
 import { useUiStore } from "@/store/ui"
@@ -44,7 +44,7 @@ const route = useRoute()
 const productsStore = useProductsStore()
 const uiStore = useUiStore()
 
-const selectedSort = ref<SortOption>({
+const selectedSort = reactive<SortOption>({
   label: "Default",
   value: "default",
   sortBy: "",
@@ -90,8 +90,8 @@ const isSameRequest = computed(
   () =>
     productsStore.productsList.length > 0 &&
     productsStore.currentCategory === category.value &&
-    productsStore.currentSort.sortBy === selectedSort.value.sortBy &&
-    productsStore.currentSort.order === selectedSort.value.order
+    productsStore.currentSort.sortBy === selectedSort.sortBy &&
+    productsStore.currentSort.order === selectedSort.order
 )
 
 const resetAndLoad = () => {
@@ -100,24 +100,22 @@ const resetAndLoad = () => {
   productsStore.visibleCount = RENDER_LIMIT
   productsStore.currentCategory = category.value
   productsStore.currentSort = {
-    sortBy: selectedSort.value.sortBy,
-    order: selectedSort.value.order,
+    sortBy: selectedSort.sortBy,
+    order: selectedSort.order,
   }
   fetchProducts(0, INITIAL_FETCH)
 }
 const loadMore = () => {
   productsStore.visibleCount += RENDER_LIMIT
-  if (productsStore.productsList.length < productsStore.visibleCount) {
-    fetchProducts(fetchSkip.value, REFILL_FETCH)
-    fetchSkip.value += REFILL_FETCH
-  }
+  fetchProducts(fetchSkip.value, REFILL_FETCH)
+  fetchSkip.value += REFILL_FETCH
 }
 const fetchProducts = (skip: number, limit: number) => {
   const params = {
     limit,
     skip,
-    sortBy: selectedSort.value.sortBy,
-    order: selectedSort.value.order,
+    sortBy: selectedSort.sortBy,
+    order: selectedSort.order,
   }
 
   if (category.value) {
@@ -136,7 +134,7 @@ onMounted(() => {
       o.sortBy === productsStore.currentSort.sortBy &&
       o.order === productsStore.currentSort.order
   )
-  if (matched) selectedSort.value = matched
+  if (matched) Object.assign(selectedSort, matched)
 
   if (isSameRequest.value) {
     fetchSkip.value = productsStore.productsList.length
