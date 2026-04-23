@@ -35,7 +35,7 @@ export const useProductsStore = defineStore("products", {
       const ui = useUiStore()
       ui.setLoading("fetchHomeProducts", true)
       try {
-        const data = await getProducts()
+        const data = await getProducts({ limit: 0 })
         this.homeProducts = data.products
       } catch {
         ui.setError("fetchHomeProducts", "Failed to load products")
