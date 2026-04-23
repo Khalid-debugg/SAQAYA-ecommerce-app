@@ -38,3 +38,14 @@ export async function getProductsByCategory(params: {
   )
   return response.data
 }
+
+export async function searchProducts(params: {
+  query: string
+  limit: number
+}): Promise<ProductsPaginated> {
+  const response = await axiosInstance.get<ProductsPaginated>(
+    "/products/search",
+    { params }
+  )
+  return response.data
+}

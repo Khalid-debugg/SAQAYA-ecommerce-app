@@ -64,9 +64,6 @@
 
   &__search {
     width: 243px;
-    display: flex;
-    align-items: center;
-    align-self: center;
     border-radius: $radius-sm;
     background-color: $color-bg-muted;
     padding: $spacing-sm $spacing-md;
@@ -109,7 +106,10 @@
 .nav-menu {
   &__search {
     width: 80%;
+    align-self: center;
     padding: $spacing-sm $spacing-md;
+    background-color: $color-bg-muted;
+    border-radius: $radius-sm;
   }
 
   &__links {
