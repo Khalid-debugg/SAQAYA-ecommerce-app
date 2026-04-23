@@ -13,6 +13,7 @@ export const useProductsStore = defineStore("products", {
   state: (): ProductsState => ({
     homeProducts: [],
     productsList: [],
+    relatedProducts: [],
     selectedProduct: null,
     productCategories: [],
     totalProducts: 0,
@@ -34,7 +35,7 @@ export const useProductsStore = defineStore("products", {
       const ui = useUiStore()
       ui.setLoading("fetchHomeProducts", true)
       try {
-        const data = await getProducts()
+        const data = await getProducts({ limit: 0 })
         this.homeProducts = data.products
       } catch {
         ui.setError("fetchHomeProducts", "Failed to load products")
@@ -107,6 +108,26 @@ export const useProductsStore = defineStore("products", {
         throw new Error("Failed to load products")
       } finally {
         ui.setLoading("fetchProducts", false)
+      }
+    },
+
+    async fetchRelatedProducts(category: string, excludeId: number) {
+      const ui = useUiStore()
+      ui.setLoading("fetchRelatedProducts", true)
+      try {
+        const data = await getProductsByCategory({
+          category,
+          limit: 5,
+          skip: 0,
+        })
+        this.relatedProducts = data.products
+          .filter((p) => p.id !== excludeId)
+          .slice(0, 4)
+      } catch {
+        ui.setError("fetchRelatedProducts", "Failed to load related products")
+        throw new Error("Failed to load related products")
+      } finally {
+        ui.setLoading("fetchRelatedProducts", false)
       }
     },
   },

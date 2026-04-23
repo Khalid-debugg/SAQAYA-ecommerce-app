@@ -3,9 +3,10 @@
     <div class="container contact__flex">
       <div class="contact__image">
         <img
-          src="@/assets/images/contact/contact-us.jpg"
+          src="@/assets/images/contact/contact-us.webp"
           alt="Contact us"
           class="contact__image-src"
+          loading="eager"
         />
       </div>
       <div class="contact__right">
