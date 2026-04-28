@@ -83,4 +83,8 @@ const router = createRouter({
   },
 })
 
+router.beforeEach((to) => {
+  document.title = (to.meta.breadcrumb as string) || "Exclusive"
+})
+
 export default router
